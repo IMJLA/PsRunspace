@@ -462,7 +462,7 @@ task SourceControl -depends UnitTests {
     # Commit to Git
     git add .
     git commit -m $CommitMessage
-    git push origin main
+    git push -f origin main
 } -description 'git add, commit, and push'
 
 task Publish -depends SourceControl {
