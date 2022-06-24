@@ -1,4 +1,7 @@
-$ScriptFiles = Get-ChildItem -Path "$PSScriptRoot\*.ps1" -Recurse
+
+$ScriptFiles = Get-ChildItem -Path "$PSScriptRoot\*.ps1" | Where-Object -FilterScript {
+    ($_.PSParentPath | Split-Path -Leaf) -eq 'TestCode'
+}
 
 # Dot source any functions
 ForEach ($ThisScript in $ScriptFiles) {
@@ -17,4 +20,9 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
     ($_.PSParentPath | Split-Path -Leaf) -eq 'public'
 }
 $publicFunctions = $PublicScriptFiles.BaseName
-Export-ModuleMember -Function $publicFunctions
+Export-ModuleMember -Function @('Add-PsCommand','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
+
+
+
+
