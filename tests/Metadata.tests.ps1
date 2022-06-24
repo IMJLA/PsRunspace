@@ -10,9 +10,9 @@ BeforeAll {
         $projectRoot = $PSScriptRoot
     }
 
-    $allTextFiles      = Get-TextFilesList $projectRoot
+    $allTextFiles = Get-TextFilesList $projectRoot
     $unicodeFilesCount = 0
-    $totalTabsCount    = 0
+    $totalTabsCount = 0
     foreach ($textFile in $allTextFiles) {
         if (Test-FileUnicode $textFile) {
             $unicodeFilesCount++
@@ -35,15 +35,15 @@ BeforeAll {
     }
 }
 
-Describe 'Text files formatting' {
-    Context 'File encoding' {
-        It "No text file uses Unicode/UTF-16 encoding" {
+Describe 'text files' {
+    Context '- File Encoding' {
+        It "do not use Unicode/UTF-16 encoding" {
             $unicodeFilesCount | Should -Be 0
         }
     }
 
-    Context 'Indentations' {
-        It "No text file use tabs for indentations" {
+    Context '- Indentations' {
+        It "do not use tabs for indentations" {
             $totalTabsCount | Should -Be 0
         }
     }
