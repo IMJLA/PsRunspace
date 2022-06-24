@@ -9,10 +9,10 @@
 @{
 
     # Script module or binary module file associated with this manifest.
-    RootModule        = 'PsRunspace.psm1'
+    RootModule        = 'PsRunspace'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.10'
+    ModuleVersion     = '1.0.11'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
