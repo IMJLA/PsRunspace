@@ -8,14 +8,14 @@ schema: 2.0.0
 # Split-Thread
 
 ## SYNOPSIS
-Splits a command for a collection of input objects into multiple threads for asynchronous processing
+Split a command for a collection of input objects into multiple threads for asynchronous processing
 
 ## SYNTAX
 
 ```
 Split-Thread [-Command] <Object> [[-InputObject] <Object>] [[-InputParameter] <Object>] [[-Threads] <Int32>]
  [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [[-AddParam] <Hashtable>] [[-AddSwitch] <String[]>]
- [[-AddModule] <String[]>] [[-ObjectStringProperty] <String>] [[-OutputStream] <String[]>] [<CommonParameters>]
+ [[-AddModule] <String[]>] [[-ObjectStringProperty] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -178,21 +178,6 @@ Aliases:
 
 Required: False
 Position: 10
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OutputStream
-Suppress Powershell output streams from the threads
-
-```yaml
-Type: System.String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

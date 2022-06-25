@@ -1,7 +1,10 @@
 
-$ScriptFiles = Get-ChildItem -Path "$PSScriptRoot\*.ps1" | Where-Object -FilterScript {
-    ($_.PSParentPath | Split-Path -Leaf) -eq 'TestCode'
+$ScriptFiles = Get-ChildItem -Path "$PSScriptRoot\*.ps1" -Recurse | Where-Object -FilterScript {
+    'TestCode' -ne ($_.PSParentPath | Split-Path -Leaf)
 }
+
+Write-Debug "$(($ScriptFiles | Measure-Object).Count) .ps1 files found in folder '$PSScriptRoot'"
+
 
 # Dot source any functions
 ForEach ($ThisScript in $ScriptFiles) {
@@ -21,6 +24,7 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 }
 $publicFunctions = $PublicScriptFiles.BaseName
 Export-ModuleMember -Function @('Add-PsCommand','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

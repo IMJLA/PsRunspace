@@ -433,7 +433,7 @@
       <command:verb>Split</command:verb>
       <command:noun>Thread</command:noun>
       <maml:description>
-        <maml:para>Splits a command for a collection of input objects into multiple threads for asynchronous processing</maml:para>
+        <maml:para>Split a command for a collection of input objects into multiple threads for asynchronous processing</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -462,18 +462,6 @@
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
             <maml:name>System.String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
-          <maml:name>OutputStream</maml:name>
-          <maml:description>
-            <maml:para>Suppress Powershell output streams from the threads</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
-          <dev:type>
-            <maml:name>System.String[]</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -657,18 +645,6 @@
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
           <maml:name>System.String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
-        <maml:name>OutputStream</maml:name>
-        <maml:description>
-          <maml:para>Suppress Powershell output streams from the threads</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
-        <dev:type>
-          <maml:name>System.String[]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>

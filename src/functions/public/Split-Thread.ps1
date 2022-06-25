@@ -2,7 +2,7 @@ function Split-Thread {
 
     <#
     .Synopsis
-        Splits a command for a collection of input objects into multiple threads for asynchronous processing
+        Split a command for a collection of input objects into multiple threads for asynchronous processing
 
     .Description
         The specified command will be run for each input object in a separate powershell instance with its own runspace
@@ -86,11 +86,7 @@ function Split-Thread {
         Name of a property (whose value is a string) that exists on each $InputObject and can be used to represent the object in text form
         If left null, the object's ToString() method will be used instead.
         #>
-        [string]$ObjectStringProperty,
-
-        # Suppress Powershell output streams from the threads
-        [ValidateSet('All', 'None', 'Debug', 'Verbose', 'Information', 'Warning', 'Error')]
-        [string[]]$OutputStream = 'None'
+        [string]$ObjectStringProperty
 
     )
 
@@ -149,21 +145,17 @@ function Split-Thread {
 
         $InitialSessionState.ImportPSModulesFromPath($ModulesDir)
 
-        if ($OutputStream -ne 'None') {
-
-            if ($OutputStream -eq 'All') {
-                $OutputStream = @('Debug', 'Verbose', 'Information', 'Warning', 'Error')
+        # Set the preference variables for PowerShell output streams in each thread to match the current preferences
+        $OutputStream = @('Debug', 'Verbose', 'Information', 'Warning', 'Error')
+        ForEach ($ThisStream in $OutputStream) {
+            if ($ThisStream -eq 'Error') {
+                $VariableName = 'ErrorActionPreference'
+            } else {
+                $VariableName = "$($ThisStream)Preference"
             }
-
-            ForEach ($ThisStream in $OutputStream) {
-                if ($ThisStream -eq 'Error') {
-                    $variableEntry = [System.Management.Automation.Runspaces.SessionStateVariableEntry]::new('ErrorActionPreference', 'Continue', '')
-                } else {
-                    $variableEntry = [System.Management.Automation.Runspaces.SessionStateVariableEntry]::new("$ThisStream`Preference", 'Continue', '')
-                }
-                $InitialSessionState.Variables.Add($variableEntry)
-            }
-
+            $VariableValue = (Get-Variable -Name $VariableName).Value
+            $variableEntry = [System.Management.Automation.Runspaces.SessionStateVariableEntry]::new($VariableName, $VariableValue, '')
+            $InitialSessionState.Variables.Add($variableEntry)
         }
 
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
