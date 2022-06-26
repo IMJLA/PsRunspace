@@ -94,56 +94,44 @@ function Split-Thread {
 
         $InitialSessionState = [system.management.automation.runspaces.initialsessionstate]::CreateDefault()
 
-        <#
-        Some modules (for example a module imported directly from a .psm1 file) will have a Definition property that contains all the module's code.
-            We will run that Definition code inside the runspace.
-            This is done most reliably by dumping the definition to a .psm1 file in a temp directory, then loading it into the InitialSessionState using the ImportPSModulesFromPath($TempDir) method
-            TODO: skip temp dir in cases where .psm1 path already known?
-        Other modules (for example the Active Directory module) have a null Definition property.
-            In that case we will just try to import the module using Import-Module.
-        #>
-
-        $TempDir = "$Env:TEMP\PsRunspace"
-        $ModulesDir = "$TempDir\$((Get-Date -format s) -replace ':')"
-        $null = New-Item -ItemType Directory -Path $ModulesDir -ErrorAction SilentlyContinue
-
+        # Import the source module containing the specified Command in each thread
         $CommandInfo = Get-PsCommandInfo -Command $Command
+        switch ($CommandInfo.ModuleInfo.ModuleType) {
+            'Binary' {
+                Write-Debug "`$InitialSessionState.ImportPSModule('$($CommandInfo.ModuleInfo.Name)')"
+                $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Name)
+            }
+            'Script' {
+                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$($CommandInfo.ModuleInfo.Path | Split-Path -Parent)')"
+                $InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
+            }
+            'Manifest' {
+                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$($CommandInfo.ModuleInfo.Path | Split-Path -Parent)')"
+                $InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
+            }
+            default {
+                # Scriptblocks have no module to import so ModuleInfo will be null
+            }
+        }
 
+        # Import any additional specified modules in each thread
         ForEach ($Module in $AddModule) {
 
             $ModuleObj = Get-Module $Module -ErrorAction SilentlyContinue
+            switch ($ModuleObj.ModuleType) {
+                'Binary' {
+                    Write-Debug "`$InitialSessionState.ImportPSModule('$Module')"
+                    $InitialSessionState.ImportPSModule($Module)
+                }
+                default {
+                    # This is for Script or Manifest modules
+                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$($ModuleObj.Path | Split-Path -Parent)')"
+                    $InitialSessionState.ImportPSModulesFromPath(($ModuleObj.Path | Split-Path -Parent))
 
-            if ($ModuleObj.Definition) {
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`tDefinition found for module '$Module'. Will import definition in each runspace."
-                #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`tDefinition found for module '$Module'. Will import definition in each runspace."
-
-                $ModuleDir = "$ModulesDir\$($ModuleObj.Name)"
-                $null = New-Item -ItemType Directory -Path $ModuleDir -ErrorAction SilentlyContinue
-                $ModuleObj.Definition | Out-File -LiteralPath "$ModuleDir\$($ModuleObj.Name).psm1" -Force
-
-            } else {
-
-                #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`tNo definition found for module '$Module'. Will load module by name in each runspace."
-
-                $InitialSessionState.ImportPSModule($Module)
-
+                }
             }
 
         }
-
-        if ($CommandInfo.SourceModuleDefinition -and $AddModule -notcontains $CommandInfo.CommandInfo.Source) {
-            #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`tDefinition found for source module '$($CommandInfo.CommandInfo.Source)'. Will import definition in each runspace."
-            $ModuleDir = "$ModulesDir\$($CommandInfo.CommandInfo.Source)"
-            $null = New-Item -ItemType Directory -Path $ModuleDir -ErrorAction SilentlyContinue
-            $CommandInfo.SourceModuleDefinition | Out-File -LiteralPath "$ModuleDir\$($CommandInfo.CommandInfo.Source).psm1" -Force
-        }
-
-        if ($CommandInfo.SourceModuleName -and $AddModule -notcontains $CommandInfo.SourceModuleName) {
-            #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`tImporting source module by name '$($CommandInfo.CommandInfo.Source)'."
-            $InitialSessionState.ImportPSModule($CommandInfo.SourceModuleName)
-        }
-
-        $InitialSessionState.ImportPSModulesFromPath($ModulesDir)
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences
         $OutputStream = @('Debug', 'Verbose', 'Information', 'Warning', 'Error')
@@ -154,11 +142,12 @@ function Split-Thread {
                 $VariableName = "$($ThisStream)Preference"
             }
             $VariableValue = (Get-Variable -Name $VariableName).Value
-            $variableEntry = [System.Management.Automation.Runspaces.SessionStateVariableEntry]::new($VariableName, $VariableValue, '')
-            $InitialSessionState.Variables.Add($variableEntry)
+            $VariableEntry = [System.Management.Automation.Runspaces.SessionStateVariableEntry]::new($VariableName, $VariableValue, '')
+            $InitialSessionState.Variables.Add($VariableEntry)
         }
 
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
+        $VerbosePreference = 'SilentlyContinue'
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -169,27 +158,26 @@ function Split-Thread {
 
     process {
 
+        # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
             $null = $AllInputObjects.Add($ThisObject)
         }
 
     }
     end {
-
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
             InputObject          = $AllInputObjects
             AddParam             = $AddParam
             AddSwitch            = $AddSwitch
-            OutputStream         = $OutputStream
             ObjectStringProperty = $ObjectStringProperty
             CommandInfo          = $CommandInfo
             RunspacePool         = $RunspacePool
         }
         $AllThreads = Open-Thread @ThreadParameters
-
         Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose
+        $VerbosePreference = 'Continue'
 
         if ($Global:TimedOut -eq $false) {
 

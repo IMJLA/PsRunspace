@@ -27,17 +27,11 @@ function Open-Thread {
         [System.Management.Automation.Runspaces.RunspacePool]$RunspacePool,
 
         <#
-        Name of a property (whose value is a string) that exists on each $InputObject and can be used to represent the object in text form
+        Name of a property (whose value is a string) that exists on each $InputObject
+        It will be used to represent the object in text form
         If left null, the object's ToString() method will be used instead.
         #>
         [string]$ObjectStringProperty,
-
-        <#
-        Powershell output streams to pass through from the threads
-        'All' is ignored if it is not the only value in the array
-        #>
-        [ValidateSet('All', 'None', 'Debug', 'Verbose', 'Information', 'Warning', 'Error')]
-        [string[]]$OutputStream = 'None',
 
         # PowerShell Command or Script to run against each InputObject
         [Parameter(Mandatory = $true)]
@@ -67,7 +61,6 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-
     }
     process {
 
@@ -85,7 +78,7 @@ function Open-Thread {
             $PowershellInterface.RunspacePool = $RunspacePool
 
             $null = $PowershellInterface.Commands.Clear()
-            $null = $PowershellInterface | Add-PsCommand -Command $Command -CommandInfo $CommandInfo
+            Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)

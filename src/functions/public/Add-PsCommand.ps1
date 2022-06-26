@@ -54,7 +54,7 @@ function Add-PsCommand {
                 'Alias' {
                     # Resolve the alias to its command and start from the beginning with that command.
                     $CommandInfo = Get-PsCommandInfo -Command $CommandInfo.CommandInfo.Definition
-                    $ThisPowershell | Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo
+                    Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
                 }
                 'Function' {
                     $ThisPowershell.AddScript($CommandInfo.CommandInfo.Definition)

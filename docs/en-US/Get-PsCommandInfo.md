@@ -20,7 +20,7 @@ Get-PsCommandInfo [[-Command] <Object>]
 Used by Split-Thread, Invoke-Thread, and Add-PsCommand
 
 Determine whether the Command is a \[System.Management.Automation.ScriptBlock\] object
-If not, passes it to the Name parameter of Get-Command to retrieve info about the command, its definition, and its source module
+If not, passes it to the Name parameter of Get-Command
 
 ## EXAMPLES
 
@@ -34,6 +34,11 @@ The following demonstrates sending a Cmdlet name to the -Command parameter
 
 ### -Command
 Command to retrieve info on
+This can be a scriptblock object, or a string that specifies an:
+    Alias
+    Function (the name of the function)
+    ExternalScript (the path to the .ps1 file)
+    All, Application, Cmdlet, Configuration, Filter, or Script
 
 ```yaml
 Type: System.Object

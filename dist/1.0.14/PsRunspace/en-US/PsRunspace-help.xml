@@ -121,7 +121,7 @@
     </command:details>
     <maml:description>
       <maml:para>Used by Split-Thread, Invoke-Thread, and Add-PsCommand</maml:para>
-      <maml:para>Determine whether the Command is a [System.Management.Automation.ScriptBlock] object If not, passes it to the Name parameter of Get-Command to retrieve info about the command, its definition, and its source module</maml:para>
+      <maml:para>Determine whether the Command is a [System.Management.Automation.ScriptBlock] object If not, passes it to the Name parameter of Get-Command</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -129,7 +129,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Command</maml:name>
           <maml:description>
-            <maml:para>Command to retrieve info on</maml:para>
+            <maml:para>Command to retrieve info on This can be a scriptblock object, or a string that specifies an:     Alias     Function (the name of the function)     ExternalScript (the path to the .ps1 file)     All, Application, Cmdlet, Configuration, Filter, or Script</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Object</command:parameterValue>
           <dev:type>
@@ -144,7 +144,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Command</maml:name>
         <maml:description>
-          <maml:para>Command to retrieve info on</maml:para>
+          <maml:para>Command to retrieve info on This can be a scriptblock object, or a string that specifies an:     Alias     Function (the name of the function)     ExternalScript (the path to the .ps1 file)     All, Application, Cmdlet, Configuration, Filter, or Script</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Object</command:parameterValue>
         <dev:type>
@@ -216,7 +216,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>ObjectStringProperty</maml:name>
           <maml:description>
-            <maml:para>Name of a property (whose value is a string) that exists on each $InputObject and can be used to represent the object in text form If left null, the object's ToString() method will be used instead.</maml:para>
+            <maml:para>Name of a property (whose value is a string) that exists on each $InputObject It will be used to represent the object in text form If left null, the object's ToString() method will be used instead.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
@@ -225,19 +225,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-          <maml:name>OutputStream</maml:name>
-          <maml:description>
-            <maml:para>Powershell output streams to pass through from the threads 'All' is ignored if it is not the only value in the array</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
-          <dev:type>
-            <maml:name>System.String[]</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>Command</maml:name>
           <maml:description>
             <maml:para>PowerShell Command or Script to run against each InputObject</maml:para>
@@ -249,7 +237,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>CommandInfo</maml:name>
           <maml:description>
             <maml:para>Output from Get-PsCommandInfo</maml:para>
@@ -261,7 +249,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
           <maml:name>InputParameter</maml:name>
           <maml:description>
             <maml:para>Named parameter of the Command to pass InputObject to If this is not specified, InputObject will be passed to the Command as an argument</maml:para>
@@ -273,7 +261,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
           <maml:name>AddParam</maml:name>
           <maml:description>
             <maml:para>Parameters to add to the Command Each parameter is a name-value pair in the hashtable:     @{"ParameterName" = "Value"}     @{"ParameterName" = "Value" ; "ParameterTwo" = "Value2"}</maml:para>
@@ -285,7 +273,7 @@
           </dev:type>
           <dev:defaultValue>@{}</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
           <maml:name>AddSwitch</maml:name>
           <maml:description>
             <maml:para>Switches to add to the Command</maml:para>
@@ -300,7 +288,7 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
         <maml:name>AddParam</maml:name>
         <maml:description>
           <maml:para>Parameters to add to the Command Each parameter is a name-value pair in the hashtable:     @{"ParameterName" = "Value"}     @{"ParameterName" = "Value" ; "ParameterTwo" = "Value2"}</maml:para>
@@ -312,7 +300,7 @@
         </dev:type>
         <dev:defaultValue>@{}</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>AddSwitch</maml:name>
         <maml:description>
           <maml:para>Switches to add to the Command</maml:para>
@@ -324,7 +312,7 @@
         </dev:type>
         <dev:defaultValue>@()</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>Command</maml:name>
         <maml:description>
           <maml:para>PowerShell Command or Script to run against each InputObject</maml:para>
@@ -336,7 +324,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>CommandInfo</maml:name>
         <maml:description>
           <maml:para>Output from Get-PsCommandInfo</maml:para>
@@ -360,7 +348,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
         <maml:name>InputParameter</maml:name>
         <maml:description>
           <maml:para>Named parameter of the Command to pass InputObject to If this is not specified, InputObject will be passed to the Command as an argument</maml:para>
@@ -375,23 +363,11 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>ObjectStringProperty</maml:name>
         <maml:description>
-          <maml:para>Name of a property (whose value is a string) that exists on each $InputObject and can be used to represent the object in text form If left null, the object's ToString() method will be used instead.</maml:para>
+          <maml:para>Name of a property (whose value is a string) that exists on each $InputObject It will be used to represent the object in text form If left null, the object's ToString() method will be used instead.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
           <maml:name>System.String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-        <maml:name>OutputStream</maml:name>
-        <maml:description>
-          <maml:para>Powershell output streams to pass through from the threads 'All' is ignored if it is not the only value in the array</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
-        <dev:type>
-          <maml:name>System.String[]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>

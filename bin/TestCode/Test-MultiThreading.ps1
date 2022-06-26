@@ -11,7 +11,7 @@ $Count = ($Samples | Measure-Object).Count
 #$Command = "$PSScriptRoot\Test-Command.ps1"
 
 Remove-Module TestModule -ErrorAction SilentlyContinue *> $null
-Import-Module $PSScriptRoot\TestModule.psm1 *> $null
+Import-Module $PSScriptRoot\TestModule\TestModule.psm1 *> $null
 $Command = "Test-Function"
 
 #$Start = Get-Date
@@ -34,7 +34,7 @@ $Elapsed = New-TimeSpan -Start $Start -End $End
 
 " "
 "Multithreading benefit are even more significant with long-running operations"
-"These operations each generated 5 output streams then slept for 1 second to simulate a long-running operation"
-#"$($Elapsed3.TotalSeconds) seconds for ForEach-Object for $Count objects"
-"$($Elapsed.TotalSeconds) seconds for Split-Thread for $Count objects"
-#"$($Elapsed2.TotalSeconds) seconds for Split-Thread -OutputStream All for $Count objects"
+"These $Count operations each generated 6 output streams then slept for 1 second to simulate a long-running operation"
+#"$($Elapsed3.TotalSeconds) seconds for ForEach-Object for $Count input objects"
+"$($Elapsed.TotalSeconds) seconds for Split-Thread for $Count input objects"
+#"$($Elapsed2.TotalSeconds) seconds for Split-Thread -OutputStream All for $Count input objects"

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.14] - 2022-06-25 - Minor cleanup and efficiency improvements
+
+## [1.0.13] - 2022-06-25 - Minor cleanup and efficiency improvements
+
 ## [1.0.12] - 2022-06-25 - Removed OutputStream param from Split-Thread in favor of honoring preference variables
 
 ## [1.0.11] - 2022-06-23 - Fixed module manifest

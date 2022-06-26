@@ -14,8 +14,8 @@ Prepares each thread so it is ready to execute a command and capture the output 
 
 ```
 Open-Thread [[-InputObject] <Object>] [-RunspacePool] <RunspacePool> [[-ObjectStringProperty] <String>]
- [[-OutputStream] <String[]>] [-Command] <Object> [[-CommandInfo] <PSObject>] [[-InputParameter] <String>]
- [[-AddParam] <Hashtable>] [[-AddSwitch] <String[]>] [<CommonParameters>]
+ [-Command] <Object> [[-CommandInfo] <PSObject>] [[-InputParameter] <String>] [[-AddParam] <Hashtable>]
+ [[-AddSwitch] <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 7
 Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +62,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 8
 Default value: @()
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 5
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,7 +92,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -123,14 +123,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ObjectStringProperty
-Name of a property (whose value is a string) that exists on each $InputObject and can be used to represent the object in text form
+Name of a property (whose value is a string) that exists on each $InputObject
+It will be used to represent the object in text form
 If left null, the object's ToString() method will be used instead.
 
 ```yaml
@@ -140,22 +141,6 @@ Aliases:
 
 Required: False
 Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OutputStream
-Powershell output streams to pass through from the threads
-'All' is ignored if it is not the only value in the array
-
-```yaml
-Type: System.String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
