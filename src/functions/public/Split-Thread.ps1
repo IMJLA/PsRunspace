@@ -102,14 +102,14 @@ function Split-Thread {
                 $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Name)
             }
             'Script' {
-                Write-Debug "`$InitialSessionState.ImportPSModule('$($CommandInfo.ModuleInfo.Path)')"
-                $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Path)
-                #$InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
+                $ModulePath = $CommandInfo.ModuleInfo.Path | Split-Path -Parent
+                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                $InitialSessionState.ImportPSModulesFromPath($ModulePath)
             }
             'Manifest' {
-                Write-Debug "`$InitialSessionState.ImportPSModule('$($CommandInfo.ModuleInfo.Path)')"
-                $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Path)
-                #$InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
+                $ModulePath = $CommandInfo.ModuleInfo.Path | Split-Path -Parent
+                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                $InitialSessionState.ImportPSModulesFromPath($ModulePath)
             }
             default {
                 # Scriptblocks have no module to import so ModuleInfo will be null
