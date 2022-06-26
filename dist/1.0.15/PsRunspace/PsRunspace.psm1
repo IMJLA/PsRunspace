@@ -363,12 +363,14 @@ function Split-Thread {
                 $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Name)
             }
             'Script' {
-                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$($CommandInfo.ModuleInfo.Path | Split-Path -Parent)')"
-                $InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
+                Write-Debug "`$InitialSessionState.ImportPSModule('$($CommandInfo.ModuleInfo.Path)')"
+                $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Path)
+                #$InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
             }
             'Manifest' {
-                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$($CommandInfo.ModuleInfo.Path | Split-Path -Parent)')"
-                $InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
+                Write-Debug "`$InitialSessionState.ImportPSModule('$($CommandInfo.ModuleInfo.Path)')"
+                $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Path)
+                #$InitialSessionState.ImportPSModulesFromPath(($CommandInfo.ModuleInfo.Path | Split-Path -Parent))
             }
             default {
                 # Scriptblocks have no module to import so ModuleInfo will be null
@@ -665,6 +667,7 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 }
 $publicFunctions = $PublicScriptFiles.BaseName
 Export-ModuleMember -Function @('Add-PsCommand','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
