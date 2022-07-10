@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.18] - 2022-07-10 - Publish to PSGallery
+
 ## [1.0.17] - 2022-07-10 - Updated ReadMe
 
 ## [1.0.16] - 2022-06-25 - ImportPSModulesFromPath is more intelligent than ImportPSModule because it will use a manifest if available

@@ -482,7 +482,7 @@ task Publish -depends SourceControl {
     }
 
     # Publish to PSGallery
-    #Publish-Module @publishParams
+    Publish-Module @publishParams
 } -description 'Publish module to the defined PowerShell repository'
 
 task FinalTasks -depends Publish {
@@ -496,90 +496,3 @@ task ? -description 'Lists the available tasks' {
     'Available tasks:'
     $psake.context.Peek().Tasks.Keys | Sort-Object
 }
-
-
-# Version of the module manifest in the src directory before the build is run and the version is updated
-$SourceModuleVersion = (Import-PowerShellDataFile -Path $env:BHPSModuleManifest).ModuleVersion
-
-# Controls whether to "compile" module into single PSM1 or not
-$BuildCompileModule = $true
-
-# List of directories that if BuildCompileModule is $true, will be concatenated into the PSM1
-$BuildCompileDirectories = @('classes', 'enums', 'filters', 'functions/private', 'functions/public')
-
-# List of directories that will always be copied "as is" to output directory
-$BuildCopyDirectories = @('../bin', '../config', '../data', '../lib')
-
-# List of files (regular expressions) to exclude from output directory
-$BuildExclude = @('gitkeep', "$env:BHProjectName.psm1")
-
-# Output directory when building a module
-$BuildOutDir = [IO.Path]::Combine($env:BHProjectPath, 'dist')
-
-# Default Locale used for help generation, defaults to en-US
-# Get-UICulture doesn't return a name on Linux so default to en-US
-$HelpDefaultLocale = if (-not (Get-UICulture).Name) { 'en-US' } else { (Get-UICulture).Name }
-
-# Convert project readme into the module about file
-$HelpConvertReadMeToAboutHelp = $true
-
-# Directory PlatyPS markdown documentation will be saved to
-$DocsRootDir = [IO.Path]::Combine($env:BHProjectPath, 'docs')
-
-$TestRootDir = [IO.Path]::Combine($env:BHProjectPath, 'tests')
-$TestOutputFile = 'out/testResults.xml'
-
-# Path to updatable help CAB
-$HelpUpdatableHelpOutDir = [IO.Path]::Combine($DocsRootDir, 'UpdatableHelp')
-
-# Enable/disable use of PSScriptAnalyzer to perform script analysis
-$TestLintEnabled = $true
-
-# When PSScriptAnalyzer is enabled, control which severity level will generate a build failure.
-# Valid values are Error, Warning, Information and None.  "None" will report errors but will not
-# cause a build failure.  "Error" will fail the build only on diagnostic records that are of
-# severity error.  "Warning" will fail the build on Warning and Error diagnostic records.
-# "Any" will fail the build on any diagnostic record, regardless of severity.
-$TestLintFailBuildOnSeverityLevel = 'Error'
-
-# Path to the PSScriptAnalyzer settings file.
-$TestLintSettingsPath = [IO.Path]::Combine($PSScriptRoot, 'tests\ScriptAnalyzerSettings.psd1')
-
-$TestEnabled = $true
-
-$TestOutputFormat = 'NUnitXml'
-
-# Enable/disable Pester code coverage reporting.
-$TestCodeCoverageEnabled = $false
-
-# Fail Pester code coverage test if below this threshold
-$TestCodeCoverageThreshold = .75
-
-# CodeCoverageFiles specifies the files to perform code coverage analysis on. This property
-# acts as a direct input to the Pester -CodeCoverage parameter, so will support constructions
-# like the ones found here: https://pester.dev/docs/usage/code-coverage.
-$TestCodeCoverageFiles = @()
-
-# Path to write code coverage report to
-$TestCodeCoverageOutputFile = [IO.Path]::Combine($TestRootDir, 'out', 'codeCoverage.xml')
-
-# The code coverage output format to use
-$TestCodeCoverageOutputFileFormat = 'JaCoCo'
-
-$TestImportModuleFirst = $false
-
-# PowerShell repository name to publish modules to
-$PublishPSRepository = 'PSGallery'
-
-# API key to authenticate to PowerShell repository with
-$PublishPSRepositoryApiKey = $env:PSGALLERY_API_KEY
-
-# Credential to authenticate to PowerShell repository with
-$PublishPSRepositoryCredential = $null
-
-$NewLine = [System.Environment]::NewLine    # Version of the module manifest in the src directory before the build is run and the version is updated
-$SourceModuleVersion = (Import-PowerShellDataFile -Path $env:BHPSModuleManifest).ModuleVersion
-
-# Controls whether to "compile" module into single PSM1 or not
-$BuildCompileModule = $true
-
