@@ -1,4 +1,13 @@
-﻿Function Test-Function { Test-Subfunction $args[0] }
+﻿Function Test-Function {
+    Write-Host "Host: $($args[0])"
+    Write-Debug $args[0]
+    Write-Information "Info: $($args[0])"
+    Write-Output "Output: $($args[0])"
+    Write-Verbose $args[0]
+    Write-Warning $args[0]
+    Start-Sleep -Seconds 1
+    Test-Subfunction $args[0]
+}
 
 Function Test-Subfunction {
     Write-Host "Host: $($args[0])"

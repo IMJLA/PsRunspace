@@ -3,37 +3,29 @@ function Split-Thread {
     <#
     .Synopsis
         Split a command for a collection of input objects into multiple threads for asynchronous processing
-
     .Description
         The specified command will be run for each input object in a separate powershell instance with its own runspace
         These runspaces are part of the same runspace pool inside the same powershell.exe process
-
     .EXAMPLE
         The following demonstrates sending a Cmdlet name to the -Command parameter
             $InputObject | Split-Thread -Command 'Write-Output'
-
     .EXAMPLE
         The following demonstrates sending a scriptblock to the -Command parameter
             $InputObject | Split-Thread -Command [scriptblock]::create("Write-Output `$args[0]")
-
     .EXAMPLE
         The following demonstrates sending a script file path to the -Command parameter
             $InputObject | Split-Thread -Command "C:\Test-Command.ps1"
-
     .EXAMPLE
         The following demonstrates sending a function to the -Command parameter
             $InputObject | Split-Thread -Command 'Test-Function'
-
     .EXAMPLE
         The following demonstrates the -AddParam parameter
 
         $InputObject | Split-Thread -Command "Get-Service" -InputParameter ComputerName -AddParam @{"Name" = "BITS"}
-
     .EXAMPLE
         The following demonstrates the -AddSwitch parameter
 
         $InputObject | Split-Thread -Command "Get-Service" -AddSwitch @('RequiredServices','DependentServices')
-
 	.EXAMPLE
 		The following demonstrates the use of a threadsafe hashtable to store results
 		The hastable can be accessed and updated from inside each runspace
@@ -91,6 +83,7 @@ function Split-Thread {
     )
 
     begin {
+        Write-Debug "Split-Thread entered begin block for $Command"
 
         $InitialSessionState = [system.management.automation.runspaces.initialsessionstate]::CreateDefault()
 
@@ -102,12 +95,12 @@ function Split-Thread {
                 $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Name)
             }
             'Script' {
-                $ModulePath = $CommandInfo.ModuleInfo.Path | Split-Path -Parent
+                $ModulePath = Split-Path -LiteralPath $CommandInfo.ModuleInfo.Path -Parent
                 Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                 $InitialSessionState.ImportPSModulesFromPath($ModulePath)
             }
             'Manifest' {
-                $ModulePath = $CommandInfo.ModuleInfo.Path | Split-Path -Parent
+                $ModulePath = Split-Path -LiteralPath $CommandInfo.ModuleInfo.Path -Parent
                 Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                 $InitialSessionState.ImportPSModulesFromPath($ModulePath)
             }
@@ -159,6 +152,7 @@ function Split-Thread {
     }
 
     process {
+        Write-Debug "Split-Thread entered process block for $Command"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -167,6 +161,7 @@ function Split-Thread {
 
     }
     end {
+        Write-Debug "Split-Thread entered end block for $Command"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -178,6 +173,7 @@ function Split-Thread {
             RunspacePool         = $RunspacePool
         }
         $AllThreads = Open-Thread @ThreadParameters
+        Write-Debug "Split-Thread received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
         Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose
         $VerbosePreference = 'Continue'
 

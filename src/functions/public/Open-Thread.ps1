@@ -69,16 +69,16 @@ function Open-Thread {
             $CurrentObjectIndex++
 
             if ($ObjectStringProperty -ne '') {
-                $ObjectString = $Object."$ObjectStringProperty"
+                [string]$ObjectString = $Object."$ObjectStringProperty"
             } else {
-                $ObjectString = $Object.ToString()
+                [string]$ObjectString = $Object.ToString()
             }
 
             $PowershellInterface = [powershell]::Create()
             $PowershellInterface.RunspacePool = $RunspacePool
 
             $null = $PowershellInterface.Commands.Clear()
-            Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface
+            $null = Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)
@@ -104,6 +104,7 @@ function Open-Thread {
 
             $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterString $AdditionalParametersString $SwitchParameterString"
             <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
             $Progress = @{
                 Activity        = $StatusString
                 PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
