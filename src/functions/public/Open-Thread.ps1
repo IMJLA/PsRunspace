@@ -83,8 +83,9 @@ function Open-Thread {
             Write-Debug '$PowershellInterface.Commands.Clear()'
             $null = $PowershellInterface.Commands.Clear()
 
-            ForEach ($ThisCommandInfoObj in $CommandInfo) {
-                $null = Add-PsCommand -Command $ThisCommandInfoObj.CommandInfo.Name -CommandInfo $ThisCommandInfoObj -PowershellInterface $PowershellInterface
+            ForEach ($ThisCommandInfo in $CommandInfo) {
+                Write-Debug "Add-PsCommand -Command $($ThisCommandInfo.CommandInfo.Name) -CommandInfo `$ThisCommandInfo -PowershellInterface `$PowershellInterface"
+                $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
             }
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
