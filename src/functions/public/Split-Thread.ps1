@@ -85,7 +85,7 @@ function Split-Thread {
     begin {
         Write-Debug "Split-Thread entered begin block for $Command"
 
-        Write-Debug '$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()'
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()"
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
@@ -129,10 +129,10 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
-        Write-Debug "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
         #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
-        Write-Debug '$RunspacePool.Open()'
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool.Open()"
         $RunspacePool.Open()
 
         $Global:TimedOut = $false

@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.48] - 2022-07-30 - Added metadata to debug output
+
 ## [1.0.47] - 2022-07-30 - Updated debug output
 
 ## [1.0.46] - 2022-07-30 - Further improved debug output
