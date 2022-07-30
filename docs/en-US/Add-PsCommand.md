@@ -25,9 +25,10 @@ Uses AddScript() or AddStatement() and AddCommand() depending on the command
 
 ### EXAMPLE 1
 ```
-The following demonstrates sending a Cmdlet name to the -Command parameter
-    [powershell]::Create() | AddCommand -Command 'Write-Output'
+[powershell]::Create() | Add-PsCommand -Command 'Write-Output'
 ```
+
+Add a command by sending a Cmdlet name to the -Command parameter
 
 ## PARAMETERS
 

@@ -101,10 +101,9 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>The following demonstrates sending a Cmdlet name to the -Command parameter
-    [powershell]::Create() | AddCommand -Command 'Write-Output'</dev:code>
+        <dev:code>[powershell]::Create() | Add-PsCommand -Command 'Write-Output'</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>Add a command by sending a Cmdlet name to the -Command parameter</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

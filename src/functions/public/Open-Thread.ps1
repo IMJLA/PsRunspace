@@ -61,7 +61,7 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Open-Thread received $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos from Split-Thread"
+        Write-Debug "Open-Thread received $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos from Split-Thread"
 
     }
     process {
@@ -76,13 +76,13 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$PowershellInterface = [powershell]::Create()'
+            Write-Debug '$PowershellInterface = [powershell]::Create()'
             $PowershellInterface = [powershell]::Create()
 
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$PowershellInterface.RunspacePool = $RunspacePool'
+            Write-Debug '$PowershellInterface.RunspacePool = $RunspacePool'
             $PowershellInterface.RunspacePool = $RunspacePool
 
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$PowershellInterface.Commands.Clear()'
+            Write-Debug '$PowershellInterface.Commands.Clear()'
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfo in $CommandInfo) {
@@ -112,8 +112,8 @@ function Open-Thread {
             $SwitchParameterString = $Switches -join ' '
 
             $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterString $AdditionalParametersString $SwitchParameterString"
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
             $Progress = @{
                 Activity        = $StatusString
                 PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
