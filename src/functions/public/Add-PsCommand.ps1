@@ -63,7 +63,7 @@ function Add-PsCommand {
                     # TODO: Add modules if available? Not needed at this time but maybe later
                     ForEach ($ThisCommandInfo in $CommandsToAdd) {
                         if ($ThisCommandInfo.CommandType -eq [System.Management.Automation.CommandTypes]::Function) {
-                            Write-Debug "Open-Thread adding definition of function $($ThisCommandInfo.CommandInfo.Name)"
+                            Write-Debug "Add-PsCommand adding definition of function $($ThisCommandInfo.CommandInfo.Name)"
                             [string]$ThisFunction = "function $($ThisCommandInfo.CommandInfo.Name) {`r`n$($ThisCommandInfo.CommandInfo.Definition)`r`n}"
                             $null = $ThisPowershell.AddScript($ThisFunction)
                         }
@@ -77,7 +77,7 @@ function Add-PsCommand {
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 default {
-                    Write-Debug "Open-Thread adding command '$Command'"
+                    Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
