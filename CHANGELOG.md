@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.21] - 2022-07-29 - bug fixes with Split-Path to remove unnecessary pipeline overhead
+
 ## [1.0.20] - 2022-07-29 - Test build to troubleshoot 5.1 compatibility
 
 ## [1.0.19] - 2022-07-25 - Cleaned up source .psm1 file

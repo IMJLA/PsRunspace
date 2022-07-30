@@ -95,12 +95,12 @@ function Split-Thread {
                 $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Name)
             }
             'Script' {
-                $ModulePath = Split-Path -LiteralPath $CommandInfo.ModuleInfo.Path -Parent
+                $ModulePath = Split-Path -Path $CommandInfo.ModuleInfo.Path -Parent
                 Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                 $InitialSessionState.ImportPSModulesFromPath($ModulePath)
             }
             'Manifest' {
-                $ModulePath = Split-Path -LiteralPath $CommandInfo.ModuleInfo.Path -Parent
+                $ModulePath = Split-Path -Path $CommandInfo.ModuleInfo.Path -Parent
                 Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                 $InitialSessionState.ImportPSModulesFromPath($ModulePath)
             }
@@ -120,8 +120,9 @@ function Split-Thread {
                 }
                 default {
                     # This is for Script or Manifest modules
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$($ModuleObj.Path | Split-Path -Parent)')"
-                    $InitialSessionState.ImportPSModulesFromPath(($ModuleObj.Path | Split-Path -Parent))
+                    $PathParent = Split-Path -Path $ModuleObj.Path -Parent
+                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$PathParent')"
+                    $InitialSessionState.ImportPSModulesFromPath($PathParent)
 
                 }
             }
