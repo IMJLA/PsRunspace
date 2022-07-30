@@ -114,10 +114,6 @@ function Split-Thread {
         }
         Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos after filtering"
 
-        if (($CommandInfo | Measure-Object).Count -eq 0) {
-            $CommandInfo = $OriginalCommandInfo
-        }
-
         $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences

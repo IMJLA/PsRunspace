@@ -31,7 +31,10 @@ function Add-PsCommand {
 
         # Output from Get-PsCommandInfo
         # Optional, to improve performance if it will be re-used for multiple calls of Add-PsCommand
-        [pscustomobject]$CommandInfo
+        [pscustomobject]$CommandInfo,
+
+        # Add Commands rather than their definitions
+        [switch]$Force
 
     )
 
@@ -54,12 +57,20 @@ function Add-PsCommand {
                     $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
                 }
                 'Function' {
-                    # Add the definitions of the function
-                    # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
-                    [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
-                    Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
-                    $null = $ThisPowershell.AddScript($ThisFunction)
+
+                    if ($Force) {
+                        Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                        # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
+                        Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
+                        $null = $ThisPowershell.AddStatement().AddCommand($Command)
+                    } else {
+                        # Add the definitions of the function
+                        # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
+                        [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
+                        <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
+                        Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
+                        $null = $ThisPowershell.AddScript($ThisFunction)
+                    }
                 }
                 'ExternalScript' {
                     <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
