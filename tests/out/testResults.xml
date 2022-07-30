@@ -1,154 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="164" errors="0" failures="13" not-run="0" inconclusive="0" ignored="0" skipped="2" invalid="0" date="2022-07-29" time="21:43:06">
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="164" errors="0" failures="13" not-run="0" inconclusive="0" ignored="0" skipped="2" invalid="0" date="2022-07-29" time="21:44:29">
   <environment os-version="10.0.19044" cwd="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests" user-domain="JLA-LoftHTPC" nunit-version="2.5.8.0" platform="Microsoft Windows 10 Pro|C:\WINDOWS|\Device\Harddisk0\Partition2" user="Owner" clr-version="Unknown" machine-name="JLA-LOFTHTPC" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="2.0162" asserts="0" description="Pester">
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="2.068" asserts="0" description="Pester">
     <results>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Function.tests.ps1" executed="True" result="Success" success="True" time="0.2422" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Function.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Function.tests.ps1" executed="True" result="Success" success="True" time="0.2292" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Function.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="function 'Add-PsCommand.ps1'" executed="True" result="Success" success="True" time="0.0195" asserts="0" description="function 'Add-PsCommand.ps1'">
+          <test-suite type="TestFixture" name="function 'Add-PsCommand.ps1'" executed="True" result="Success" success="True" time="0.0273" asserts="0" description="function 'Add-PsCommand.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Add-PsCommand.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0073" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Add-PsCommand.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0097" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Add-PsCommand.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsCommand.ps1&quot;)" time="0.0073" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Add-PsCommand.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsCommand.ps1&quot;)" time="0.0097" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Add-PsCommand.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0076" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Add-PsCommand.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0071" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Add-PsCommand.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsCommand.ps1&quot;)" time="0.0076" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Add-PsCommand.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsCommand.ps1&quot;)" time="0.0071" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="function 'Add-PsModule.ps1'" executed="True" result="Success" success="True" time="0.0398" asserts="0" description="function 'Add-PsModule.ps1'">
+          <test-suite type="TestFixture" name="function 'Add-PsModule.ps1'" executed="True" result="Success" success="True" time="0.0449" asserts="0" description="function 'Add-PsModule.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Add-PsModule.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0109" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Add-PsModule.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0065" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Add-PsModule.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsModule.ps1&quot;)" time="0.0109" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Add-PsModule.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsModule.ps1&quot;)" time="0.0065" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Add-PsModule.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0064" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Add-PsModule.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0074" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Add-PsModule.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsModule.ps1&quot;)" time="0.0064" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Add-PsModule.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Add-PsModule.ps1&quot;)" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="function 'Expand-PsCommandInfo.ps1'" executed="True" result="Success" success="True" time="0.0581" asserts="0" description="function 'Expand-PsCommandInfo.ps1'">
+          <test-suite type="TestFixture" name="function 'Expand-PsCommandInfo.ps1'" executed="True" result="Success" success="True" time="0.0625" asserts="0" description="function 'Expand-PsCommandInfo.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Expand-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0076" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Expand-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0047" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Expand-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsCommandInfo.ps1&quot;)" time="0.0076" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Expand-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsCommandInfo.ps1&quot;)" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Expand-PsCommandInfo.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0077" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Expand-PsCommandInfo.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.01" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Expand-PsCommandInfo.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsCommandInfo.ps1&quot;)" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Expand-PsCommandInfo.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsCommandInfo.ps1&quot;)" time="0.01" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="function 'Expand-PsToken.ps1'" executed="True" result="Success" success="True" time="0.0787" asserts="0" description="function 'Expand-PsToken.ps1'">
+          <test-suite type="TestFixture" name="function 'Expand-PsToken.ps1'" executed="True" result="Success" success="True" time="0.0761" asserts="0" description="function 'Expand-PsToken.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Expand-PsToken.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0075" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Expand-PsToken.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0045" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Expand-PsToken.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsToken.ps1&quot;)" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Expand-PsToken.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsToken.ps1&quot;)" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Expand-PsToken.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.007" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Expand-PsToken.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0059" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Expand-PsToken.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsToken.ps1&quot;)" time="0.007" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Expand-PsToken.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Expand-PsToken.ps1&quot;)" time="0.0059" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="function 'Get-PsCommandInfo.ps1'" executed="True" result="Success" success="True" time="0.0961" asserts="0" description="function 'Get-PsCommandInfo.ps1'">
+          <test-suite type="TestFixture" name="function 'Get-PsCommandInfo.ps1'" executed="True" result="Success" success="True" time="0.0935" asserts="0" description="function 'Get-PsCommandInfo.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Get-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0075" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Get-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0072" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Get-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Get-PsCommandInfo.ps1&quot;)" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Get-PsCommandInfo.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Get-PsCommandInfo.ps1&quot;)" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Get-PsCommandInfo.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0064" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Get-PsCommandInfo.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.007" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Get-PsCommandInfo.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Get-PsCommandInfo.ps1&quot;)" time="0.0064" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Get-PsCommandInfo.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Get-PsCommandInfo.ps1&quot;)" time="0.007" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="function 'Open-Thread.ps1'" executed="True" result="Success" success="True" time="0.119" asserts="0" description="function 'Open-Thread.ps1'">
+          <test-suite type="TestFixture" name="function 'Open-Thread.ps1'" executed="True" result="Success" success="True" time="0.1081" asserts="0" description="function 'Open-Thread.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Open-Thread.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0082" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Open-Thread.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0053" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Open-Thread.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Open-Thread.ps1&quot;)" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Open-Thread.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Open-Thread.ps1&quot;)" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Open-Thread.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0111" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Open-Thread.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.006" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Open-Thread.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Open-Thread.ps1&quot;)" time="0.0111" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Open-Thread.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Open-Thread.ps1&quot;)" time="0.006" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="function 'Split-Thread.ps1'" executed="True" result="Success" success="True" time="0.1362" asserts="0" description="function 'Split-Thread.ps1'">
+          <test-suite type="TestFixture" name="function 'Split-Thread.ps1'" executed="True" result="Success" success="True" time="0.1262" asserts="0" description="function 'Split-Thread.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Split-Thread.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0069" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Split-Thread.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0081" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Split-Thread.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Split-Thread.ps1&quot;)" time="0.0069" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Split-Thread.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Split-Thread.ps1&quot;)" time="0.0081" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Split-Thread.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0066" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Split-Thread.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0067" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Split-Thread.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Split-Thread.ps1&quot;)" time="0.0066" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Split-Thread.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Split-Thread.ps1&quot;)" time="0.0067" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="function 'Wait-Thread.ps1'" executed="True" result="Success" success="True" time="0.1777" asserts="0" description="function 'Wait-Thread.ps1'">
+          <test-suite type="TestFixture" name="function 'Wait-Thread.ps1'" executed="True" result="Success" success="True" time="0.1624" asserts="0" description="function 'Wait-Thread.ps1'">
             <results>
-              <test-suite type="ParameterizedTest" name="function 'Wait-Thread.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.012" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="function 'Wait-Thread.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0116" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Wait-Thread.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Wait-Thread.ps1&quot;)" time="0.012" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Wait-Thread.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Wait-Thread.ps1&quot;)" time="0.0116" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="function 'Wait-Thread.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0262" asserts="0" description="runs without throwing errors">
+              <test-suite type="ParameterizedTest" name="function 'Wait-Thread.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0216" asserts="0" description="runs without throwing errors">
                 <results>
-                  <test-case description="runs without throwing errors" name="function 'Wait-Thread.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Wait-Thread.ps1&quot;)" time="0.0262" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="runs without throwing errors" name="function 'Wait-Thread.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\src\functions\public\Wait-Thread.ps1&quot;)" time="0.0216" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1" executed="True" result="Failure" success="False" time="1.1642" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1" executed="True" result="Failure" success="False" time="1.217" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="help for Add-PsCommand" executed="True" result="Failure" success="False" time="0.113" asserts="0" description="help for Add-PsCommand">
+          <test-suite type="TestFixture" name="help for Add-PsCommand" executed="True" result="Failure" success="False" time="0.1149" asserts="0" description="help for Add-PsCommand">
             <results>
-              <test-suite type="TestFixture" name="help for Add-PsCommand.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.0527" asserts="0" description="help for Add-PsCommand.- Help for parameter 'Command'">
+              <test-suite type="TestFixture" name="help for Add-PsCommand.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.0568" asserts="0" description="help for Add-PsCommand.- Help for parameter 'Command'">
                 <results>
-                  <test-case description="has a description" name="help for Add-PsCommand.- Help for parameter 'Command'.has a description" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Add-PsCommand.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Add-PsCommand.- Help for parameter 'Command'.has the correct parameter type" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Add-PsCommand.- Help for parameter 'Command'.has a description" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Add-PsCommand.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Add-PsCommand.- Help for parameter 'Command'.has the correct parameter type" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'" executed="True" result="Success" success="True" time="0.0743" asserts="0" description="help for Add-PsCommand.- Help for parameter 'CommandInfo'">
+              <test-suite type="TestFixture" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'" executed="True" result="Success" success="True" time="0.0789" asserts="0" description="help for Add-PsCommand.- Help for parameter 'CommandInfo'">
                 <results>
-                  <test-case description="has a description" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'.has a description" time="0.005" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'.has the correct [mandatory] value" time="0.0085" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'.has the correct parameter type" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'.has a description" time="0.0083" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'.has the correct [mandatory] value" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Add-PsCommand.- Help for parameter 'CommandInfo'.has the correct parameter type" time="0.0058" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'" executed="True" result="Success" success="True" time="0.0931" asserts="0" description="help for Add-PsCommand.- Help for parameter 'PowershellInterface'">
+              <test-suite type="TestFixture" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'" executed="True" result="Success" success="True" time="0.1021" asserts="0" description="help for Add-PsCommand.- Help for parameter 'PowershellInterface'">
                 <results>
-                  <test-case description="has a description" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'.has a description" time="0.0055" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'.has the correct [mandatory] value" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'.has the correct parameter type" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'.has a description" time="0.006" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'.has the correct [mandatory] value" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Add-PsCommand.- Help for parameter 'PowershellInterface'.has the correct parameter type" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Add-PsCommand.is not auto-generated" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Add-PsCommand.has a description" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example code" name="help for Add-PsCommand.has example code" time="0.0084" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example help" name="help for Add-PsCommand.has example help" time="0.0109" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="is not auto-generated" name="help for Add-PsCommand.is not auto-generated" time="0.0067" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Add-PsCommand.has a description" time="0.0055" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Add-PsCommand.has example code" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Add-PsCommand.has example help" time="0.0163" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:85
@@ -157,26 +157,26 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
               </test-case>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="help for Add-PsModule" executed="True" result="Failure" success="False" time="0.196" asserts="0" description="help for Add-PsModule">
+          <test-suite type="TestFixture" name="help for Add-PsModule" executed="True" result="Failure" success="False" time="0.2017" asserts="0" description="help for Add-PsModule">
             <results>
-              <test-suite type="TestFixture" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'" executed="True" result="Success" success="True" time="0.0398" asserts="0" description="help for Add-PsModule.- Help for parameter 'InitialSessionState'">
+              <test-suite type="TestFixture" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'" executed="True" result="Success" success="True" time="0.0533" asserts="0" description="help for Add-PsModule.- Help for parameter 'InitialSessionState'">
                 <results>
-                  <test-case description="has a description" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'.has a description" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'.has the correct [mandatory] value" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'.has the correct parameter type" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'.has a description" time="0.0065" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'.has the correct [mandatory] value" time="0.0063" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Add-PsModule.- Help for parameter 'InitialSessionState'.has the correct parameter type" time="0.0055" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Add-PsModule.- Help for parameter 'ModuleInfo'" executed="True" result="Success" success="True" time="0.0655" asserts="0" description="help for Add-PsModule.- Help for parameter 'ModuleInfo'">
+              <test-suite type="TestFixture" name="help for Add-PsModule.- Help for parameter 'ModuleInfo'" executed="True" result="Success" success="True" time="0.0754" asserts="0" description="help for Add-PsModule.- Help for parameter 'ModuleInfo'">
                 <results>
-                  <test-case description="has a description" name="help for Add-PsModule.- Help for parameter 'ModuleInfo'.has a description" time="0.005" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Add-PsModule.- Help for parameter 'ModuleInfo'.has the correct [mandatory] value" time="0.0105" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Add-PsModule.- Help for parameter 'ModuleInfo'.has a description" time="0.0059" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Add-PsModule.- Help for parameter 'ModuleInfo'.has the correct [mandatory] value" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="has the correct parameter type" name="help for Add-PsModule.- Help for parameter 'ModuleInfo'.has the correct parameter type" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Add-PsModule.is not auto-generated" time="0.0052" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Add-PsModule.has a description" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example code" name="help for Add-PsModule.has example code" time="0.003" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example help" name="help for Add-PsModule.has example help" time="0.0121" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="is not auto-generated" name="help for Add-PsModule.is not auto-generated" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Add-PsModule.has a description" time="0.005" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Add-PsModule.has example code" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Add-PsModule.has example help" time="0.0129" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:85
@@ -185,38 +185,38 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
               </test-case>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="help for Expand-PsCommandInfo" executed="True" result="Failure" success="False" time="0.2781" asserts="0" description="help for Expand-PsCommandInfo">
+          <test-suite type="TestFixture" name="help for Expand-PsCommandInfo" executed="True" result="Failure" success="False" time="0.3066" asserts="0" description="help for Expand-PsCommandInfo">
             <results>
-              <test-suite type="TestFixture" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'" executed="True" result="Success" success="True" time="0.0511" asserts="0" description="help for Expand-PsCommandInfo.- Help for parameter 'Cache'">
+              <test-suite type="TestFixture" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'" executed="True" result="Success" success="True" time="0.0677" asserts="0" description="help for Expand-PsCommandInfo.- Help for parameter 'Cache'">
                 <results>
-                  <test-case description="has a description" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'.has a description" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'.has the correct [mandatory] value" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'.has the correct parameter type" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'.has a description" time="0.0056" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'.has the correct [mandatory] value" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Expand-PsCommandInfo.- Help for parameter 'Cache'.has the correct parameter type" time="0.0061" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'" executed="True" result="Success" success="True" time="0.0653" asserts="0" description="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'">
+              <test-suite type="TestFixture" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'" executed="True" result="Success" success="True" time="0.0934" asserts="0" description="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'">
                 <results>
-                  <test-case description="has a description" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'.has a description" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'.has the correct [mandatory] value" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'.has the correct parameter type" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'.has a description" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'.has the correct [mandatory] value" time="0.0096" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Expand-PsCommandInfo.- Help for parameter 'PsCommandInfo'.has the correct parameter type" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Expand-PsCommandInfo.is not auto-generated" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Expand-PsCommandInfo.has a description" time="0.0097" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="is not auto-generated" name="help for Expand-PsCommandInfo.is not auto-generated" time="0.0111" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Expand-PsCommandInfo.has a description" time="0.0095" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at $commandHelp.Description | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:75
 at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:75</stack-trace>
                 </failure>
               </test-case>
-              <test-case description="has example code" name="help for Expand-PsCommandInfo.has example code" time="0.013" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="has example code" name="help for Expand-PsCommandInfo.has example code" time="0.0085" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example | Select-Object -First 1).Code | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:80
 at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:80</stack-trace>
                 </failure>
               </test-case>
-              <test-case description="has example help" name="help for Expand-PsCommandInfo.has example help" time="0.006" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="has example help" name="help for Expand-PsCommandInfo.has example help" time="0.0159" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:85
@@ -225,34 +225,34 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
               </test-case>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="help for Expand-PsToken" executed="True" result="Success" success="True" time="0.318" asserts="0" description="help for Expand-PsToken">
+          <test-suite type="TestFixture" name="help for Expand-PsToken" executed="True" result="Success" success="True" time="0.3634" asserts="0" description="help for Expand-PsToken">
             <results>
-              <test-suite type="TestFixture" name="help for Expand-PsToken.- Help for parameter 'InputObject'" executed="True" result="Success" success="True" time="0.0257" asserts="0" description="help for Expand-PsToken.- Help for parameter 'InputObject'">
+              <test-suite type="TestFixture" name="help for Expand-PsToken.- Help for parameter 'InputObject'" executed="True" result="Success" success="True" time="0.0404" asserts="0" description="help for Expand-PsToken.- Help for parameter 'InputObject'">
                 <results>
-                  <test-case description="has a description" name="help for Expand-PsToken.- Help for parameter 'InputObject'.has a description" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Expand-PsToken.- Help for parameter 'InputObject'.has the correct [mandatory] value" time="0.0029" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Expand-PsToken.- Help for parameter 'InputObject'.has the correct parameter type" time="0.0026" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Expand-PsToken.- Help for parameter 'InputObject'.has a description" time="0.0062" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Expand-PsToken.- Help for parameter 'InputObject'.has the correct [mandatory] value" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Expand-PsToken.- Help for parameter 'InputObject'.has the correct parameter type" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Expand-PsToken.is not auto-generated" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Expand-PsToken.has a description" time="0.0025" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example code" name="help for Expand-PsToken.has example code" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example help" name="help for Expand-PsToken.has example help" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="is not auto-generated" name="help for Expand-PsToken.is not auto-generated" time="0.005" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Expand-PsToken.has a description" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Expand-PsToken.has example code" time="0.0078" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Expand-PsToken.has example help" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="help for Get-PsCommandInfo" executed="True" result="Failure" success="False" time="0.3714" asserts="0" description="help for Get-PsCommandInfo">
+          <test-suite type="TestFixture" name="help for Get-PsCommandInfo" executed="True" result="Failure" success="False" time="0.4118" asserts="0" description="help for Get-PsCommandInfo">
             <results>
-              <test-suite type="TestFixture" name="help for Get-PsCommandInfo.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.039" asserts="0" description="help for Get-PsCommandInfo.- Help for parameter 'Command'">
+              <test-suite type="TestFixture" name="help for Get-PsCommandInfo.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.0342" asserts="0" description="help for Get-PsCommandInfo.- Help for parameter 'Command'">
                 <results>
-                  <test-case description="has a description" name="help for Get-PsCommandInfo.- Help for parameter 'Command'.has a description" time="0.004" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Get-PsCommandInfo.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Get-PsCommandInfo.- Help for parameter 'Command'.has the correct parameter type" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Get-PsCommandInfo.- Help for parameter 'Command'.has a description" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Get-PsCommandInfo.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0029" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Get-PsCommandInfo.- Help for parameter 'Command'.has the correct parameter type" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Get-PsCommandInfo.is not auto-generated" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Get-PsCommandInfo.has a description" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example code" name="help for Get-PsCommandInfo.has example code" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example help" name="help for Get-PsCommandInfo.has example help" time="0.0059" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="is not auto-generated" name="help for Get-PsCommandInfo.is not auto-generated" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Get-PsCommandInfo.has a description" time="0.0032" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Get-PsCommandInfo.has example code" time="0.003" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Get-PsCommandInfo.has example help" time="0.0096" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:85
@@ -261,80 +261,80 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
               </test-case>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="help for Open-Thread" executed="True" result="Failure" success="False" time="0.5602" asserts="0" description="help for Open-Thread">
+          <test-suite type="TestFixture" name="help for Open-Thread" executed="True" result="Failure" success="False" time="0.6725" asserts="0" description="help for Open-Thread">
             <results>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'AddParam'" executed="True" result="Success" success="True" time="0.0512" asserts="0" description="help for Open-Thread.- Help for parameter 'AddParam'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'AddParam'" executed="True" result="Success" success="True" time="0.0636" asserts="0" description="help for Open-Thread.- Help for parameter 'AddParam'">
                 <results>
-                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'AddParam'.has a description" time="0.0095" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'AddParam'.has the correct [mandatory] value" time="0.0038" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'AddParam'.has the correct parameter type" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'AddParam'.has a description" time="0.0063" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'AddParam'.has the correct [mandatory] value" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'AddParam'.has the correct parameter type" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'AddSwitch'" executed="True" result="Success" success="True" time="0.0696" asserts="0" description="help for Open-Thread.- Help for parameter 'AddSwitch'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'AddSwitch'" executed="True" result="Success" success="True" time="0.0821" asserts="0" description="help for Open-Thread.- Help for parameter 'AddSwitch'">
                 <results>
                   <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'AddSwitch'.has a description" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'AddSwitch'.has the correct [mandatory] value" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'AddSwitch'.has the correct [mandatory] value" time="0.0073" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'AddSwitch'.has the correct parameter type" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.0835" asserts="0" description="help for Open-Thread.- Help for parameter 'Command'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.0995" asserts="0" description="help for Open-Thread.- Help for parameter 'Command'">
                 <results>
-                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'Command'.has a description" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'Command'.has the correct parameter type" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'Command'.has a description" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'Command'.has the correct parameter type" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'CommandInfo'" executed="True" result="Success" success="True" time="0.1009" asserts="0" description="help for Open-Thread.- Help for parameter 'CommandInfo'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'CommandInfo'" executed="True" result="Success" success="True" time="0.1193" asserts="0" description="help for Open-Thread.- Help for parameter 'CommandInfo'">
                 <results>
-                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'CommandInfo'.has a description" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'CommandInfo'.has the correct [mandatory] value" time="0.0065" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'CommandInfo'.has the correct parameter type" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'CommandInfo'.has a description" time="0.0073" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'CommandInfo'.has the correct [mandatory] value" time="0.004" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'CommandInfo'.has the correct parameter type" time="0.004" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'InputObject'" executed="True" result="Success" success="True" time="0.1138" asserts="0" description="help for Open-Thread.- Help for parameter 'InputObject'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'InputObject'" executed="True" result="Success" success="True" time="0.1384" asserts="0" description="help for Open-Thread.- Help for parameter 'InputObject'">
                 <results>
-                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'InputObject'.has a description" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'InputObject'.has the correct [mandatory] value" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'InputObject'.has the correct parameter type" time="0.0027" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'InputObject'.has a description" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'InputObject'.has the correct [mandatory] value" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'InputObject'.has the correct parameter type" time="0.0081" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'InputParameter'" executed="True" result="Success" success="True" time="0.1297" asserts="0" description="help for Open-Thread.- Help for parameter 'InputParameter'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'InputParameter'" executed="True" result="Success" success="True" time="0.1551" asserts="0" description="help for Open-Thread.- Help for parameter 'InputParameter'">
                 <results>
-                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'InputParameter'.has a description" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'InputParameter'.has the correct [mandatory] value" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'InputParameter'.has the correct parameter type" time="0.0027" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'InputParameter'.has a description" time="0.005" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'InputParameter'.has the correct [mandatory] value" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'InputParameter'.has the correct parameter type" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'" executed="True" result="Success" success="True" time="0.148" asserts="0" description="help for Open-Thread.- Help for parameter 'ObjectStringProperty'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'" executed="True" result="Success" success="True" time="0.1746" asserts="0" description="help for Open-Thread.- Help for parameter 'ObjectStringProperty'">
                 <results>
-                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'.has a description" time="0.004" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'.has the correct [mandatory] value" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'.has the correct parameter type" time="0.0071" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'.has a description" time="0.0091" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'.has the correct [mandatory] value" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'ObjectStringProperty'.has the correct parameter type" time="0.003" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'RunspacePool'" executed="True" result="Failure" success="False" time="0.1736" asserts="0" description="help for Open-Thread.- Help for parameter 'RunspacePool'">
+              <test-suite type="TestFixture" name="help for Open-Thread.- Help for parameter 'RunspacePool'" executed="True" result="Failure" success="False" time="0.2019" asserts="0" description="help for Open-Thread.- Help for parameter 'RunspacePool'">
                 <results>
-                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'RunspacePool'.has a description" time="0.0098" asserts="0" success="False" result="Failure" executed="True">
+                  <test-case description="has a description" name="help for Open-Thread.- Help for parameter 'RunspacePool'.has a description" time="0.0094" asserts="0" success="False" result="Failure" executed="True">
                     <failure>
                       <message>Expected a value, but got $null or empty.</message>
                       <stack-trace>at $parameterHelp.Description.Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:103
 at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:103</stack-trace>
                     </failure>
                   </test-case>
-                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'RunspacePool'.has the correct [mandatory] value" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'RunspacePool'.has the correct parameter type" time="0.0038" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Open-Thread.- Help for parameter 'RunspacePool'.has the correct [mandatory] value" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Open-Thread.- Help for parameter 'RunspacePool'.has the correct parameter type" time="0.0084" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Open-Thread.is not auto-generated" time="0.0056" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Open-Thread.has a description" time="0.004" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example code" name="help for Open-Thread.has example code" time="0.0088" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="is not auto-generated" name="help for Open-Thread.is not auto-generated" time="0.0166" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Open-Thread.has a description" time="0.0038" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Open-Thread.has example code" time="0.007" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example | Select-Object -First 1).Code | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:80
 at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:80</stack-trace>
                 </failure>
               </test-case>
-              <test-case description="has example help" name="help for Open-Thread.has example help" time="0.0085" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="has example help" name="help for Open-Thread.has example help" time="0.017" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:85
@@ -343,82 +343,82 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
               </test-case>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="help for Split-Thread" executed="True" result="Failure" success="False" time="0.872" asserts="0" description="help for Split-Thread">
+          <test-suite type="TestFixture" name="help for Split-Thread" executed="True" result="Failure" success="False" time="0.9019" asserts="0" description="help for Split-Thread">
             <results>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'AddModule'" executed="True" result="Success" success="True" time="0.0487" asserts="0" description="help for Split-Thread.- Help for parameter 'AddModule'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'AddModule'" executed="True" result="Success" success="True" time="0.0557" asserts="0" description="help for Split-Thread.- Help for parameter 'AddModule'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'AddModule'.has a description" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'AddModule'.has the correct [mandatory] value" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'AddModule'.has the correct parameter type" time="0.005" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'AddModule'.has a description" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'AddModule'.has the correct [mandatory] value" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'AddModule'.has the correct parameter type" time="0.0118" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'AddParam'" executed="True" result="Success" success="True" time="0.0706" asserts="0" description="help for Split-Thread.- Help for parameter 'AddParam'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'AddParam'" executed="True" result="Success" success="True" time="0.0755" asserts="0" description="help for Split-Thread.- Help for parameter 'AddParam'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'AddParam'.has a description" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'AddParam'.has the correct [mandatory] value" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'AddParam'.has the correct parameter type" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'AddParam'.has a description" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'AddParam'.has the correct [mandatory] value" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'AddParam'.has the correct parameter type" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'AddSwitch'" executed="True" result="Success" success="True" time="0.1494" asserts="0" description="help for Split-Thread.- Help for parameter 'AddSwitch'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'AddSwitch'" executed="True" result="Success" success="True" time="0.0993" asserts="0" description="help for Split-Thread.- Help for parameter 'AddSwitch'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'AddSwitch'.has a description" time="0.0348" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'AddSwitch'.has the correct [mandatory] value" time="0.0087" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'AddSwitch'.has a description" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'AddSwitch'.has the correct [mandatory] value" time="0.0102" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'AddSwitch'.has the correct parameter type" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.1864" asserts="0" description="help for Split-Thread.- Help for parameter 'Command'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'Command'" executed="True" result="Success" success="True" time="0.1182" asserts="0" description="help for Split-Thread.- Help for parameter 'Command'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'Command'.has a description" time="0.0093" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0182" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'Command'.has the correct parameter type" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'Command'.has a description" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'Command'.has the correct [mandatory] value" time="0.0038" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'Command'.has the correct parameter type" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'InputObject'" executed="True" result="Success" success="True" time="0.2079" asserts="0" description="help for Split-Thread.- Help for parameter 'InputObject'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'InputObject'" executed="True" result="Success" success="True" time="0.133" asserts="0" description="help for Split-Thread.- Help for parameter 'InputObject'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'InputObject'.has a description" time="0.0084" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'InputObject'.has the correct [mandatory] value" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'InputObject'.has the correct parameter type" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'InputObject'.has a description" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'InputObject'.has the correct [mandatory] value" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'InputObject'.has the correct parameter type" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'InputParameter'" executed="True" result="Success" success="True" time="0.2298" asserts="0" description="help for Split-Thread.- Help for parameter 'InputParameter'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'InputParameter'" executed="True" result="Success" success="True" time="0.1502" asserts="0" description="help for Split-Thread.- Help for parameter 'InputParameter'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'InputParameter'.has a description" time="0.005" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'InputParameter'.has the correct [mandatory] value" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'InputParameter'.has the correct parameter type" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'InputParameter'.has a description" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'InputParameter'.has the correct [mandatory] value" time="0.0066" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'InputParameter'.has the correct parameter type" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'" executed="True" result="Success" success="True" time="0.2521" asserts="0" description="help for Split-Thread.- Help for parameter 'ObjectStringProperty'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'" executed="True" result="Success" success="True" time="0.1636" asserts="0" description="help for Split-Thread.- Help for parameter 'ObjectStringProperty'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'.has a description" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'.has the correct [mandatory] value" time="0.0038" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'.has the correct parameter type" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'.has a description" time="0.0032" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'.has the correct [mandatory] value" time="0.0026" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'ObjectStringProperty'.has the correct parameter type" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'SleepTimer'" executed="True" result="Success" success="True" time="0.265" asserts="0" description="help for Split-Thread.- Help for parameter 'SleepTimer'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'SleepTimer'" executed="True" result="Success" success="True" time="0.1822" asserts="0" description="help for Split-Thread.- Help for parameter 'SleepTimer'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'SleepTimer'.has a description" time="0.0032" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'SleepTimer'.has the correct [mandatory] value" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'SleepTimer'.has the correct parameter type" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'SleepTimer'.has a description" time="0.004" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'SleepTimer'.has the correct [mandatory] value" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'SleepTimer'.has the correct parameter type" time="0.004" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'Threads'" executed="True" result="Success" success="True" time="0.2814" asserts="0" description="help for Split-Thread.- Help for parameter 'Threads'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'Threads'" executed="True" result="Success" success="True" time="0.2004" asserts="0" description="help for Split-Thread.- Help for parameter 'Threads'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'Threads'.has a description" time="0.0062" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'Threads'.has a description" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
                   <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'Threads'.has the correct [mandatory] value" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'Threads'.has the correct parameter type" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'Threads'.has the correct parameter type" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'Timeout'" executed="True" result="Success" success="True" time="0.2992" asserts="0" description="help for Split-Thread.- Help for parameter 'Timeout'">
+              <test-suite type="TestFixture" name="help for Split-Thread.- Help for parameter 'Timeout'" executed="True" result="Success" success="True" time="0.2149" asserts="0" description="help for Split-Thread.- Help for parameter 'Timeout'">
                 <results>
-                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'Timeout'.has a description" time="0.004" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'Timeout'.has the correct [mandatory] value" time="0.003" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'Timeout'.has the correct parameter type" time="0.0059" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Split-Thread.- Help for parameter 'Timeout'.has a description" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Split-Thread.- Help for parameter 'Timeout'.has the correct [mandatory] value" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Split-Thread.- Help for parameter 'Timeout'.has the correct parameter type" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Split-Thread.is not auto-generated" time="0.0059" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Split-Thread.has a description" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example code" name="help for Split-Thread.has example code" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example help" name="help for Split-Thread.has example help" time="0.0108" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="is not auto-generated" name="help for Split-Thread.is not auto-generated" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Split-Thread.has a description" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Split-Thread.has example code" time="0.0061" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Split-Thread.has example help" time="0.0103" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:85
@@ -427,53 +427,53 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
               </test-case>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="help for Wait-Thread" executed="True" result="Failure" success="False" time="0.9956" asserts="0" description="help for Wait-Thread">
+          <test-suite type="TestFixture" name="help for Wait-Thread" executed="True" result="Failure" success="False" time="1.037" asserts="0" description="help for Wait-Thread">
             <results>
-              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Dispose'" executed="True" result="Success" success="True" time="0.0416" asserts="0" description="help for Wait-Thread.- Help for parameter 'Dispose'">
+              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Dispose'" executed="True" result="Success" success="True" time="0.0424" asserts="0" description="help for Wait-Thread.- Help for parameter 'Dispose'">
                 <results>
-                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Dispose'.has a description" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Dispose'.has the correct [mandatory] value" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Dispose'.has the correct parameter type" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Dispose'.has a description" time="0.0058" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Dispose'.has the correct [mandatory] value" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Dispose'.has the correct parameter type" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'SleepTimer'" executed="True" result="Success" success="True" time="0.0589" asserts="0" description="help for Wait-Thread.- Help for parameter 'SleepTimer'">
+              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'SleepTimer'" executed="True" result="Success" success="True" time="0.0621" asserts="0" description="help for Wait-Thread.- Help for parameter 'SleepTimer'">
                 <results>
-                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'SleepTimer'.has a description" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'SleepTimer'.has the correct [mandatory] value" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'SleepTimer'.has the correct parameter type" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'SleepTimer'.has a description" time="0.0085" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'SleepTimer'.has the correct [mandatory] value" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'SleepTimer'.has the correct parameter type" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Thread'" executed="True" result="Success" success="True" time="0.0767" asserts="0" description="help for Wait-Thread.- Help for parameter 'Thread'">
+              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Thread'" executed="True" result="Success" success="True" time="0.0804" asserts="0" description="help for Wait-Thread.- Help for parameter 'Thread'">
                 <results>
-                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Thread'.has a description" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Thread'.has the correct [mandatory] value" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Thread'.has the correct parameter type" time="0.0071" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Thread'.has a description" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Thread'.has the correct [mandatory] value" time="0.0032" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Thread'.has the correct parameter type" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Threads'" executed="True" result="Success" success="True" time="0.0913" asserts="0" description="help for Wait-Thread.- Help for parameter 'Threads'">
+              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Threads'" executed="True" result="Success" success="True" time="0.0955" asserts="0" description="help for Wait-Thread.- Help for parameter 'Threads'">
                 <results>
-                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Threads'.has a description" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Threads'.has the correct [mandatory] value" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Threads'.has the correct parameter type" time="0.0041" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Threads'.has a description" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Threads'.has the correct [mandatory] value" time="0.0029" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Threads'.has the correct parameter type" time="0.0029" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Timeout'" executed="True" result="Success" success="True" time="0.1118" asserts="0" description="help for Wait-Thread.- Help for parameter 'Timeout'">
+              <test-suite type="TestFixture" name="help for Wait-Thread.- Help for parameter 'Timeout'" executed="True" result="Success" success="True" time="0.1186" asserts="0" description="help for Wait-Thread.- Help for parameter 'Timeout'">
                 <results>
-                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Timeout'.has a description" time="0.007" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Timeout'.has the correct [mandatory] value" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Timeout'.has the correct parameter type" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Wait-Thread.- Help for parameter 'Timeout'.has a description" time="0.0051" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Wait-Thread.- Help for parameter 'Timeout'.has the correct [mandatory] value" time="0.008" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Wait-Thread.- Help for parameter 'Timeout'.has the correct parameter type" time="0.0057" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-case description="is not auto-generated" name="help for Wait-Thread.is not auto-generated" time="0.005" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has a description" name="help for Wait-Thread.has a description" time="0.0032" asserts="0" success="True" result="Success" executed="True" />
-              <test-case description="has example code" name="help for Wait-Thread.has example code" time="0.0099" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="is not auto-generated" name="help for Wait-Thread.is not auto-generated" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Wait-Thread.has a description" time="0.0027" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Wait-Thread.has example code" time="0.0069" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example | Select-Object -First 1).Code | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:80
 at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:80</stack-trace>
                 </failure>
               </test-case>
-              <test-case description="has example help" name="help for Wait-Thread.has example help" time="0.0069" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="has example help" name="help for Wait-Thread.has example help" time="0.0105" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
                   <message>Expected a value, but got $null or empty.</message>
                   <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Help.tests.ps1:85
@@ -484,48 +484,48 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Manifest.tests.ps1" executed="True" result="Ignored" success="True" time="0.2001" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Manifest.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Manifest.tests.ps1" executed="True" result="Ignored" success="True" time="0.2025" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Manifest.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="module manifest 'PsRunspace.psd1'" executed="True" result="Success" success="True" time="0.0489" asserts="0" description="module manifest 'PsRunspace.psd1'">
+          <test-suite type="TestFixture" name="module manifest 'PsRunspace.psd1'" executed="True" result="Success" success="True" time="0.0488" asserts="0" description="module manifest 'PsRunspace.psd1'">
             <results>
-              <test-suite type="TestFixture" name="module manifest 'PsRunspace.psd1'.- Validation" executed="True" result="Success" success="True" time="0.0465" asserts="0" description="module manifest 'PsRunspace.psd1'.- Validation">
+              <test-suite type="TestFixture" name="module manifest 'PsRunspace.psd1'.- Validation" executed="True" result="Success" success="True" time="0.0463" asserts="0" description="module manifest 'PsRunspace.psd1'.- Validation">
                 <results>
-                  <test-case description="is a valid manifest" name="module manifest 'PsRunspace.psd1'.- Validation.is a valid manifest" time="0.0055" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has a valid name in the manifest" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid name in the manifest" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has a valid root module" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid root module" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has a valid version" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid version" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has a valid description" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid description" time="0.0057" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has a valid author" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid author" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has a valid guid" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid guid" time="0.0096" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has a valid copyright" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid copyright" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="is a valid manifest" name="module manifest 'PsRunspace.psd1'.- Validation.is a valid manifest" time="0.0096" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid name in the manifest" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid name in the manifest" time="0.004" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid root module" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid root module" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid version" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid version" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid description" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid description" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid author" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid author" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid guid" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid guid" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid copyright" name="module manifest 'PsRunspace.psd1'.- Validation.has a valid copyright" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="Git tagging" executed="True" result="Ignored" success="True" time="0.066" asserts="0" description="Git tagging">
+          <test-suite type="TestFixture" name="Git tagging" executed="True" result="Ignored" success="True" time="0.0618" asserts="0" description="Git tagging">
             <results>
-              <test-suite type="TestFixture" name="Git tagging.- Git tag version ''" executed="True" result="Ignored" success="True" time="0.0145" asserts="0" description="Git tagging.- Git tag version ''">
+              <test-suite type="TestFixture" name="Git tagging.- Git tag version ''" executed="True" result="Ignored" success="True" time="0.01" asserts="0" description="Git tagging.- Git tag version ''">
                 <results>
-                  <test-case description="is a valid version" name="Git tagging.- Git tag version ''.is a valid version" time="0.0069" asserts="0" success="False" result="Ignored" executed="False" />
-                  <test-case description="matches the module manifest version" name="Git tagging.- Git tag version ''.matches the module manifest version" time="0.0042" asserts="0" success="False" result="Ignored" executed="False" />
+                  <test-case description="is a valid version" name="Git tagging.- Git tag version ''.is a valid version" time="0.0048" asserts="0" success="False" result="Ignored" executed="False" />
+                  <test-case description="matches the module manifest version" name="Git tagging.- Git tag version ''.matches the module manifest version" time="0.002" asserts="0" success="False" result="Ignored" executed="False" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Metadata.tests.ps1" executed="True" result="Failure" success="False" time="0.156" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Metadata.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Metadata.tests.ps1" executed="True" result="Failure" success="False" time="0.1549" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Metadata.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="text files" executed="True" result="Failure" success="False" time="0.0267" asserts="0" description="text files">
+          <test-suite type="TestFixture" name="text files" executed="True" result="Failure" success="False" time="0.0244" asserts="0" description="text files">
             <results>
-              <test-suite type="TestFixture" name="text files.- File Encoding" executed="True" result="Success" success="True" time="0.008" asserts="0" description="text files.- File Encoding">
+              <test-suite type="TestFixture" name="text files.- File Encoding" executed="True" result="Success" success="True" time="0.0083" asserts="0" description="text files.- File Encoding">
                 <results>
-                  <test-case description="do not use Unicode/UTF-16 encoding" name="text files.- File Encoding.do not use Unicode/UTF-16 encoding" time="0.0052" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="do not use Unicode/UTF-16 encoding" name="text files.- File Encoding.do not use Unicode/UTF-16 encoding" time="0.0051" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="text files.- Indentations" executed="True" result="Failure" success="False" time="0.0237" asserts="0" description="text files.- Indentations">
+              <test-suite type="TestFixture" name="text files.- Indentations" executed="True" result="Failure" success="False" time="0.0189" asserts="0" description="text files.- Indentations">
                 <results>
-                  <test-case description="do not use tabs for indentations" name="text files.- Indentations.do not use tabs for indentations" time="0.0124" asserts="0" success="False" result="Failure" executed="True">
+                  <test-case description="do not use tabs for indentations" name="text files.- Indentations.do not use tabs for indentations" time="0.0075" asserts="0" success="False" result="Failure" executed="True">
                     <failure>
                       <message>Expected 0, but got 2.</message>
                       <stack-trace>at $totalTabsCount | Should -Be 0, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Metadata.tests.ps1:47
@@ -538,40 +538,40 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Module.tests.ps1" executed="True" result="Success" success="True" time="0.1073" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Module.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Module.tests.ps1" executed="True" result="Success" success="True" time="0.1171" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Module.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="PowerShell files in module 'PsRunspace'" executed="True" result="Success" success="True" time="0.0453" asserts="0" description="PowerShell files in module 'PsRunspace'">
+          <test-suite type="TestFixture" name="PowerShell files in module 'PsRunspace'" executed="True" result="Success" success="True" time="0.0588" asserts="0" description="PowerShell files in module 'PsRunspace'">
             <results>
-              <test-suite type="ParameterizedTest" name="PowerShell files in module 'PsRunspace'.'&lt;Script&gt;' can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0396" asserts="0" description="'&lt;Script&gt;' can be tokenized by the PowerShell parser without any errors">
+              <test-suite type="ParameterizedTest" name="PowerShell files in module 'PsRunspace'.'&lt;Script&gt;' can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0552" asserts="0" description="'&lt;Script&gt;' can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\bin\TestCode\TestModule\TestModule.psm1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\bin\TestCode\TestModule\TestModule.psm1' can be tokenized by the PowerShell parser without any errors" time="0.0069" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\bin\TestCode\Test-Command.ps1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\bin\TestCode\Test-Command.ps1' can be tokenized by the PowerShell parser without any errors" time="0.0051" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\bin\TestCode\Test-MultiThreading.ps1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\bin\TestCode\Test-MultiThreading.ps1' can be tokenized by the PowerShell parser without any errors" time="0.0051" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\PsRunspace.psd1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\PsRunspace.psd1' can be tokenized by the PowerShell parser without any errors" time="0.0123" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\PsRunspace.psm1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\PsRunspace.psm1' can be tokenized by the PowerShell parser without any errors" time="0.0102" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\bin\TestCode\TestModule\TestModule.psm1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\bin\TestCode\TestModule\TestModule.psm1' can be tokenized by the PowerShell parser without any errors" time="0.011" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\bin\TestCode\Test-Command.ps1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\bin\TestCode\Test-Command.ps1' can be tokenized by the PowerShell parser without any errors" time="0.0057" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\bin\TestCode\Test-MultiThreading.ps1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\bin\TestCode\Test-MultiThreading.ps1' can be tokenized by the PowerShell parser without any errors" time="0.0073" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\PsRunspace.psd1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\PsRunspace.psd1' can be tokenized by the PowerShell parser without any errors" time="0.0125" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\PsRunspace.psm1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsRunspace'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\PsRunspace.psm1' can be tokenized by the PowerShell parser without any errors" time="0.0186" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="module 'PsRunspace'" executed="True" result="Success" success="True" time="0.0633" asserts="0" description="module 'PsRunspace'">
+          <test-suite type="TestFixture" name="module 'PsRunspace'" executed="True" result="Success" success="True" time="0.0738" asserts="0" description="module 'PsRunspace'">
             <results>
-              <test-suite type="ParameterizedTest" name="module 'PsRunspace'.can be imported without any errors" executed="True" result="Success" success="True" time="0.0144" asserts="0" description="can be imported without any errors">
+              <test-suite type="ParameterizedTest" name="module 'PsRunspace'.can be imported without any errors" executed="True" result="Success" success="True" time="0.0121" asserts="0" description="can be imported without any errors">
                 <results>
-                  <test-case description="can be imported without any errors" name="module 'PsRunspace'.can be imported without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.34\PsRunspace\bin\TestCode\TestModule\TestModule.psm1&quot;)" time="0.0144" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="can be imported without any errors" name="module 'PsRunspace'.can be imported without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\dist\1.0.35\PsRunspace\bin\TestCode\TestModule\TestModule.psm1&quot;)" time="0.0121" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Project.tests.ps1" executed="True" result="Success" success="True" time="0.1464" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Project.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Project.tests.ps1" executed="True" result="Success" success="True" time="0.1473" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsRunspace\tests\Project.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="change log" executed="True" result="Success" success="True" time="0.0182" asserts="0" description="change log">
+          <test-suite type="TestFixture" name="change log" executed="True" result="Success" success="True" time="0.023" asserts="0" description="change log">
             <results>
-              <test-suite type="TestFixture" name="change log.- Version" executed="True" result="Success" success="True" time="0.0155" asserts="0" description="change log.- Version">
+              <test-suite type="TestFixture" name="change log.- Version" executed="True" result="Success" success="True" time="0.0203" asserts="0" description="change log.- Version">
                 <results>
-                  <test-case description="has a valid version" name="change log.- Version.has a valid version" time="0.007" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="has the same version as the manifest" name="change log.- Version.has the same version as the manifest" time="0.0053" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid version" name="change log.- Version.has a valid version" time="0.0067" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the same version as the manifest" name="change log.- Version.has the same version as the manifest" time="0.0101" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>

@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.35] - 2022-07-29 - No really this time all the debug output is gone
+
 ## [1.0.34] - 2022-07-29 - I swear now I must have commented all the debug output
 
 ## [1.0.33] - 2022-07-29 - Commented more debug output

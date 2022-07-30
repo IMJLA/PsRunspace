@@ -759,17 +759,12 @@ function Wait-Thread {
 
                 if ($Dispose -eq $true) {
                     $ThreadOutput = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
-                    #NormallyCommentThisForPerformanceOptimization#>if (($ThreadOutput | Measure-Object).Count -gt 0) {
-                    #NormallyCommentThisForPerformanceOptimization#>Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tOutput (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
-                    #NormallyCommentThisForPerformanceOptimization#>}
-                    #NormallyCommentThisForPerformanceOptimization#>else {
-                    #NormallyCommentThisForPerformanceOptimization#>Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tNull result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
-                    #NormallyCommentThisForPerformanceOptimization#>}
-                    if (($ThreadOutput | Measure-Object).Count -gt 0) {
-                        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tOutput (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
-                    } else {
-                        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tNull result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
-                    }
+                    <#NormallyCommentThisForPerformanceOptimization#>#if (($ThreadOutput | Measure-Object).Count -gt 0) {
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tOutput (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#}
+                    <#NormallyCommentThisForPerformanceOptimization#>#else {
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tNull result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
+                    <#NormallyCommentThisForPerformanceOptimization#>#}
                     $ThreadOutput
                     $null = $CompletedThread.PowerShellInterface.Dispose()
                     $CompletedThread.PowerShellInterface = $null
@@ -827,6 +822,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

@@ -2,7 +2,7 @@
 Module Name: PsRunspace
 Module Guid: 00000000-0000-0000-0000-000000000000 bd092585-90cf-4df3-8d14-ee2b5bb548a6
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.34
+Help Version: 1.0.35
 Locale: en-US
 ---
 
