@@ -387,11 +387,29 @@ function Open-Thread {
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.RunspacePool = `$RunspacePool # for '$ObjectString'"
             $PowershellInterface.RunspacePool = $RunspacePool
 
+            # Do I need this one?  What commands would be in there?
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfo in $CommandInfo) {
                 $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
+            }
+            if ($CommandInfo) {
+                #TODO: This inefficiently waits for each to finish before beginning the next.
+                #      Rework to break out of this function after only BeginInboke for each thread, and use Wait-Thread with Dispose set to false
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # to preload command definitions for '$ObjectString'"
+                $Handle = $PowershellInterface.BeginInvoke()
+                while ($Handle.IsCompleted -eq $false) {
+                    Start-Sleep -Milliseconds 200
+                }
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowerShellInterface.Streams.ClearStreams() # after preloading command definitions for '$($ObjectString)'"
+                $null = $PowerShellInterface.Streams.ClearStreams()
+
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowerShellInterface.EndInvoke(`$Handle) # after preloading command definitions for '$($ObjectString)'"
+                $null = $PowerShellInterface.EndInvoke($Handle)
+
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # after preloading command definitions for '$ObjectString'"
+                $null = $PowershellInterface.Commands.Clear()
             }
 
             $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
@@ -838,6 +856,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
