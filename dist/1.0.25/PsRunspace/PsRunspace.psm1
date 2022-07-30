@@ -541,7 +541,8 @@ function Split-Thread {
 
         $CommandInfo = $CommandInfo |
         Where-Object -FilterScript {
-            $ModulesToAdd.Name -notcontains $ComamndInfo.ModuleInfo.Name
+            $ModulesToAdd.Name -notcontains $CommandInfo.ModuleInfo.Name -and
+            -not [string]::IsNullOrEmpty($CommandInfo.ModuleInfo.Name)
         }
 
         $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
@@ -820,6 +821,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

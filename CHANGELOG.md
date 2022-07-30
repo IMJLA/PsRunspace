@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.25] - 2022-07-29 - Bug fix in split-thread when filtering commandinfo
+
 ## [1.0.24] - 2022-07-29 - Troubleshooting Add-PsCommand
 
 ## [1.0.23] - 2022-07-29 - bug fix incorrect param name for add-psmodule in split-thread

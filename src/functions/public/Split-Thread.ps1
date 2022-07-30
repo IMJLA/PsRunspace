@@ -106,7 +106,8 @@ function Split-Thread {
 
         $CommandInfo = $CommandInfo |
         Where-Object -FilterScript {
-            $ModulesToAdd.Name -notcontains $ComamndInfo.ModuleInfo.Name
+            $ModulesToAdd.Name -notcontains $CommandInfo.ModuleInfo.Name -and
+            -not [string]::IsNullOrEmpty($CommandInfo.ModuleInfo.Name)
         }
 
         $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
