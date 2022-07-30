@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.61] - 2022-07-30 - Enforced use of AddStatement() to see if it makes any difference
+
 ## [1.0.60] - 2022-07-30 - minor debug output adjustments
 
 ## [1.0.59] - 2022-07-30 - Added more debug verbosity

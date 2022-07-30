@@ -75,12 +75,12 @@ function Add-PsCommand {
                 'ExternalScript' {
                     <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
-                    $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
+                    $null = $ThisPowershell.AddStatement().AddScript($CommandInfo.ScriptBlock)
                 }
                 'ScriptBlock' {
                     <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddScript('$Command')"
-                    $null = $ThisPowershell.AddScript($Command)
+                    $null = $ThisPowershell.AddStatement().AddScript($Command)
                 }
                 default {
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t# Adding command '$Command' of type '$($CommandInfo.CommandType)'"
