@@ -2,7 +2,7 @@
 Module Name: PsRunspace
 Module Guid: 00000000-0000-0000-0000-000000000000 bd092585-90cf-4df3-8d14-ee2b5bb548a6
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.22
+Help Version: 1.0.23
 Locale: en-US
 ---
 
@@ -22,9 +22,6 @@ Return the original PsCommandInfo object as well as CommandInfo objects for any 
 
 ### [Expand-PsToken](Expand-PsToken.md)
 Recursively get nested tokens
-
-### [Get-NestedCommandInfo](Get-NestedCommandInfo.md)
-{{ Fill in the Description }}
 
 ### [Get-PsCommandInfo](Get-PsCommandInfo.md)
 Get info about a PowerShell command

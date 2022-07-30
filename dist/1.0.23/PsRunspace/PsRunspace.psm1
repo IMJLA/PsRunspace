@@ -544,7 +544,7 @@ function Split-Thread {
             $ModulesToAdd.Name -notcontains $ComamndInfo.ModuleInfo.Name
         }
 
-        $null = Add-PsModule -InitialSessionState $InitialSessionState -PsCommandInfo $ModulesToAdd
+        $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences
         $OutputStream = @('Debug', 'Verbose', 'Information', 'Warning', 'Error')
@@ -820,6 +820,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
