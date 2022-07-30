@@ -126,8 +126,10 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
+        Write-Debug "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
-        $VerbosePreference = 'SilentlyContinue'
+        #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
+        Write-Debug '$RunspacePool.Open()'
         $RunspacePool.Open()
 
         $Global:TimedOut = $false

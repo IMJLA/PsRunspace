@@ -58,19 +58,25 @@ function Add-PsCommand {
                 [System.Management.Automation.CommandTypes]::Function {
                     # Add the definitions of the function
                     # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
-                    Write-Debug "Add-PsCommand adding definition of function $($CommandInfo.CommandInfo.Name)"
                     [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
+                    Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
+                    Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
                     $null = $ThisPowershell.AddScript($ThisFunction)
                 }
                 'ScriptBlock' {
+                    Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
+                    Write-Debug "`$PowershellInterface.AddScript('$Command')"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 [System.Management.Automation.CommandTypes]::ExternalScript {
+                    Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
+                    Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 default {
                     Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
+                    Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
 
@@ -363,8 +369,13 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
+            Write-Debug '$PowershellInterface = [powershell]::Create()'
             $PowershellInterface = [powershell]::Create()
+
+            Write-Debug '$PowershellInterface.RunspacePool = $RunspacePool'
             $PowershellInterface.RunspacePool = $RunspacePool
+
+            Write-Debug '$PowershellInterface.Commands.Clear()'
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfoObj in $CommandInfo) {
@@ -552,8 +563,10 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
+        Write-Debug "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
-        $VerbosePreference = 'SilentlyContinue'
+        #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
+        Write-Debug '$RunspacePool.Open()'
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -813,6 +826,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

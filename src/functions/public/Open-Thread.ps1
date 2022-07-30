@@ -74,8 +74,13 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
+            Write-Debug '$PowershellInterface = [powershell]::Create()'
             $PowershellInterface = [powershell]::Create()
+
+            Write-Debug '$PowershellInterface.RunspacePool = $RunspacePool'
             $PowershellInterface.RunspacePool = $RunspacePool
+
+            Write-Debug '$PowershellInterface.Commands.Clear()'
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfoObj in $CommandInfo) {
