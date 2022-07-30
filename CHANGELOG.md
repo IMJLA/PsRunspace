@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.53] - 2022-07-30 - Added metadata to remaining debug output
+
 ## [1.0.52] - 2022-07-30 - Added metadata to remaining debug output
 
 ## [1.0.51] - 2022-07-30 - Minor bugfix in debug output for Open-Thread

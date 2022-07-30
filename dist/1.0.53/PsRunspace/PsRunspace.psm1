@@ -84,7 +84,7 @@ function Add-PsCommand {
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
-                    Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t# Adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddStatement().AddCommand('$Command')"
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
@@ -838,6 +838,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
