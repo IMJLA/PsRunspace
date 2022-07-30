@@ -61,15 +61,15 @@ function Add-PsCommand {
                     Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
                     $null = $ThisPowershell.AddScript($ThisFunction)
                 }
-                'ScriptBlock' {
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
-                    Write-Debug "`$PowershellInterface.AddScript('$Command')"
-                    $null = $ThisPowershell.AddScript($Command)
-                }
                 [System.Management.Automation.CommandTypes]::ExternalScript {
                     <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
                     Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
+                }
+                'ScriptBlock' {
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
+                    Write-Debug "`$PowershellInterface.AddScript('$Command')"
+                    $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
                     Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"

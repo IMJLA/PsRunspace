@@ -29,10 +29,10 @@ function Get-PsCommandInfo {
     )
 
     if ($Command.GetType().FullName -eq 'System.Management.Automation.ScriptBlock') {
-        $CommandType = 'ScriptBlock'
+        [string]$CommandType = 'ScriptBlock'
     } else {
         $CommandInfo = Get-Command $Command -ErrorAction SilentlyContinue
-        $CommandType = $CommandInfo.CommandType
+        [System.Management.Automation.CommandTypes]$CommandType = $CommandInfo.CommandType
         if ($CommandInfo.Source) {
             $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
         }

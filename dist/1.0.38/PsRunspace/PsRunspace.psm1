@@ -62,15 +62,15 @@ function Add-PsCommand {
                     Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
                     $null = $ThisPowershell.AddScript($ThisFunction)
                 }
-                'ScriptBlock' {
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
-                    Write-Debug "`$PowershellInterface.AddScript('$Command')"
-                    $null = $ThisPowershell.AddScript($Command)
-                }
                 [System.Management.Automation.CommandTypes]::ExternalScript {
                     <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
                     Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
+                }
+                'ScriptBlock' {
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
+                    Write-Debug "`$PowershellInterface.AddScript('$Command')"
+                    $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
                     Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
@@ -273,10 +273,10 @@ function Get-PsCommandInfo {
     )
 
     if ($Command.GetType().FullName -eq 'System.Management.Automation.ScriptBlock') {
-        $CommandType = 'ScriptBlock'
+        [string]$CommandType = 'ScriptBlock'
     } else {
         $CommandInfo = Get-Command $Command -ErrorAction SilentlyContinue
-        $CommandType = $CommandInfo.CommandType
+        [System.Management.Automation.CommandTypes]$CommandType = $CommandInfo.CommandType
         if ($CommandInfo.Source) {
             $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
         }
@@ -822,6 +822,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
