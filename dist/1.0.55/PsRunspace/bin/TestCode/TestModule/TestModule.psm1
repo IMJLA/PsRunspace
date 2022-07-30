@@ -1,5 +1,5 @@
 ﻿Function Test-Function {
-    Write-Host "Host: Parent Function - $($args[0])"
+    Write-Host "Host:    Parent Function - $($args[0])"
     Write-Debug "  Parent Function - $($args[0])"
     Write-Information "Info: Parent Function - $($args[0])"
     Write-Output "Output: Parent Function - $($args[0])"
@@ -10,7 +10,7 @@
 }
 
 Function Test-Subfunction {
-    Write-Host "Host: Child Function - $($args[0])"
+    Write-Host "Host:    Child Function - $($args[0])"
     Write-Debug "  Child Function - $($args[0])"
     Write-Information "Info: Child Function - $($args[0])"
     Write-Output "Output: Child Function - $($args[0])"

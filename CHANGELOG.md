@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.55] - 2022-07-30 - Added detail to debug output
+
 ## [1.0.54] - 2022-07-30 - Commented non-powershell code in debug output
 
 ## [1.0.53] - 2022-07-30 - Added metadata to remaining debug output
