@@ -33,17 +33,17 @@ function Add-PsModule {
 
             switch ($ThisModule.ModuleType) {
                 'Binary' {
-                    Write-Debug "`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
                     $InitialSessionState.ImportPSModule($ThisModule.Name)
                 }
                 'Script' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 'Manifest' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 default {

@@ -83,17 +83,17 @@ function Split-Thread {
     )
 
     begin {
-        Write-Debug "Split-Thread entered begin block for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread entered begin block for $Command"
 
-        Write-Debug '$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()'
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()'
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
 
         $OriginalCommandInfo = Get-PsCommandInfo -Command $Command
-        Write-Debug "Split-Thread found 1 original PsCommandInfo"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread found 1 original PsCommandInfo"
         $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo
-        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos"
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
@@ -112,7 +112,7 @@ function Split-Thread {
             $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name ###-and
             ###-not [string]::IsNullOrEmpty($_.CommandInfo.Name)
         }
-        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos"
 
         if (($CommandInfo | Measure-Object).Count -eq 0) {
             $CommandInfo = $OriginalCommandInfo
@@ -133,10 +133,10 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
-        Write-Debug "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
         #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
-        Write-Debug '$RunspacePool.Open()'
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$RunspacePool.Open()'
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -146,7 +146,7 @@ function Split-Thread {
     }
 
     process {
-        Write-Debug "Split-Thread entered process block for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread entered process block for $Command"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -155,8 +155,8 @@ function Split-Thread {
 
     }
     end {
-        Write-Debug "Split-Thread entered end block for $Command"
-        Write-Debug "Split-Thread sending $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos to Open-Thread"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread entered end block for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread sending $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos to Open-Thread"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -168,7 +168,7 @@ function Split-Thread {
             RunspacePool         = $RunspacePool
         }
         $AllThreads = Open-Thread @ThreadParameters
-        Write-Debug "Split-Thread received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
         Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose
         $VerbosePreference = 'Continue'
 

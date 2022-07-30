@@ -128,11 +128,11 @@ function Wait-Thread {
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages"
 
                 # Because $Host was used to create the RunspacePool, any output to $Host (which includes Write-Host and Write-Information and Write-Progress) has already been displayed
-                #$CompletedThread.PowerShellInterface.Streams.Progress | ForEach-Object {Write-Progress $_}
-                #$CompletedThread.PowerShellInterface.Streams.Information | ForEach-Object { Write-Information $_ }
-                #$CompletedThread.PowerShellInterface.Streams.Verbose | ForEach-Object { Write-Verbose $_ }
-                #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug $_ }
-                #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning $_ }
+                #$CompletedThread.PowerShellInterface.Streams.Progress | ForEach-Object {Write-Progress "$_"}
+                #$CompletedThread.PowerShellInterface.Streams.Information | ForEach-Object { Write-Information "$_" }
+                #$CompletedThread.PowerShellInterface.Streams.Verbose | ForEach-Object { Write-Verbose "$_" }
+                #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug "$_" }
+                #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning "$_" }
 
                 $null = $CompletedThread.PowerShellInterface.Streams.ClearStreams()
 

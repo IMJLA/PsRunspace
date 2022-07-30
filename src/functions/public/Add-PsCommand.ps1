@@ -58,24 +58,24 @@ function Add-PsCommand {
                     # Add the definitions of the function
                     # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
                     [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
-                    Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
-                    Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
                     $null = $ThisPowershell.AddScript($ThisFunction)
                 }
                 'ScriptBlock' {
-                    Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
-                    Write-Debug "`$PowershellInterface.AddScript('$Command')"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddScript('$Command')"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 [System.Management.Automation.CommandTypes]::ExternalScript {
-                    Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
-                    Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 default {
-                    Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                    Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
 

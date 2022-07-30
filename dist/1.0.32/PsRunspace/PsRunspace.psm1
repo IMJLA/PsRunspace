@@ -59,24 +59,24 @@ function Add-PsCommand {
                     # Add the definitions of the function
                     # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
                     [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
-                    Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
-                    Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
                     $null = $ThisPowershell.AddScript($ThisFunction)
                 }
                 'ScriptBlock' {
-                    Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
-                    Write-Debug "`$PowershellInterface.AddScript('$Command')"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddScript('$Command')"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 [System.Management.Automation.CommandTypes]::ExternalScript {
-                    Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
-                    Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 default {
-                    Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                    Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
 
@@ -119,17 +119,17 @@ function Add-PsModule {
 
             switch ($ThisModule.ModuleType) {
                 'Binary' {
-                    Write-Debug "`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
                     $InitialSessionState.ImportPSModule($ThisModule.Name)
                 }
                 'Script' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 'Manifest' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 default {
@@ -356,7 +356,7 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        Write-Debug "Open-Thread received $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos from Split-Thread"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Open-Thread received $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos from Split-Thread"
 
     }
     process {
@@ -371,17 +371,16 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
-            Write-Debug '$PowershellInterface = [powershell]::Create()'
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$PowershellInterface = [powershell]::Create()'
             $PowershellInterface = [powershell]::Create()
 
-            Write-Debug '$PowershellInterface.RunspacePool = $RunspacePool'
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$PowershellInterface.RunspacePool = $RunspacePool'
             $PowershellInterface.RunspacePool = $RunspacePool
 
-            Write-Debug '$PowershellInterface.Commands.Clear()'
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$PowershellInterface.Commands.Clear()'
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfo in $CommandInfo) {
-                Write-Debug "Add-PsCommand -Command $($ThisCommandInfo.CommandInfo.Name) -CommandInfo `$ThisCommandInfo -PowershellInterface `$PowershellInterface"
                 $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
             }
 
@@ -409,7 +408,7 @@ function Open-Thread {
 
             $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterString $AdditionalParametersString $SwitchParameterString"
             <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
             $Progress = @{
                 Activity        = $StatusString
                 PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
@@ -523,17 +522,17 @@ function Split-Thread {
     )
 
     begin {
-        Write-Debug "Split-Thread entered begin block for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread entered begin block for $Command"
 
-        Write-Debug '$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()'
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()'
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
 
         $OriginalCommandInfo = Get-PsCommandInfo -Command $Command
-        Write-Debug "Split-Thread found 1 original PsCommandInfo"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread found 1 original PsCommandInfo"
         $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo
-        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos"
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
@@ -552,7 +551,7 @@ function Split-Thread {
             $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name ###-and
             ###-not [string]::IsNullOrEmpty($_.CommandInfo.Name)
         }
-        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos"
 
         if (($CommandInfo | Measure-Object).Count -eq 0) {
             $CommandInfo = $OriginalCommandInfo
@@ -573,10 +572,10 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
-        Write-Debug "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
         #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
-        Write-Debug '$RunspacePool.Open()'
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug '$RunspacePool.Open()'
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -586,7 +585,7 @@ function Split-Thread {
     }
 
     process {
-        Write-Debug "Split-Thread entered process block for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread entered process block for $Command"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -595,8 +594,8 @@ function Split-Thread {
 
     }
     end {
-        Write-Debug "Split-Thread entered end block for $Command"
-        Write-Debug "Split-Thread sending $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos to Open-Thread"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread entered end block for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread sending $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos to Open-Thread"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -608,7 +607,7 @@ function Split-Thread {
             RunspacePool         = $RunspacePool
         }
         $AllThreads = Open-Thread @ThreadParameters
-        Write-Debug "Split-Thread received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
+        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Split-Thread received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
         Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose
         $VerbosePreference = 'Continue'
 
@@ -759,11 +758,11 @@ function Wait-Thread {
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages"
 
                 # Because $Host was used to create the RunspacePool, any output to $Host (which includes Write-Host and Write-Information and Write-Progress) has already been displayed
-                #$CompletedThread.PowerShellInterface.Streams.Progress | ForEach-Object {Write-Progress $_}
-                #$CompletedThread.PowerShellInterface.Streams.Information | ForEach-Object { Write-Information $_ }
-                #$CompletedThread.PowerShellInterface.Streams.Verbose | ForEach-Object { Write-Verbose $_ }
-                #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug $_ }
-                #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning $_ }
+                #$CompletedThread.PowerShellInterface.Streams.Progress | ForEach-Object {Write-Progress "$_"}
+                #$CompletedThread.PowerShellInterface.Streams.Information | ForEach-Object { Write-Information "$_" }
+                #$CompletedThread.PowerShellInterface.Streams.Verbose | ForEach-Object { Write-Verbose "$_" }
+                #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug "$_" }
+                #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning "$_" }
 
                 $null = $CompletedThread.PowerShellInterface.Streams.ClearStreams()
 
@@ -837,6 +836,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
