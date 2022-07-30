@@ -89,6 +89,9 @@ function Open-Thread {
                 $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
             }
 
+            Write-Debug "Add-PsCommand -Command '$Command' -PowershellInterface `$PowershellInterface -Force"
+            $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
+
             If (!([string]::IsNullOrEmpty($InputParameter))) {
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "-$InputParameter '$ObjectString'"
