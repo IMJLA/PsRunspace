@@ -59,7 +59,7 @@ function Add-PsCommand {
                 'Function' {
 
                     if ($Force) {
-                        Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                         Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                         $null = $ThisPowershell.AddStatement().AddCommand($Command)
@@ -73,7 +73,7 @@ function Add-PsCommand {
                     }
                 }
                 'ExternalScript' {
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
                     Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }

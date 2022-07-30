@@ -60,7 +60,7 @@ function Add-PsCommand {
                 'Function' {
 
                     if ($Force) {
-                        Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                         Write-Debug "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                         $null = $ThisPowershell.AddStatement().AddCommand($Command)
@@ -74,7 +74,7 @@ function Add-PsCommand {
                     }
                 }
                 'ExternalScript' {
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
                     Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
@@ -398,15 +398,18 @@ function Open-Thread {
             $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
+                Write-Debug "`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString')"
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "-$InputParameter '$ObjectString'"
             } Else {
+                Write-Debug "`$PowershellInterface.AddArgument('$ObjectString')"
                 $null = $PowershellInterface.AddArgument($Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "'$ObjectString'"
             }
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
+                Write-Debug "`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)')"
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
@@ -414,14 +417,13 @@ function Open-Thread {
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
+                Write-Debug "`$PowershellInterface.AddParameter('$Switch')"
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
             $SwitchParameterString = $Switches -join ' '
 
             $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterString $AdditionalParametersString $SwitchParameterString"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
             $Progress = @{
                 Activity        = $StatusString
                 PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
@@ -429,6 +431,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
+            Write-Debug "`$PowershellInterface.BeginInvoke()"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{
@@ -832,6 +835,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

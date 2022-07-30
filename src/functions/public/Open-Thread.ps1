@@ -93,15 +93,18 @@ function Open-Thread {
             $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
+                Write-Debug "`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString')"
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "-$InputParameter '$ObjectString'"
             } Else {
+                Write-Debug "`$PowershellInterface.AddArgument('$ObjectString')"
                 $null = $PowershellInterface.AddArgument($Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "'$ObjectString'"
             }
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
+                Write-Debug "`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)')"
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
@@ -109,14 +112,13 @@ function Open-Thread {
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
+                Write-Debug "`$PowershellInterface.AddParameter('$Switch')"
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
             $SwitchParameterString = $Switches -join ' '
 
             $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterString $AdditionalParametersString $SwitchParameterString"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
             $Progress = @{
                 Activity        = $StatusString
                 PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
@@ -124,6 +126,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
+            Write-Debug "`$PowershellInterface.BeginInvoke()"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{
