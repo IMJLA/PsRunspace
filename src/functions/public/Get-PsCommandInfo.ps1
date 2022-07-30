@@ -32,7 +32,7 @@ function Get-PsCommandInfo {
         [string]$CommandType = 'ScriptBlock'
     } else {
         $CommandInfo = Get-Command $Command -ErrorAction SilentlyContinue
-        [System.Management.Automation.CommandTypes]$CommandType = $CommandInfo.CommandType
+        [string]$CommandType = $CommandInfo.CommandType
         if ($CommandInfo.Source) {
             $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
         }

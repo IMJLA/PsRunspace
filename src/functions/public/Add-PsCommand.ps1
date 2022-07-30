@@ -48,12 +48,12 @@ function Add-PsCommand {
 
             switch ($CommandInfo.CommandType) {
 
-                [System.Management.Automation.CommandTypes]::Alias {
+                'Alias' {
                     # Resolve the alias to its command and start from the beginning with that command.
                     $CommandInfo = Get-PsCommandInfo -Command $CommandInfo.CommandInfo.Definition
                     $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
                 }
-                [System.Management.Automation.CommandTypes]::Function {
+                'Function' {
                     # Add the definitions of the function
                     # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
                     [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
@@ -61,7 +61,7 @@ function Add-PsCommand {
                     Write-Debug "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
                     $null = $ThisPowershell.AddScript($ThisFunction)
                 }
-                [System.Management.Automation.CommandTypes]::ExternalScript {
+                'ExternalScript' {
                     <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
                     Write-Debug "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
