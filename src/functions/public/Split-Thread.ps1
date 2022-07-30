@@ -83,7 +83,7 @@ function Split-Thread {
     )
 
     begin {
-        Write-Debug "Split-Thread entered begin block for $Command"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered begin block for '$Command'"
 
         Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()"
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
@@ -91,9 +91,9 @@ function Split-Thread {
         # Import the source module containing the specified Command in each thread
 
         $OriginalCommandInfo = Get-PsCommandInfo -Command $Command
-        Write-Debug "Split-Thread found 1 original PsCommandInfo"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Found 1 original PsCommandInfo"
         $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo
-        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos ($($CommandInfo.CommandInfo.Name -join ','))"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos ($($CommandInfo.CommandInfo.Name -join ','))"
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
@@ -112,7 +112,7 @@ function Split-Thread {
             $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name -and
             $_.CommandType -ne 'Cmdlet'
         }
-        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos after filtering"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos after filtering"
 
         $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
 
@@ -142,7 +142,7 @@ function Split-Thread {
     }
 
     process {
-        Write-Debug "Split-Thread entered process block for $Command"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered process block for $Command"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -151,8 +151,8 @@ function Split-Thread {
 
     }
     end {
-        Write-Debug "Split-Thread entered end block for $Command"
-        Write-Debug "Split-Thread sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered end block for $Command"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -164,7 +164,7 @@ function Split-Thread {
             RunspacePool         = $RunspacePool
         }
         $AllThreads = Open-Thread @ThreadParameters
-        Write-Debug "Split-Thread received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
         Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose
         $VerbosePreference = 'Continue'
 
