@@ -89,6 +89,7 @@ function Open-Thread {
             ForEach ($ThisCommandInfo in $CommandInfo) {
                 $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
             }
+            <#
             if ($CommandInfo) {
                 #TODO: This inefficiently waits for each to finish before beginning the next.
                 #      Rework to break out of this function after only BeginInboke for each thread, and use Wait-Thread with Dispose set to false
@@ -106,6 +107,7 @@ function Open-Thread {
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # after preloading command definitions for '$ObjectString'"
                 $null = $PowershellInterface.Commands.Clear()
             }
+            #>
 
             $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
 
