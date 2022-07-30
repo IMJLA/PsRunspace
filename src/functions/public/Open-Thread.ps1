@@ -125,7 +125,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
-            Write-Debug "`$PowershellInterface.BeginInvoke()"
+            Write-Debug "`$Handle = `$PowershellInterface.BeginInvoke()"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{

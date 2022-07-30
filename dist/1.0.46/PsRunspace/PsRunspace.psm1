@@ -430,7 +430,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
-            Write-Debug "`$PowershellInterface.BeginInvoke()"
+            Write-Debug "`$Handle = `$PowershellInterface.BeginInvoke()"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{
@@ -700,6 +700,7 @@ function Wait-Thread {
             # If the threads do not have handles, there is nothing to wait for, so output the thread as-is.
             # Otherwise wait for the handle to indicate completion (or a timeout to be reached)
             if ($ThisThread.Handle -eq $false) {
+                Write-Debug "`$PowerShellInterface.Streams.ClearStreams()"
                 $null = $ThisThread.PowerShellInterface.Streams.ClearStreams()
                 $ThisThread
             } else {
@@ -766,23 +767,26 @@ function Wait-Thread {
                 #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug "$_" }
                 #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning "$_" }
 
+                Write-Debug "`$PowerShellInterface.Streams.ClearStreams()"
                 $null = $CompletedThread.PowerShellInterface.Streams.ClearStreams()
 
+                Write-Debug "`$PowerShellInterface.EndInvoke(`$Handle)"
+                $ThreadOutput = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
+
                 if ($Dispose -eq $true) {
-                    $ThreadOutput = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
                     <#NormallyCommentThisForPerformanceOptimization#>#if (($ThreadOutput | Measure-Object).Count -gt 0) {
-                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tOutput (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tOutput (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
                     <#NormallyCommentThisForPerformanceOptimization#>#}
                     <#NormallyCommentThisForPerformanceOptimization#>#else {
-                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tNull result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tNull result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
                     <#NormallyCommentThisForPerformanceOptimization#>#}
                     $ThreadOutput
+                    Write-Debug "`$PowerShellInterface.Dispose()"
                     $null = $CompletedThread.PowerShellInterface.Dispose()
                     $CompletedThread.PowerShellInterface = $null
                     $CompletedThread.Handle = $null
                 } else {
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tThread $($CompletedThread.Index) ($($CompletedThread.ObjectString)) is finished opening."
-                    $null = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
                     $CompletedThread.Handle = $null
                     $CompletedThread
                 }
@@ -834,6 +838,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
