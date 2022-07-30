@@ -58,7 +58,7 @@ function Add-PsCommand {
                 [System.Management.Automation.CommandTypes]::Function {
 
                     # Recursively tokenize the command definition, identify Command tokens nested within, and get their definitions
-                    $CommandsToAdd = Get-NestedCommandInfo -PsCommandInfo $CommandInfo
+                    $CommandsToAdd = Expand-PsCommandInfo -PsCommandInfo $CommandInfo
 
                     # Add the definitions of those functions if available
                     # TODO: Add modules if available? Not needed at this time but maybe later
@@ -86,6 +86,122 @@ function Add-PsCommand {
             }
         }
     }
+}
+function Add-PsModule {
+    <#
+    .Synopsis
+        Import a Module in a [System.Management.Automation.Runspaces.InitialSessionState] instance
+    .Description
+        Used by Add-PsCommand
+        Uses ImportPSModule() or ImportPSModulesFromPath() depending on the module
+    .EXAMPLE
+        $InitialSessionState = [system.management.automation.runspaces.initialsessionstate]::CreateDefault()
+        Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo
+    #>
+
+    param(
+
+        # Powershell interface to add the Command to
+        [Parameter(Mandatory)]
+        [System.Management.Automation.Runspaces.InitialSessionState]$InitialSessionState,
+
+        <#
+        ModuleInfo object for the module to add to the Powershell interface
+        #>
+        [Parameter(
+            Mandatory,
+            Position = 0
+        )]
+        [System.Management.Automation.PSModuleInfo[]]$ModuleInfo
+
+    )
+
+    process {
+
+        ForEach ($ThisModule in $ModuleInfo) {
+
+            switch ($ThisModule.ModuleType) {
+                'Binary' {
+                    Write-Debug "`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
+                    $InitialSessionState.ImportPSModule($ThisModule.Name)
+                }
+                'Script' {
+                    $ModulePath = Split-Path -Path $ThisModule.Path -Parent
+                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    $InitialSessionState.ImportPSModulesFromPath($ModulePath)
+                }
+                'Manifest' {
+                    $ModulePath = Split-Path -Path $ThisModule.Path -Parent
+                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    $InitialSessionState.ImportPSModulesFromPath($ModulePath)
+                }
+                default {
+                    # Scriptblocks or Functions not from modules will have no module to import so ModuleInfo will be null
+                }
+            }
+
+        }
+    }
+
+}
+function Expand-PsCommandInfo {
+
+    <#
+    .SYNOPSIS
+        Return the original PsCommandInfo object as well as CommandInfo objects for any nested commands
+    #>
+
+    param (
+        # CommandInfo object for the command whose nested command names to return
+        [PSCustomObject]$PsCommandInfo,
+
+        # Cache of already identified CommmandInfo objects
+        [hashtable]$Cache = [hashtable]::Synchronized(@{})
+    )
+
+    # Add the first object to the cache
+    $Cache[$PsCommandInfo.CommandInfo.Name] = $PsCommandInfo
+
+    # Tokenize the function definition
+    $PsTokens = $null
+    $TokenizerErrors = $null
+    $AbstractSyntaxTree = [System.Management.Automation.Language.Parser]::ParseInput(
+        $PsCommandInfo.CommandInfo.Definition,
+        [ref]$PsTokens,
+        [ref]$TokenizerErrors
+    )
+
+    # Get all nested tokens
+    $AllPsTokens = Expand-PsToken -InputObject $PsTokens
+
+    # Find any other functions we also need to add
+    $CommandTokens = $AllPsTokens |
+    Where-Object -FilterScript {
+        $_.Kind -eq 'Generic' -and
+        $_.TokenFlags.HasFlag([System.Management.Automation.Language.TokenFlags]::CommandName)
+    }
+
+    # Add the definitions of those functions if available
+    # TODO: Add modules if available? Not needed at this time but maybe later
+    ForEach ($ThisCommandToken in $CommandTokens) {
+        if (
+            -not $Cache[$ThisCommandToken.Value] -and
+            $ThisCommandToken.Value -notmatch '[\.\\]' # This excludes any file paths since they are not PowerShell commands with tokenizable definitions (they contain \ or .)
+        ) {
+            $TokenCommandInfo = Get-PsCommandInfo -Command $ThisCommandToken.Value
+            $Cache[$ThisCommandToken.Value] = $TokenCommandInfo
+
+            # Suppress the output of the Expand-PsCommandInfo function because we will instead be using the updated cache contents
+            # This way the results are already deduplicated for us by the hashtable
+            $null = Expand-PsCommandInfo -PsCommandInfo $TokenCommandInfo -Cache $Cache
+        }
+    }
+
+    # Output the objects in the cache
+    ForEach ($ThisKey in $Cache.Keys) {
+        $Cache[$ThisKey]
+    }
+
 }
 function Expand-PsToken {
     <#
@@ -127,64 +243,6 @@ function Expand-PsToken {
             }
         }
         $InputObject
-    }
-
-}
-function Get-NestedCommandInfo {
-
-    <#
-    .SYNOPSIS
-        Return the original PsCommandInfo object as well as CommandInfo objects for any nested commands
-    #>
-
-    param (
-        # CommandInfo object for the command whose nested command names to return
-        [PSCustomObject]$PsCommandInfo,
-
-        # Cache of already identified CommmandInfo objects
-        [hashtable]$Cache = [hashtable]::Synchronized(@{})
-    )
-
-    # Add the first object to the cache
-    $Cache[$PsCommandInfo.CommandInfo.Name] = $PsCommandInfo
-
-    # Tokenize the function definition
-    $PsTokens = $null
-    $TokenizerErrors = $null
-    $AbstractSyntaxTree = [System.Management.Automation.Language.Parser]::ParseInput(
-        $PsCommandInfo.CommandInfo.Definition,
-        [ref]$PsTokens,
-        [ref]$TokenizerErrors
-    )
-
-    # Get all nested tokens
-    $AllPsTokens = Expand-PsToken -InputObject $PsTokens
-
-    # Find any other functions we also need to add
-    $CommandTokens = $AllPsTokens |
-    Where-Object -FilterScript {
-        $_.Kind -eq 'Generic' -and
-        $_.TokenFlags.HasFlag([System.Management.Automation.Language.TokenFlags]::CommandName)
-    }
-
-    # Add the definitions of those functions if available
-    # TODO: Add modules if available? Not needed at this time but maybe later
-    ForEach ($ThisCommandToken in $CommandTokens) {
-        if (-not $Cache[$ThisCommandToken.Value] -and
-            $ThisCommandToken.Value -notmatch '[\.\\]' # This excludes any file paths since they are not PowerShell commands with tokenizable definitions (they contain \ or .)
-        ) {
-            $TokenCommandInfo = Get-PsCommandInfo -Command $ThisCommandToken.Value
-            $Cache[$ThisCommandToken.Value] = $TokenCommandInfo
-
-            # Suppress the output of the Get-NestedCommandInfo function because we will instead be using the updated cache contents
-            # This way the results are already deduplicated for us by the hashtable
-            $null = Get-NestedCommandInfo -PsCommandInfo $TokenCommandInfo -Cache $Cache
-        }
-    }
-
-    # Output the objects in the cache
-    ForEach ($ThisKey in $Cache.Keys) {
-        $Cache[$ThisKey]
     }
 
 }
@@ -278,7 +336,7 @@ function Open-Thread {
         $Command,
 
         # Output from Get-PsCommandInfo
-        [pscustomobject]$CommandInfo,
+        [pscustomobject[]]$CommandInfo,
 
         # Named parameter of the Command to pass InputObject to
         # If this is not specified, InputObject will be passed to the Command as an argument
@@ -318,7 +376,9 @@ function Open-Thread {
             $PowershellInterface.RunspacePool = $RunspacePool
 
             $null = $PowershellInterface.Commands.Clear()
-            $null = Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface
+            ForEach ($ThisCommandInfoObj in $CommandInfo) {
+                $null = Add-PsCommand -Command $ThisCommandInfoObj.Name -CommandInfo $ThisCommandInfoObj -PowershellInterface $PowershellInterface
+            }
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)
@@ -463,46 +523,28 @@ function Split-Thread {
         $InitialSessionState = [system.management.automation.runspaces.initialsessionstate]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
+
         $CommandInfo = Get-PsCommandInfo -Command $Command
-        switch ($CommandInfo.ModuleInfo.ModuleType) {
-            'Binary' {
-                Write-Debug "`$InitialSessionState.ImportPSModule('$($CommandInfo.ModuleInfo.Name)')"
-                $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Name)
-            }
-            'Script' {
-                $ModulePath = Split-Path -Path $CommandInfo.ModuleInfo.Path -Parent
-                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
-                $InitialSessionState.ImportPSModulesFromPath($ModulePath)
-            }
-            'Manifest' {
-                $ModulePath = Split-Path -Path $CommandInfo.ModuleInfo.Path -Parent
-                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
-                $InitialSessionState.ImportPSModulesFromPath($ModulePath)
-            }
-            default {
-                # Scriptblocks have no module to import so ModuleInfo will be null
-            }
-        }
+        $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $CommandInfo
 
-        # Import any additional specified modules in each thread
+        # Prepare our collection of PowerShell modules to import in each thread
+        # This will include any modules specified by name with the -AddModule parameter
+        # This will also include any modules identified by tokenizing the -Command parameter or its definition, and recursing through all nested command tokens
+        $ModulesToAdd = [System.Collections.Generic.List[System.Management.Automation.PSModuleInfo]]::new()
         ForEach ($Module in $AddModule) {
-
             $ModuleObj = Get-Module $Module -ErrorAction SilentlyContinue
-            switch ($ModuleObj.ModuleType) {
-                'Binary' {
-                    Write-Debug "`$InitialSessionState.ImportPSModule('$Module')"
-                    $InitialSessionState.ImportPSModule($Module)
-                }
-                default {
-                    # This is for Script or Manifest modules
-                    $PathParent = Split-Path -Path $ModuleObj.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$PathParent')"
-                    $InitialSessionState.ImportPSModulesFromPath($PathParent)
-
-                }
-            }
-
+            $null = $ModulesToAdd.Add($ModuleObj)
         }
+
+        $ModulesToAdd = $CommandInfo.ModuleInfo |
+        Sort-Object -Property Name -Unique
+
+        $CommandInfo = $CommandInfo |
+        Where-Object -FilterScript {
+            $ModulesToAdd.Name -notcontains $ComamndInfo.ModuleInfo.Name
+        }
+
+        $null = Add-PsModule -InitialSessionState $InitialSessionState -PsCommandInfo $ModulesToAdd
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences
         $OutputStream = @('Debug', 'Verbose', 'Information', 'Warning', 'Error')
@@ -777,7 +819,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('Add-PsCommand','Expand-PsToken','Get-NestedCommandInfo','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

@@ -57,7 +57,7 @@ function Add-PsCommand {
                 [System.Management.Automation.CommandTypes]::Function {
 
                     # Recursively tokenize the command definition, identify Command tokens nested within, and get their definitions
-                    $CommandsToAdd = Get-NestedCommandInfo -PsCommandInfo $CommandInfo
+                    $CommandsToAdd = Expand-PsCommandInfo -PsCommandInfo $CommandInfo
 
                     # Add the definitions of those functions if available
                     # TODO: Add modules if available? Not needed at this time but maybe later

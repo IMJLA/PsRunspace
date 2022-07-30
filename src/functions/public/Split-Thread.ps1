@@ -88,46 +88,28 @@ function Split-Thread {
         $InitialSessionState = [system.management.automation.runspaces.initialsessionstate]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
+
         $CommandInfo = Get-PsCommandInfo -Command $Command
-        switch ($CommandInfo.ModuleInfo.ModuleType) {
-            'Binary' {
-                Write-Debug "`$InitialSessionState.ImportPSModule('$($CommandInfo.ModuleInfo.Name)')"
-                $InitialSessionState.ImportPSModule($CommandInfo.ModuleInfo.Name)
-            }
-            'Script' {
-                $ModulePath = Split-Path -Path $CommandInfo.ModuleInfo.Path -Parent
-                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
-                $InitialSessionState.ImportPSModulesFromPath($ModulePath)
-            }
-            'Manifest' {
-                $ModulePath = Split-Path -Path $CommandInfo.ModuleInfo.Path -Parent
-                Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
-                $InitialSessionState.ImportPSModulesFromPath($ModulePath)
-            }
-            default {
-                # Scriptblocks have no module to import so ModuleInfo will be null
-            }
-        }
+        $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $CommandInfo
 
-        # Import any additional specified modules in each thread
+        # Prepare our collection of PowerShell modules to import in each thread
+        # This will include any modules specified by name with the -AddModule parameter
+        # This will also include any modules identified by tokenizing the -Command parameter or its definition, and recursing through all nested command tokens
+        $ModulesToAdd = [System.Collections.Generic.List[System.Management.Automation.PSModuleInfo]]::new()
         ForEach ($Module in $AddModule) {
-
             $ModuleObj = Get-Module $Module -ErrorAction SilentlyContinue
-            switch ($ModuleObj.ModuleType) {
-                'Binary' {
-                    Write-Debug "`$InitialSessionState.ImportPSModule('$Module')"
-                    $InitialSessionState.ImportPSModule($Module)
-                }
-                default {
-                    # This is for Script or Manifest modules
-                    $PathParent = Split-Path -Path $ModuleObj.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$PathParent')"
-                    $InitialSessionState.ImportPSModulesFromPath($PathParent)
-
-                }
-            }
-
+            $null = $ModulesToAdd.Add($ModuleObj)
         }
+
+        $ModulesToAdd = $CommandInfo.ModuleInfo |
+        Sort-Object -Property Name -Unique
+
+        $CommandInfo = $CommandInfo |
+        Where-Object -FilterScript {
+            $ModulesToAdd.Name -notcontains $ComamndInfo.ModuleInfo.Name
+        }
+
+        $null = Add-PsModule -InitialSessionState $InitialSessionState -PsCommandInfo $ModulesToAdd
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences
         $OutputStream = @('Debug', 'Verbose', 'Information', 'Warning', 'Error')

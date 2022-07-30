@@ -6,7 +6,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('Add-PsCommand','Expand-PsToken','Get-NestedCommandInfo','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

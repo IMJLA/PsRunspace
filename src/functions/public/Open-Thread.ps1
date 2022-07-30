@@ -38,7 +38,7 @@ function Open-Thread {
         $Command,
 
         # Output from Get-PsCommandInfo
-        [pscustomobject]$CommandInfo,
+        [pscustomobject[]]$CommandInfo,
 
         # Named parameter of the Command to pass InputObject to
         # If this is not specified, InputObject will be passed to the Command as an argument
@@ -78,7 +78,9 @@ function Open-Thread {
             $PowershellInterface.RunspacePool = $RunspacePool
 
             $null = $PowershellInterface.Commands.Clear()
-            $null = Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface
+            ForEach ($ThisCommandInfoObj in $CommandInfo) {
+                $null = Add-PsCommand -Command $ThisCommandInfoObj.Name -CommandInfo $ThisCommandInfoObj -PowershellInterface $PowershellInterface
+            }
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)

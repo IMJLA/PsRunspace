@@ -1,4 +1,4 @@
-function Get-NestedCommandInfo {
+function Expand-PsCommandInfo {
 
     <#
     .SYNOPSIS
@@ -38,15 +38,16 @@ function Get-NestedCommandInfo {
     # Add the definitions of those functions if available
     # TODO: Add modules if available? Not needed at this time but maybe later
     ForEach ($ThisCommandToken in $CommandTokens) {
-        if (-not $Cache[$ThisCommandToken.Value] -and
+        if (
+            -not $Cache[$ThisCommandToken.Value] -and
             $ThisCommandToken.Value -notmatch '[\.\\]' # This excludes any file paths since they are not PowerShell commands with tokenizable definitions (they contain \ or .)
         ) {
             $TokenCommandInfo = Get-PsCommandInfo -Command $ThisCommandToken.Value
             $Cache[$ThisCommandToken.Value] = $TokenCommandInfo
 
-            # Suppress the output of the Get-NestedCommandInfo function because we will instead be using the updated cache contents
+            # Suppress the output of the Expand-PsCommandInfo function because we will instead be using the updated cache contents
             # This way the results are already deduplicated for us by the hashtable
-            $null = Get-NestedCommandInfo -PsCommandInfo $TokenCommandInfo -Cache $Cache
+            $null = Expand-PsCommandInfo -PsCommandInfo $TokenCommandInfo -Cache $Cache
         }
     }
 
