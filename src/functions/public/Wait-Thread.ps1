@@ -93,14 +93,10 @@ function Wait-Thread {
 
             $ActiveThreadCountString = "$($Threads - $AvailableRunspaces) of $Threads are active"
 
-            ##NormallyCommentThisForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$ActiveThreadCountString"
-            ##NormallyCommentThisForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThreads.Count) completed threads"
-            ##NormallyCommentThisForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CleanedUpThreads.Count) cleaned up threads"
-            ##NormallyCommentThisForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($IncompleteThreads.Count) incomplete threads"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$ActiveThreadCountString"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThreads.Count) completed threads"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CleanedUpThreads.Count) cleaned up threads"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($IncompleteThreads.Count) incomplete threads"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$ActiveThreadCountString"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThreads.Count) completed threads"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CleanedUpThreads.Count) cleaned up threads"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($IncompleteThreads.Count) incomplete threads"
 
             $RemainingString = "$($IncompleteThreads.ObjectString)"
             If ($RemainingString.Length -gt 60) {
