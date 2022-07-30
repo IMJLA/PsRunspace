@@ -366,7 +366,7 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`tReceived $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t# Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread"
 
     }
     process {
@@ -716,6 +716,9 @@ function Wait-Thread {
         # If the threads have handles, we can check to see if they are complete.
         While (@($AllThreads | Where-Object -FilterScript { $null -ne $_.Handle }).Count -gt 0) {
 
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tStart-Sleep -Milliseconds `$SleepTimer"
+            Start-Sleep -Milliseconds $SleepTimer
+
             if ($RunspacePool) { $AvailableRunspaces = $RunspacePool.GetAvailableRunspaces() }
 
             $CleanedUpThreads = [System.Collections.Generic.List[PSCustomObject]]::new()
@@ -735,10 +738,10 @@ function Wait-Thread {
 
             $ActiveThreadCountString = "$($Threads - $AvailableRunspaces) of $Threads are active"
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$ActiveThreadCountString"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThreads.Count) completed threads"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CleanedUpThreads.Count) cleaned up threads"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($IncompleteThreads.Count) incomplete threads"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $ActiveThreadCountString"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThreads.Count) completed threads"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CleanedUpThreads.Count) cleaned up threads"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($IncompleteThreads.Count) incomplete threads"
 
             $RemainingString = "$($IncompleteThreads.ObjectString)"
             If ($RemainingString.Length -gt 60) {
@@ -754,11 +757,11 @@ function Wait-Thread {
 
             ForEach ($CompletedThread in $CompletedThreads) {
 
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThread.PowerShellInterface.Streams.Progress.Count) Progress messages"
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThread.PowerShellInterface.Streams.Information.Count) Information messages"
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThread.PowerShellInterface.Streams.Verbose.Count) Verbose messages"
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThread.PowerShellInterface.Streams.Debug.Count) Debug messages"
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t$($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Progress.Count) Progress messages"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Information.Count) Information messages"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Verbose.Count) Verbose messages"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Debug.Count) Debug messages"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages"
 
                 # Because $Host was used to create the RunspacePool, any output to $Host (which includes Write-Host and Write-Information and Write-Progress) has already been displayed
                 #$CompletedThread.PowerShellInterface.Streams.Progress | ForEach-Object {Write-Progress "$_"}
@@ -816,9 +819,6 @@ function Wait-Thread {
                 }
             }
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tSleeping $SleepTimer milliseconds"
-            Start-Sleep -Milliseconds $SleepTimer
-
         }
 
         $StopWatch.Stop()
@@ -838,6 +838,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

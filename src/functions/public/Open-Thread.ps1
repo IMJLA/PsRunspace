@@ -61,7 +61,7 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`tReceived $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t# Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread"
 
     }
     process {
