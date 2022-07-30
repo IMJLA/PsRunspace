@@ -70,7 +70,7 @@ function Add-PsCommand {
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
                         <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
                         Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
-                        $null = $ThisPowershell.AddScript($ThisFunction)
+                        $null = $ThisPowershell.AddStatement().AddScript($ThisFunction)
                     }
                 }
                 'ExternalScript' {
@@ -614,7 +614,12 @@ function Split-Thread {
     }
 
     process {
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered process block for $Command"
+        if ($ObjectStringProperty) {
+            $ObjectString = $InputObject.$ObjectStringProperty
+        } else {
+            $ObjectString = $InputObject.ToString()
+        }
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered process block for '$Command' on '$ObjectString'"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -856,6 +861,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

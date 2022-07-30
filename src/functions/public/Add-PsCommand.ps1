@@ -69,7 +69,7 @@ function Add-PsCommand {
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
                         <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
                         Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
-                        $null = $ThisPowershell.AddScript($ThisFunction)
+                        $null = $ThisPowershell.AddStatement().AddScript($ThisFunction)
                     }
                 }
                 'ExternalScript' {

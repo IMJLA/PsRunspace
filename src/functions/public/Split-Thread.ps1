@@ -142,7 +142,12 @@ function Split-Thread {
     }
 
     process {
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered process block for $Command"
+        if ($ObjectStringProperty) {
+            $ObjectString = $InputObject.$ObjectStringProperty
+        } else {
+            $ObjectString = $InputObject.ToString()
+        }
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered process block for '$Command' on '$ObjectString'"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
