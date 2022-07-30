@@ -49,12 +49,12 @@ function Add-PsCommand {
 
             switch ($CommandInfo.CommandType) {
 
-                'Alias' {
+                [System.Management.Automation.CommandTypes]::Alias {
                     # Resolve the alias to its command and start from the beginning with that command.
                     $CommandInfo = Get-PsCommandInfo -Command $CommandInfo.CommandInfo.Definition
                     $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
                 }
-                'Function' {
+                [System.Management.Automation.CommandTypes]::Function {
 
                     # Recursively tokenize the command definition, identify Command tokens nested within, and get their definitions
                     $CommandsToAdd = Get-NestedCommandInfo -PsCommandInfo $CommandInfo
@@ -63,6 +63,7 @@ function Add-PsCommand {
                     # TODO: Add modules if available? Not needed at this time but maybe later
                     ForEach ($ThisCommandInfo in $CommandsToAdd) {
                         if ($ThisCommandInfo.CommandType -eq [System.Management.Automation.CommandTypes]::Function) {
+                            Write-Debug "Open-Thread adding definition of function $($ThisCommandInfo.CommandInfo.Name)"
                             [string]$ThisFunction = "function $($ThisCommandInfo.CommandInfo.Name) {`r`n$($ThisCommandInfo.CommandInfo.Definition)`r`n}"
                             $null = $ThisPowershell.AddScript($ThisFunction)
                         }
@@ -72,10 +73,11 @@ function Add-PsCommand {
                 'ScriptBlock' {
                     $null = $ThisPowershell.AddScript($Command)
                 }
-                'ExternalScript' {
+                [System.Management.Automation.CommandTypes]::ExternalScript {
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 default {
+                    Write-Debug "Open-Thread adding command '$Command'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
