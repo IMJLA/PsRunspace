@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.23] - 2022-07-29 - Troubleshooting Wait-Thread
+
 ## [1.0.22] - 2022-07-29 - Trying to fix bugs in Add-PsCommand
 
 ## [1.0.21] - 2022-07-29 - bug fixes with Split-Path to remove unnecessary pipeline overhead
