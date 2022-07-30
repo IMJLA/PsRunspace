@@ -97,7 +97,7 @@ function Wait-Thread {
 
             $ActiveThreadCountString = "$($Threads - $AvailableRunspaces) of $Threads are active"
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $ActiveThreadCountString"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $ActiveThreadCountString for '$CommandString'"
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThreads.Count) completed threads for '$CommandString'"
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
