@@ -82,7 +82,7 @@ function Open-Thread {
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.RunspacePool = `$RunspacePool"
             $PowershellInterface.RunspacePool = $RunspacePool
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t'`$PowershellInterface.Commands.Clear()"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear()"
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfo in $CommandInfo) {
