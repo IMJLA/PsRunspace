@@ -76,10 +76,10 @@ function Open-Thread {
 
             $PowershellInterface = [powershell]::Create()
             $PowershellInterface.RunspacePool = $RunspacePool
-
             $null = $PowershellInterface.Commands.Clear()
+
             ForEach ($ThisCommandInfoObj in $CommandInfo) {
-                $null = Add-PsCommand -Command $ThisCommandInfoObj.Name -CommandInfo $ThisCommandInfoObj -PowershellInterface $PowershellInterface
+                $null = Add-PsCommand -Command $ThisCommandInfoObj.CommandInfo.Name -CommandInfo $ThisCommandInfoObj -PowershellInterface $PowershellInterface
             }
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {

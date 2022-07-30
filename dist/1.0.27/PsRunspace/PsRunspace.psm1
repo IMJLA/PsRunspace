@@ -365,10 +365,10 @@ function Open-Thread {
 
             $PowershellInterface = [powershell]::Create()
             $PowershellInterface.RunspacePool = $RunspacePool
-
             $null = $PowershellInterface.Commands.Clear()
+
             ForEach ($ThisCommandInfoObj in $CommandInfo) {
-                $null = Add-PsCommand -Command $ThisCommandInfoObj.Name -CommandInfo $ThisCommandInfoObj -PowershellInterface $PowershellInterface
+                $null = Add-PsCommand -Command $ThisCommandInfoObj.CommandInfo.Name -CommandInfo $ThisCommandInfoObj -PowershellInterface $PowershellInterface
             }
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
@@ -533,8 +533,8 @@ function Split-Thread {
 
         $CommandInfo = $CommandInfo |
         Where-Object -FilterScript {
-            $ModulesToAdd.Name -notcontains $CommandInfo.ModuleInfo.Name -and
-            -not [string]::IsNullOrEmpty($CommandInfo.Name)
+            $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name ###-and
+            ###-not [string]::IsNullOrEmpty($_.CommandInfo.Name)
         }
 
         $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
@@ -813,6 +813,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
