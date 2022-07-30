@@ -55,20 +55,11 @@ function Add-PsCommand {
                     $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
                 }
                 [System.Management.Automation.CommandTypes]::Function {
-
-                    # Recursively tokenize the command definition, identify Command tokens nested within, and get their definitions
-                    $CommandsToAdd = Expand-PsCommandInfo -PsCommandInfo $CommandInfo
-
-                    # Add the definitions of those functions if available
-                    # TODO: Add modules if available? Not needed at this time but maybe later
-                    ForEach ($ThisCommandInfo in $CommandsToAdd) {
-                        if ($ThisCommandInfo.CommandType -eq [System.Management.Automation.CommandTypes]::Function) {
-                            Write-Debug "Add-PsCommand adding definition of function $($ThisCommandInfo.CommandInfo.Name)"
-                            [string]$ThisFunction = "function $($ThisCommandInfo.CommandInfo.Name) {`r`n$($ThisCommandInfo.CommandInfo.Definition)`r`n}"
-                            $null = $ThisPowershell.AddScript($ThisFunction)
-                        }
-                    }
-
+                    # Add the definitions of the function
+                    # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
+                    Write-Debug "Add-PsCommand adding definition of function $($CommandInfo.CommandInfo.Name)"
+                    [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
+                    $null = $ThisPowershell.AddScript($ThisFunction)
                 }
                 'ScriptBlock' {
                     $null = $ThisPowershell.AddScript($Command)

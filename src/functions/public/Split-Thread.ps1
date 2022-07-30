@@ -85,7 +85,8 @@ function Split-Thread {
     begin {
         Write-Debug "Split-Thread entered begin block for $Command"
 
-        $InitialSessionState = [system.management.automation.runspaces.initialsessionstate]::CreateDefault()
+        Write-Debug '$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()'
+        $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
 
@@ -107,7 +108,7 @@ function Split-Thread {
         $CommandInfo = $CommandInfo |
         Where-Object -FilterScript {
             $ModulesToAdd.Name -notcontains $CommandInfo.ModuleInfo.Name -and
-            -not [string]::IsNullOrEmpty($CommandInfo.ModuleInfo.Name)
+            -not [string]::IsNullOrEmpty($CommandInfo.Name)
         }
 
         $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
