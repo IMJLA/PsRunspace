@@ -394,7 +394,6 @@ function Open-Thread {
                 $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
             }
 
-            Write-Debug "Add-PsCommand -Command '$Command' -PowershellInterface `$PowershellInterface -Force"
             $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
@@ -835,6 +834,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
