@@ -109,8 +109,8 @@ function Split-Thread {
 
         $CommandInfo = $CommandInfo |
         Where-Object -FilterScript {
-            $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name ###-and
-            ###-not [string]::IsNullOrEmpty($_.CommandInfo.Name)
+            $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name -and
+            $_.CommandType -ne 'Cmdlet'
         }
         Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos"
 
