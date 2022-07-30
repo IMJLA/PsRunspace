@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.37] - 2022-07-29 - Bug fix in the timeout feature of Wait-Thread where it was not setting the handle to null so the loop was not exiting
+
 ## [1.0.36] - 2022-07-29 - Re-enabled all debug output to resume troubleshooting ps5.1 problems
 
 ## [1.0.35] - 2022-07-29 - No really this time all the debug output is gone

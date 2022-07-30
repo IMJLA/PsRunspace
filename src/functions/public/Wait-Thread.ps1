@@ -159,6 +159,7 @@ function Wait-Thread {
 
                 $IncompleteThreads |
                 ForEach-Object {
+                    $_.Handle = $null
                     [PSCustomObject]@{
                         Handle              = $null
                         PowerShellInterface = $_.PowershellInterface
