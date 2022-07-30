@@ -85,7 +85,7 @@ function Split-Thread {
     begin {
         Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered begin block for '$Command'"
 
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
@@ -129,10 +129,10 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host) # for '$Command'"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
         #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool.Open()"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool.Open() # for '$Command'"
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -156,8 +156,8 @@ function Split-Thread {
 
     }
     end {
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered end block for $Command"
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered end block for '$Command'"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter

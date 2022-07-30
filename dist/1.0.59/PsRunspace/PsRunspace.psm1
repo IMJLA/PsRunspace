@@ -366,7 +366,7 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t# Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t# Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread for '$Command'"
 
     }
     process {
@@ -381,14 +381,14 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface = [powershell]::Create() # for '$ObjectString'"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface = [powershell]::Create() # for '$Command' on '$ObjectString'"
             $PowershellInterface = [powershell]::Create()
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.RunspacePool = `$RunspacePool # for '$ObjectString'"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.RunspacePool = `$RunspacePool # for '$Command' on '$ObjectString'"
             $PowershellInterface.RunspacePool = $RunspacePool
 
             # Do I need this one?  What commands would be in there?
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$ObjectString'"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfo in $CommandInfo) {
@@ -417,18 +417,18 @@ function Open-Thread {
             $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$ObjectString'"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "-$InputParameter '$ObjectString'"
             } Else {
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddArgument('$ObjectString') # for '$ObjectString'"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddArgument('$ObjectString') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddArgument($Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "'$ObjectString'"
             }
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)') # for '$ObjectString'"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
@@ -436,7 +436,7 @@ function Open-Thread {
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$Switch') # for '$ObjectString'"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$Switch') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
@@ -450,7 +450,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # for '$ObjectString'"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{
@@ -559,7 +559,7 @@ function Split-Thread {
     begin {
         Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered begin block for '$Command'"
 
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
@@ -603,10 +603,10 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host)"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host) # for '$Command'"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
         #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool.Open()"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t`$RunspacePool.Open() # for '$Command'"
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -630,8 +630,8 @@ function Split-Thread {
 
     }
     end {
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered end block for $Command"
-        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Entered end block for '$Command'"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tSplit-Thread`t# Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -863,6 +863,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

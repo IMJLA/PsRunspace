@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.59] - 2022-07-30 - Added more debug verbosity
+
 ## [1.0.58] - 2022-07-30 - Trying .AddStatement().AddScript(...)
 
 ## [1.0.57] - 2022-07-30 - Trying .AddStatement().AddScript(...)
