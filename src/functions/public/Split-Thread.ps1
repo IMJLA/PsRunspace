@@ -91,7 +91,9 @@ function Split-Thread {
         # Import the source module containing the specified Command in each thread
 
         $CommandInfo = Get-PsCommandInfo -Command $Command
+        Write-Debug "Split-Thread found 1 original PsCommandInfo"
         $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $CommandInfo
+        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos"
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
@@ -110,6 +112,7 @@ function Split-Thread {
             $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name ###-and
             ###-not [string]::IsNullOrEmpty($_.CommandInfo.Name)
         }
+        Write-Debug "Split-Thread found $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos"
 
         $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
 
@@ -149,6 +152,7 @@ function Split-Thread {
     }
     end {
         Write-Debug "Split-Thread entered end block for $Command"
+        Write-Debug "Split-Thread sending $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos to Open-Thread"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter

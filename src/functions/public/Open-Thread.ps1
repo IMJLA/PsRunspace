@@ -61,6 +61,8 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
+        Write-Debug "Open-Thread received $(($CommandInfo | Measure-Object).Count) filtered PsCommandInfos from Split-Thread"
+
     }
     process {
 
