@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.41] - 2022-07-29 - test
+
 ## [1.0.40] - 2022-07-29 - Filtered out cmdlets from CommandInfo in split-thread
 
 ## [1.0.39] - 2022-07-29 - Forced string as var type for CommandType to address bug in Add-PsCommand
