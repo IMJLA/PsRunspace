@@ -59,7 +59,7 @@ function Wait-Thread {
             # If the threads do not have handles, there is nothing to wait for, so output the thread as-is.
             # Otherwise wait for the handle to indicate completion (or a timeout to be reached)
             if ($ThisThread.Handle -eq $false) {
-                Write-Debug "`$PowerShellInterface.Streams.ClearStreams()"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t`$PowerShellInterface.Streams.ClearStreams()"
                 $null = $ThisThread.PowerShellInterface.Streams.ClearStreams()
                 $ThisThread
             } else {
@@ -126,10 +126,10 @@ function Wait-Thread {
                 #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug "$_" }
                 #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning "$_" }
 
-                Write-Debug "`$PowerShellInterface.Streams.ClearStreams()"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t`$PowerShellInterface.Streams.ClearStreams()"
                 $null = $CompletedThread.PowerShellInterface.Streams.ClearStreams()
 
-                Write-Debug "`$PowerShellInterface.EndInvoke(`$Handle)"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t`$PowerShellInterface.EndInvoke(`$Handle)"
                 $ThreadOutput = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
 
                 if ($Dispose -eq $true) {
@@ -140,7 +140,7 @@ function Wait-Thread {
                     <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tNull result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
                     <#NormallyCommentThisForPerformanceOptimization#>#}
                     $ThreadOutput
-                    Write-Debug "`$PowerShellInterface.Dispose()"
+                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t`$PowerShellInterface.Dispose()"
                     $null = $CompletedThread.PowerShellInterface.Dispose()
                     $CompletedThread.PowerShellInterface = $null
                     $CompletedThread.Handle = $null

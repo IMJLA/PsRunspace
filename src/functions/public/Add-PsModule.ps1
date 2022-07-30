@@ -33,17 +33,17 @@ function Add-PsModule {
 
             switch ($ThisModule.ModuleType) {
                 'Binary' {
-                    Write-Debug "`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
+                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsModule`t`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
                     $InitialSessionState.ImportPSModule($ThisModule.Name)
                 }
                 'Script' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 'Manifest' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 default {

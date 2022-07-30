@@ -61,7 +61,7 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        Write-Debug "Open-Thread received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread"
+        Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`tReceived $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread"
 
     }
     process {
@@ -76,13 +76,13 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
-            Write-Debug '$PowershellInterface = [powershell]::Create()'
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface = [powershell]::Create()"
             $PowershellInterface = [powershell]::Create()
 
-            Write-Debug '$PowershellInterface.RunspacePool = $RunspacePool'
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.RunspacePool = `$RunspacePool"
             $PowershellInterface.RunspacePool = $RunspacePool
 
-            Write-Debug '$PowershellInterface.Commands.Clear()'
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t'`$PowershellInterface.Commands.Clear()"
             $null = $PowershellInterface.Commands.Clear()
 
             ForEach ($ThisCommandInfo in $CommandInfo) {
@@ -92,18 +92,18 @@ function Open-Thread {
             $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
 
             If (!([string]::IsNullOrEmpty($InputParameter))) {
-                Write-Debug "`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString')"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString')"
                 $null = $PowershellInterface.AddParameter($InputParameter, $Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "-$InputParameter '$ObjectString'"
             } Else {
-                Write-Debug "`$PowershellInterface.AddArgument('$ObjectString')"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddArgument('$ObjectString')"
                 $null = $PowershellInterface.AddArgument($Object)
                 <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "'$ObjectString'"
             }
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
-                Write-Debug "`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)')"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)')"
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
@@ -111,7 +111,7 @@ function Open-Thread {
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
-                Write-Debug "`$PowershellInterface.AddParameter('$Switch')"
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$Switch')"
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
@@ -125,7 +125,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
-            Write-Debug "`$Handle = `$PowershellInterface.BeginInvoke()"
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke()"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{
