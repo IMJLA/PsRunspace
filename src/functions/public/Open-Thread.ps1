@@ -63,6 +63,56 @@ function Open-Thread {
         $ThreadCount = @($InputObject).Count
         Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t# Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread for '$Command'"
 
+        if ($CommandInfo) {
+            <#
+            #TODO: This works but it inefficiently waits for each to finish before beginning the next.
+            #      Could rework to break out of this function after only BeginInboke for each thread, and use Wait-Thread with Dispose set to false
+            #      That would still be inefficient, instead I have opted to manually build the definitions into a string that represents a single script
+            #      This script string will be passed to AddScript()
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # to preload command definitions for '$ObjectString'"
+            $Handle = $PowershellInterface.BeginInvoke()
+            while ($Handle.IsCompleted -eq $false) {
+                Start-Sleep -Milliseconds 200
+            }
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowerShellInterface.Streams.ClearStreams() # after preloading command definitions for '$($ObjectString)'"
+            $null = $PowerShellInterface.Streams.ClearStreams()
+
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowerShellInterface.EndInvoke(`$Handle) # after preloading command definitions for '$($ObjectString)'"
+            $null = $PowerShellInterface.EndInvoke($Handle)
+
+            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # after preloading command definitions for '$ObjectString'"
+            $null = $PowershellInterface.Commands.Clear()
+            #>
+
+            $ScriptDefinition = [System.Text.StringBuilder]::new()
+            $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
+
+            # Build the param block of the script
+            $null = $ScriptDefinition.AppendLine('param (')
+            If ( -not [string]::IsNullOrEmpty($InputParameter)) {
+                $null = $ScriptDefinition.Append("    `$$InputParameter")
+                $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$InputParameter")
+            }
+
+            ForEach ($ThisKey in $AddParam.Keys) {
+                $null = $ScriptDefinition.Append(",`r`n    `$", $ThisKey)
+                $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
+            }
+
+            ForEach ($ThisSwitch in $AddSwitch) {
+                $null = $ScriptDefinition.Append(",`r`n    [switch]`$", $ThisSwitch)
+                $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
+            }
+            $null = $ScriptDefinition.AppendLine()
+            $null = $ScriptDefinition.AppendLine(')')
+            $null = $ScriptDefinition.AppendLine()
+            [string[]]$CommandDefinitions = Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo
+            $null = $ScriptDefinition.AppendJoin("`r`n", $CommandDefinitions)
+            $null = $ScriptDefinition.AppendLine()
+            $null = $ScriptDefinition.AppendJoin('', $CommandStringForScriptDefinition)
+            $ScriptString = $ScriptDefinition.ToString()
+        }
+
     }
     process {
 
@@ -86,55 +136,7 @@ function Open-Thread {
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
 
-            ######ForEach ($ThisCommandInfo in $CommandInfo) {
-            ######    $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
-            ######}
-            if ($CommandInfo) {
-                <#
-                #TODO: This inefficiently waits for each to finish before beginning the next.
-                #      Rework to break out of this function after only BeginInboke for each thread, and use Wait-Thread with Dispose set to false
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # to preload command definitions for '$ObjectString'"
-                $Handle = $PowershellInterface.BeginInvoke()
-                while ($Handle.IsCompleted -eq $false) {
-                    Start-Sleep -Milliseconds 200
-                }
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowerShellInterface.Streams.ClearStreams() # after preloading command definitions for '$($ObjectString)'"
-                $null = $PowerShellInterface.Streams.ClearStreams()
-
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowerShellInterface.EndInvoke(`$Handle) # after preloading command definitions for '$($ObjectString)'"
-                $null = $PowerShellInterface.EndInvoke($Handle)
-
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # after preloading command definitions for '$ObjectString'"
-                $null = $PowershellInterface.Commands.Clear()
-                #>
-
-                $ScriptDefinition = [System.Text.StringBuilder]::new()
-                $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
-
-                # Build the param block of the script
-                $null = $ScriptDefinition.AppendLine('param (')
-                If ( -not [string]::IsNullOrEmpty($InputParameter)) {
-                    $null = $ScriptDefinition.Append("    `$$InputParameter")
-                    $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$InputParameter")
-                }
-
-                ForEach ($ThisKey in $AddParam.Keys) {
-                    $null = $ScriptDefinition.Append(",`r`n    `$", $ThisKey)
-                    $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
-                }
-
-                ForEach ($ThisSwitch in $AddSwitch) {
-                    $null = $ScriptDefinition.Append(",`r`n    [switch]`$", $ThisSwitch)
-                    $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
-                }
-                $null = $ScriptDefinition.AppendLine()
-                $null = $ScriptDefinition.AppendLine(')')
-                $null = $ScriptDefinition.AppendLine()
-                [string[]]$CommandDefinitions = Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo
-                $null = $ScriptDefinition.AppendJoin("`r`n", $CommandDefinitions)
-                $null = $ScriptDefinition.AppendLine()
-                $null = $ScriptDefinition.AppendJoin('', $CommandStringForScriptDefinition)
-                $ScriptString = $ScriptDefinition.ToString()
+            if ($ScriptString) {
                 $null = Add-PsCommand -Command $ScriptString -PowershellInterface $PowershellInterface -Force
             } else {
                 $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
