@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.64] - 2022-07-30 - Implemented a single AddScript for loading all function definitions passed as PsCommandInfos
+
 ## [1.0.63] - 2022-07-30 - More uniform debug output messages
 
 ## [1.0.62] - 2022-07-30 - More uniform debug output messages

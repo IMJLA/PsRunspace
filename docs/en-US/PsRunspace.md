@@ -1,8 +1,8 @@
 ---
 Module Name: PsRunspace
-Module Guid: bd092585-90cf-4df3-8d14-ee2b5bb548a6 00000000-0000-0000-0000-000000000000
+Module Guid: bd092585-90cf-4df3-8d14-ee2b5bb548a6 bd092585-90cf-4df3-8d14-ee2b5bb548a6
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.63
+Help Version: 1.0.64
 Locale: en-US
 ---
 
@@ -16,6 +16,11 @@ Add a command to a [System.Management.Automation.PowerShell] instance
 
 ### [Add-PsModule](Add-PsModule.md)
 Import a Module in a [System.Management.Automation.Runspaces.InitialSessionState] instance
+
+### [Convert-FromPsCommandInfoToString](Convert-FromPsCommandInfoToString.md)
+
+Convert-FromPsCommandInfoToString [-CommandInfo] <psobject[]> [<CommonParameters>]
+
 
 ### [Expand-PsCommandInfo](Expand-PsCommandInfo.md)
 Return the original PsCommandInfo object as well as CommandInfo objects for any nested commands

@@ -70,18 +70,18 @@ function Add-PsCommand {
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
                         <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
                         Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}')"
-                        $null = $ThisPowershell.AddStatement().AddScript($ThisFunction)
+                        $null = $ThisPowershell.AddScript($ThisFunction)
                     }
                 }
                 'ExternalScript' {
                     <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
-                    $null = $ThisPowershell.AddStatement().AddScript($CommandInfo.ScriptBlock)
+                    $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 'ScriptBlock' {
                     <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t`$PowershellInterface.AddScript('$Command')"
-                    $null = $ThisPowershell.AddStatement().AddScript($Command)
+                    $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
                     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsCommand`t# Adding command '$Command' of type '$($CommandInfo.CommandType)'"
@@ -150,6 +150,41 @@ function Add-PsModule {
         }
     }
 
+}
+function Convert-FromPsCommandInfoToString {
+    param (
+        [Parameter (
+            Mandatory,
+            Position = 0
+        )]
+        [PSCustomObject[]]$CommandInfo
+    )
+    process {
+        ForEach ($ThisCmd in $CommandInfo) {
+
+            switch ($ThisCmd.CommandType) {
+
+                'Alias' {
+                    # Resolve the alias to its command and start from the beginning with that command
+                    $ThisCmd = Get-PsCommandInfo -Command $ThisCmd.CommandInfo.Definition
+                    Convert-FromPsCommandInfoToString -CommandInfo $ThisCmd
+                }
+                'Function' {
+                    "function $($ThisCmd.CommandInfo.Name) {`r`n$($ThisCmd.CommandInfo.Definition)`r`n}"
+                }
+                'ExternalScript' {
+                    "$($ThisCmd.ScriptBlock)"
+                }
+                'ScriptBlock' {
+                    "$Command"
+                }
+                default {
+                    "$Command"
+                }
+
+            }
+        }
+    }
 }
 function Expand-PsCommandInfo {
 
@@ -391,11 +426,11 @@ function Open-Thread {
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
 
-            ForEach ($ThisCommandInfo in $CommandInfo) {
-                $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
-            }
-            <#
+            ######ForEach ($ThisCommandInfo in $CommandInfo) {
+            ######    $null = Add-PsCommand -Command $ThisCommandInfo.CommandInfo.Name -CommandInfo $ThisCommandInfo -PowershellInterface $PowershellInterface
+            ######}
             if ($CommandInfo) {
+                <#
                 #TODO: This inefficiently waits for each to finish before beginning the next.
                 #      Rework to break out of this function after only BeginInboke for each thread, and use Wait-Thread with Dispose set to false
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # to preload command definitions for '$ObjectString'"
@@ -411,19 +446,55 @@ function Open-Thread {
 
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # after preloading command definitions for '$ObjectString'"
                 $null = $PowershellInterface.Commands.Clear()
+                #>
+
+                $ScriptDefinition = [System.Text.StringBuilder]::new()
+                $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
+
+                # Build the param block of the script
+                $null = $ScriptDefinition.AppendLine('param (')
+                If ( -not [string]::IsNullOrEmpty($InputParameter)) {
+                    $null = $ScriptDefinition.Append("    `$$InputParameter")
+                    $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$InputParameter")
+                }
+
+                if ($AddParam) {
+                    $null = $ScriptDefinition.AppendLine(",")
+                    $null = $ScriptDefinition.AppendJoin(",`r`n    `$", $AddParam.Keys)
+
+                    ForEach ($ThisKey in $AddParam.Keys) {
+                        $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
+                    }
+                }
+
+                if ($AddSwitch) {
+                    $null = $ScriptDefinition.AppendLine(",")
+                    $null = $ScriptDefinition.AppendJoin(",`r`n    [switch]`$", $AddSwitch)
+
+                    ForEach ($ThisSwitch in $AddSwitch) {
+                        $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
+                    }
+                }
+
+                $null = $ScriptDefinition.AppendLine(')')
+                $null = $ScriptDefinition.AppendLine()
+                [string[]]$CommandDefinitions = Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo
+                $null = $ScriptDefinition.AppendJoin("`r`n", $CommandDefinitions)
+                $null = $ScriptDefinition.AppendJoin('', $CommandStringForScriptDefinition)
+                $ScriptString = $ScriptDefinition.ToString()
+                $null = Add-PsCommand -Command $ScriptString -PowershellInterface $PowershellInterface -Force
+            } else {
+                $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
             }
-            #>
 
-            $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
-
-            If (!([string]::IsNullOrEmpty($InputParameter))) {
-                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
-                $null = $PowershellInterface.AddParameter($InputParameter, $Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "-$InputParameter '$ObjectString'"
-            } Else {
+            If ([string]::IsNullOrEmpty($InputParameter)) {
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddArgument('$ObjectString') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddArgument($Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "'$ObjectString'"
+                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "'$ObjectString'"
+            } Else {
+                Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
+                $null = $PowershellInterface.AddParameter($InputParameter, $Object)
+                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
             }
 
             $AdditionalParameters = @()
@@ -442,7 +513,7 @@ function Open-Thread {
             }
             $SwitchParameterString = $Switches -join ' '
 
-            $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterString $AdditionalParametersString $SwitchParameterString"
+            $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterStringForDebug $AdditionalParametersString $SwitchParameterString"
             $Progress = @{
                 Activity        = $StatusString
                 PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
@@ -862,7 +933,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

@@ -12,7 +12,7 @@
     RootModule        = 'PsRunspace'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.63'
+    ModuleVersion     = '1.0.64'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -69,7 +69,7 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = @('Add-PsCommand','Add-PsModule','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+    FunctionsToExport = @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = '*'
