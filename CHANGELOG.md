@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.75] - 2022-07-30 - removed commented legacy code causing bug in open-thread...my fault for lazy find/replace en masse
+
 ## [1.0.74] - 2022-07-30 - Corrected indentation alignment on commented debug output lines
 
 ## [1.0.73] - 2022-07-30 - Commentd debug output in prep for merge back to main
