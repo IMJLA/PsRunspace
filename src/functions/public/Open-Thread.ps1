@@ -38,7 +38,7 @@ function Open-Thread {
         $Command,
 
         # Output from Get-PsCommandInfo
-        [pscustomobject]$CommandInfo,
+        [pscustomobject[]]$CommandInfo,
 
         # Named parameter of the Command to pass InputObject to
         # If this is not specified, InputObject will be passed to the Command as an argument
@@ -59,8 +59,68 @@ function Open-Thread {
 
     begin {
 
+        $TodaysHostname = HOSTNAME.EXE
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
+       <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t# Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread for '$Command'"
+
+        if ($CommandInfo) {
+            <#
+            #TODO: This works but it inefficiently waits for each to finish before beginning the next.
+            #      Could rework to break out of this function after only BeginInboke for each thread, and use Wait-Thread with Dispose set to false
+            #      That would still be inefficient, instead I have opted to manually build the definitions into a string that represents a single script
+            #      This script string will be passed to AddScript()
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # to preload command definitions for '$ObjectString'"
+            $Handle = $PowershellInterface.BeginInvoke()
+            while ($Handle.IsCompleted -eq $false) {
+                Start-Sleep -Milliseconds 200
+            }
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowerShellInterface.Streams.ClearStreams() # after preloading command definitions for '$($ObjectString)'"
+            $null = $PowerShellInterface.Streams.ClearStreams()
+
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowerShellInterface.EndInvoke(`$Handle) # after preloading command definitions for '$($ObjectString)'"
+            $null = $PowerShellInterface.EndInvoke($Handle)
+
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # after preloading command definitions for '$ObjectString'"
+            $null = $PowershellInterface.Commands.Clear()
+            #>
+
+            # Begin to build the command that the script will run with all its parameters
+            $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
+
+            # Build the param block of the script. Along the way, add any necessary parameters and switches
+            # Avoided using AppendJoin for slight performance and code readability penalty due to lack of support in PS 5.1
+            $ScriptDefinition = [System.Text.StringBuilder]::new()
+            $null = $ScriptDefinition.AppendLine('param (')
+            If ( -not [string]::IsNullOrEmpty($InputParameter)) {
+                $null = $ScriptDefinition.Append("    `$$InputParameter")
+                $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$$InputParameter")
+            }
+
+            ForEach ($ThisKey in $AddParam.Keys) {
+                $null = $ScriptDefinition.Append(",`r`n    `$$ThisKey")
+                $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
+            }
+
+            ForEach ($ThisSwitch in $AddSwitch) {
+                $null = $ScriptDefinition.Append(",`r`n    [switch]`$", $ThisSwitch)
+                $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
+            }
+            $null = $ScriptDefinition.AppendLine("`r`n)`r`n")
+            Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo |
+            ForEach-Object {
+                $null = $ScriptDefinition.AppendLine("`r`n$_")
+            }
+            $null = $ScriptDefinition.AppendLine()
+            $CommandStringForScriptDefinition |
+            ForEach-Object {
+                $null = $ScriptDefinition.AppendLine("`r`n$_")
+            }
+            $null = $ScriptDefinition.AppendLine()
+            $ScriptString = $ScriptDefinition.ToString()
+            $ScriptBlock = [scriptblock]::Create($ScriptString)
+        }
+
     }
     process {
 
@@ -69,27 +129,40 @@ function Open-Thread {
             $CurrentObjectIndex++
 
             if ($ObjectStringProperty -ne '') {
-                $ObjectString = $Object."$ObjectStringProperty"
+                [string]$ObjectString = $Object."$ObjectStringProperty"
             } else {
-                $ObjectString = $Object.ToString()
+                [string]$ObjectString = $Object.ToString()
             }
 
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface = [powershell]::Create() # for '$Command' on '$ObjectString'"
             $PowershellInterface = [powershell]::Create()
+
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.RunspacePool = `$RunspacePool # for '$Command' on '$ObjectString'"
             $PowershellInterface.RunspacePool = $RunspacePool
 
+            # Do I need this one?  What commands would be in there?
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
-            Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface
 
-            If (!([string]::IsNullOrEmpty($InputParameter))) {
-                $null = $PowershellInterface.AddParameter($InputParameter, $Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "-$InputParameter '$ObjectString'"
-            } Else {
+            if ($ScriptBlock) {
+                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force
+            } else {
+                $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
+            }
+
+            If ([string]::IsNullOrEmpty($InputParameter)) {
+               <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddArgument('$ObjectString') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddArgument($Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterString = "'$ObjectString'"
+                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "'$ObjectString'"
+            } Else {
+               <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
+                $null = $PowershellInterface.AddParameter($InputParameter, $Object)
+                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
             }
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
+               <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
@@ -97,13 +170,13 @@ function Open-Thread {
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
+               <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$Switch') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
             $SwitchParameterString = $Switches -join ' '
 
-            $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterString $AdditionalParametersString $SwitchParameterString"
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t$StatusString"
+            $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterStringForDebug $AdditionalParametersString $SwitchParameterString"
             $Progress = @{
                 Activity        = $StatusString
                 PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
@@ -111,6 +184,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
+           <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{

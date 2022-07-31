@@ -13,7 +13,7 @@ Add a command to a \[System.Management.Automation.PowerShell\] instance
 ## SYNTAX
 
 ```
-Add-PsCommand [-PowershellInterface <PowerShell[]>] [[-Command] <Object>] [-CommandInfo <PSObject>]
+Add-PsCommand [-PowershellInterface <PowerShell[]>] [[-Command] <Object>] [-CommandInfo <PSObject>] [-Force]
  [<CommonParameters>]
 ```
 
@@ -25,9 +25,10 @@ Uses AddScript() or AddStatement() and AddCommand() depending on the command
 
 ### EXAMPLE 1
 ```
-The following demonstrates sending a Cmdlet name to the -Command parameter
-    [powershell]::Create() | AddCommand -Command 'Write-Output'
+[powershell]::Create() | Add-PsCommand -Command 'Write-Output'
 ```
+
+Add a command by sending a Cmdlet name to the -Command parameter
 
 ## PARAMETERS
 
@@ -63,6 +64,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Add Commands rather than their definitions
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

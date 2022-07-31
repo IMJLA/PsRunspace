@@ -14,7 +14,7 @@ Prepares each thread so it is ready to execute a command and capture the output 
 
 ```
 Open-Thread [[-InputObject] <Object>] [-RunspacePool] <RunspacePool> [[-ObjectStringProperty] <String>]
- [-Command] <Object> [[-CommandInfo] <PSObject>] [[-InputParameter] <String>] [[-AddParam] <Hashtable>]
+ [-Command] <Object> [[-CommandInfo] <PSObject[]>] [[-InputParameter] <String>] [[-AddParam] <Hashtable>]
  [[-AddSwitch] <String[]>] [<CommonParameters>]
 ```
 
@@ -87,7 +87,7 @@ Accept wildcard characters: False
 Output from Get-PsCommandInfo
 
 ```yaml
-Type: System.Management.Automation.PSObject
+Type: System.Management.Automation.PSObject[]
 Parameter Sets: (All)
 Aliases:
 

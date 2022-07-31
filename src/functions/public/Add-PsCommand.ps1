@@ -3,14 +3,13 @@ function Add-PsCommand {
     <#
     .Synopsis
         Add a command to a [System.Management.Automation.PowerShell] instance
-
     .Description
         Used by Invoke-Thread
         Uses AddScript() or AddStatement() and AddCommand() depending on the command
-
     .EXAMPLE
-        The following demonstrates sending a Cmdlet name to the -Command parameter
-            [powershell]::Create() | AddCommand -Command 'Write-Output'
+        [powershell]::Create() | Add-PsCommand -Command 'Write-Output'
+
+        Add a command by sending a Cmdlet name to the -Command parameter
     #>
 
     param(
@@ -32,17 +31,20 @@ function Add-PsCommand {
 
         # Output from Get-PsCommandInfo
         # Optional, to improve performance if it will be re-used for multiple calls of Add-PsCommand
-        [pscustomobject]$CommandInfo
+        [pscustomobject]$CommandInfo,
+
+        # Add Commands rather than their definitions
+        [switch]$Force
 
     )
 
     begin {
 
-        [int64]$CurrentObjectIndex = 0
-
         if ($CommandInfo -eq $null) {
             $CommandInfo = Get-PsCommandInfo -Command $Command
         }
+
+        $TodaysHostname = HOSTNAME.EXE
 
     }
     process {
@@ -54,20 +56,40 @@ function Add-PsCommand {
                 'Alias' {
                     # Resolve the alias to its command and start from the beginning with that command.
                     $CommandInfo = Get-PsCommandInfo -Command $CommandInfo.CommandInfo.Definition
-                    Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
+                    $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
                 }
                 'Function' {
-                    $ThisPowershell.AddScript($CommandInfo.CommandInfo.Definition)
-                }
-                'ScriptBlock' {
-                    $ThisPowershell.AddScript($Command)
+
+                    if ($Force) {
+                        <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                        # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
+                       <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddStatement().AddCommand('$Command')"
+                        $null = $ThisPowershell.AddStatement().AddCommand($Command)
+                    } else {
+                        # Add the definitions of the function
+                        # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
+                        [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
+                        <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
+                       <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}') # Function definition not expanded in debug message for brevity"
+                        $null = $ThisPowershell.AddScript($ThisFunction)
+                    }
                 }
                 'ExternalScript' {
-                    $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
+                    <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
+                   <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript(`"$($CommandInfo.ScriptBlock)`") # `$CommandInfo.ScriptBlock not expanded in debug message for brevity"
+                    $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
+                }
+                'ScriptBlock' {
+                    <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript('$Command')"
+                   <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript(`"`$Command`") # `$Command variable not expanded in debug message for brevity"
+                    $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
+                   <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t# Adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                    $ThisPowershell.AddStatement().AddCommand($Command)
+                   <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddStatement().AddCommand('$Command')"
+                    $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
 
             }

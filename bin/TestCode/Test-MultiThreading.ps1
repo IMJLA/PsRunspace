@@ -1,5 +1,8 @@
-﻿Remove-Module PsRunspace -ErrorAction SilentlyContinue *> $null
-Import-Module $PSScriptRoot\..\..\src\PsRunspace.psm1 #*> $null
+﻿
+$ModulePath = (Get-ChildItem -Path $PSScriptRoot\..\..\dist -Include *.psm1 -Recurse).FullName
+Remove-Module PsRunspace -ErrorAction SilentlyContinue *> $null
+Import-Module $ModulePath #*> $null
+
 
 #[string]$Folder = 'C:\Test'
 #$Samples = Get-ChildItem -Path $Folder -Recurse | Select -ExpandProperty FullName

@@ -4,15 +4,14 @@ param(
     [parameter(ParameterSetName = 'task', position = 0)]
     [string[]]$Task = 'default',
 
-    # Bootstrap dependencies
-    [switch]$Bootstrap,
+    [switch]$NoPublish,
 
     # List available build tasks
     [parameter(ParameterSetName = 'Help')]
     [switch]$Help,
 
     # Optional properties to pass to psake
-    [hashtable]$Properties,
+    [hashtable]$Properties = @{},
 
     # Optional parameters to pass to psake
     [hashtable]$Parameters,
@@ -29,19 +28,8 @@ if (!($PSBoundParameters.ContainsKey('Parameters'))) {
 }
 $Parameters['CommitMessage'] = $CommitMessage
 
-# Bootstrap dependencies
-if ($Bootstrap.IsPresent) {
-    Get-PackageProvider -Name Nuget -ForceBootstrap | Out-Null
-    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-    if ((Test-Path -Path ./requirements.psd1)) {
-        if (-not (Get-Module -Name PSDepend -ListAvailable)) {
-            Install-Module -Name PSDepend -Repository PSGallery -Scope CurrentUser -Force
-        }
-        Import-Module -Name PSDepend -Verbose:$false
-        Invoke-PSDepend -Path './requirements.psd1' -Install -Import -Force -WarningAction SilentlyContinue
-    } else {
-        Write-Warning 'No [requirements.psd1] found. Skipping build dependency installation.'
-    }
+if ($NoPublish) {
+    $Properties['NoPublish'] = $true
 }
 
 # Execute psake task(s)

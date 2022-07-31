@@ -2,7 +2,7 @@
 Module Name: PsRunspace
 Module Guid: bd092585-90cf-4df3-8d14-ee2b5bb548a6
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.19
+Help Version: 1.0.73
 Locale: en-US
 ---
 
@@ -13,6 +13,20 @@ Module for multithreading PowerShell commands using .Net Runspaces
 ## PsRunspace Cmdlets
 ### [Add-PsCommand](Add-PsCommand.md)
 Add a command to a [System.Management.Automation.PowerShell] instance
+
+### [Add-PsModule](Add-PsModule.md)
+Import a Module in a [System.Management.Automation.Runspaces.InitialSessionState] instance
+
+### [Convert-FromPsCommandInfoToString](Convert-FromPsCommandInfoToString.md)
+
+Convert-FromPsCommandInfoToString [-CommandInfo] <psobject[]> [<CommonParameters>]
+
+
+### [Expand-PsCommandInfo](Expand-PsCommandInfo.md)
+Return the original PsCommandInfo object as well as CommandInfo objects for any nested commands
+
+### [Expand-PsToken](Expand-PsToken.md)
+Recursively get nested tokens
 
 ### [Get-PsCommandInfo](Get-PsCommandInfo.md)
 Get info about a PowerShell command
