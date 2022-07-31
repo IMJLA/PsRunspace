@@ -111,6 +111,7 @@ function Open-Thread {
             $null = $ScriptDefinition.AppendLine()
             $null = $ScriptDefinition.AppendJoin('', $CommandStringForScriptDefinition)
             $ScriptString = $ScriptDefinition.ToString()
+            $ScriptBlock = [scriptblock]::Create($ScriptString)
         }
 
     }
@@ -136,8 +137,8 @@ function Open-Thread {
             Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
 
-            if ($ScriptString) {
-                $null = Add-PsCommand -Command $ScriptString -PowershellInterface $PowershellInterface -Force
+            if ($ScriptBlock) {
+                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force
             } else {
                 $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
             }
