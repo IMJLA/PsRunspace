@@ -458,28 +458,21 @@ function Open-Thread {
                     $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$InputParameter")
                 }
 
-                if ($AddParam) {
-                    $null = $ScriptDefinition.AppendLine(",")
-                    $null = $ScriptDefinition.AppendJoin(",`r`n    `$", $AddParam.Keys)
-
-                    ForEach ($ThisKey in $AddParam.Keys) {
-                        $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
-                    }
+                ForEach ($ThisKey in $AddParam.Keys) {
+                    $null = $ScriptDefinition.Append(",`r`n    `$", $ThisKey)
+                    $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
                 }
 
-                if ($AddSwitch) {
-                    $null = $ScriptDefinition.AppendLine(",")
-                    $null = $ScriptDefinition.AppendJoin(",`r`n    [switch]`$", $AddSwitch)
-
-                    ForEach ($ThisSwitch in $AddSwitch) {
-                        $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
-                    }
+                ForEach ($ThisSwitch in $AddSwitch) {
+                    $null = $ScriptDefinition.Append(",`r`n    [switch]`$", $ThisSwitch)
+                    $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
                 }
-
+                $null = $ScriptDefinition.AppendLine()
                 $null = $ScriptDefinition.AppendLine(')')
                 $null = $ScriptDefinition.AppendLine()
                 [string[]]$CommandDefinitions = Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo
                 $null = $ScriptDefinition.AppendJoin("`r`n", $CommandDefinitions)
+                $null = $ScriptDefinition.AppendLine()
                 $null = $ScriptDefinition.AppendJoin('', $CommandStringForScriptDefinition)
                 $ScriptString = $ScriptDefinition.ToString()
                 $null = Add-PsCommand -Command $ScriptString -PowershellInterface $PowershellInterface -Force
@@ -934,6 +927,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
