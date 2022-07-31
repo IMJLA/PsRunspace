@@ -75,7 +75,7 @@ function Wait-Thread {
         # If the threads have handles, we can check to see if they are complete.
         While (@($AllThreads | Where-Object -FilterScript { $null -ne $_.Handle }).Count -gt 0) {
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tStart-Sleep -Milliseconds `$SleepTimer # for '$CommandString'"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`tStart-Sleep -Milliseconds `$SleepTimer # for '$CommandString'"
             Start-Sleep -Milliseconds $SleepTimer
 
             if ($RunspacePool) { $AvailableRunspaces = $RunspacePool.GetAvailableRunspaces() }
@@ -97,10 +97,10 @@ function Wait-Thread {
 
             $ActiveThreadCountString = "$($Threads - $AvailableRunspaces) of $Threads are active"
 
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $ActiveThreadCountString for '$CommandString'"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThreads.Count) completed threads for '$CommandString'"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
-            Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $ActiveThreadCountString for '$CommandString'"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThreads.Count) completed threads for '$CommandString'"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
 
             $RemainingString = "$($IncompleteThreads.ObjectString)"
             If ($RemainingString.Length -gt 60) {
@@ -116,6 +116,7 @@ function Wait-Thread {
 
             ForEach ($CompletedThread in $CompletedThreads) {
 
+                # TODO: Debug these counts, something seems off, they vary wildly with Test-Multithreading.ps1 but I would expect consistency (same number of Warnings per thread)
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Progress.Count) Progress messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Information.Count) Information messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Verbose.Count) Verbose messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
