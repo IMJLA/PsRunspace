@@ -27,31 +27,39 @@ function Add-PsModule {
 
     )
 
+    begin {
+
+        $TodaysHostname = HOSTNAME.EXE
+
+    }
+
     process {
 
         ForEach ($ThisModule in $ModuleInfo) {
 
             switch ($ThisModule.ModuleType) {
                 'Binary' {
-                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsModule`t`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
+                    Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsModule`t`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
                     $InitialSessionState.ImportPSModule($ThisModule.Name)
                 }
                 'Script' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 'Manifest' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 default {
                     # Scriptblocks or Functions not from modules will have no module to import so ModuleInfo will be null
                 }
+
             }
 
         }
+
     }
 
 }

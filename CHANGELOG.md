@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.72] - 2022-07-30 - Removed repetitive calls to hostname.exe per function; placed single calls in begin blocks instead
+
 ## [1.0.71] - 2022-07-30 - Commented some of the most verbose debug output
 
 ## [1.0.70] - 2022-07-30 - Removed AppendJoin() usage from Open-Thread for PS 5.1 compat
