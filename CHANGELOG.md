@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.74] - 2022-07-30 - Corrected indentation alignment on commented debug output lines
+
 ## [1.0.73] - 2022-07-30 - Commentd debug output in prep for merge back to main
 
 ## [1.0.72] - 2022-07-30 - Removed repetitive calls to hostname.exe per function; placed single calls in begin blocks instead
