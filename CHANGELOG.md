@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.70] - 2022-07-30 - Removed AppendJoin() usage from Open-Thread for PS 5.1 compat
+
 ## [1.0.69] - 2022-07-30 - bugfix with ScriptDefinition.Append in Open-Thread
 
 ## [1.0.68] - 2022-07-30 - In Open-Thread, converted string to scriptblock to ensure AddScript instead of AddCommand by Add-PsCommand

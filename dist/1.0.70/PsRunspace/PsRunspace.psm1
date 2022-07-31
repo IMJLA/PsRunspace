@@ -424,10 +424,12 @@ function Open-Thread {
             $null = $PowershellInterface.Commands.Clear()
             #>
 
-            $ScriptDefinition = [System.Text.StringBuilder]::new()
+            # Begin to build the command that the script will run with all its parameters
             $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
 
-            # Build the param block of the script
+            # Build the param block of the script. Along the way, add any necessary parameters and switches
+            # Avoided using AppendJoin for slight performance and code readability penalty due to lack of support in PS 5.1
+            $ScriptDefinition = [System.Text.StringBuilder]::new()
             $null = $ScriptDefinition.AppendLine('param (')
             If ( -not [string]::IsNullOrEmpty($InputParameter)) {
                 $null = $ScriptDefinition.Append("    `$$InputParameter")
@@ -443,13 +445,17 @@ function Open-Thread {
                 $null = $ScriptDefinition.Append(",`r`n    [switch]`$", $ThisSwitch)
                 $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
             }
+            $null = $ScriptDefinition.AppendLine("`r`n)`r`n")
+            Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo |
+            ForEach-Object {
+                $null = $ScriptDefinition.AppendLine("`r`n$_")
+            }
             $null = $ScriptDefinition.AppendLine()
-            $null = $ScriptDefinition.AppendLine(')')
+            $CommandStringForScriptDefinition |
+            ForEach-Object {
+                $null = $ScriptDefinition.AppendLine("`r`n$_")
+            }
             $null = $ScriptDefinition.AppendLine()
-            [string[]]$CommandDefinitions = Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo
-            $null = $ScriptDefinition.AppendJoin("`r`n", $CommandDefinitions)
-            $null = $ScriptDefinition.AppendLine()
-            $null = $ScriptDefinition.AppendJoin('', $CommandStringForScriptDefinition)
             $ScriptString = $ScriptDefinition.ToString()
             $ScriptBlock = [scriptblock]::Create($ScriptString)
         }
@@ -930,6 +936,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
