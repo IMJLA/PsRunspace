@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.67] - 2022-07-30 - Bug fix in new AddScript feature
+
 ## [1.0.66] - 2022-07-30 - Moved AddScript feature to begin block of Open-Thread for efficiency
 
 ## [1.0.65] - 2022-07-30 - bug fix with new addscript feature in open-thread

@@ -431,7 +431,7 @@ function Open-Thread {
             $null = $ScriptDefinition.AppendLine('param (')
             If ( -not [string]::IsNullOrEmpty($InputParameter)) {
                 $null = $ScriptDefinition.Append("    `$$InputParameter")
-                $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$InputParameter")
+                $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$$InputParameter")
             }
 
             ForEach ($ThisKey in $AddParam.Keys) {
@@ -929,6 +929,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

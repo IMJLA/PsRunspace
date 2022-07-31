@@ -91,7 +91,7 @@ function Open-Thread {
             $null = $ScriptDefinition.AppendLine('param (')
             If ( -not [string]::IsNullOrEmpty($InputParameter)) {
                 $null = $ScriptDefinition.Append("    `$$InputParameter")
-                $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$InputParameter")
+                $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$$InputParameter")
             }
 
             ForEach ($ThisKey in $AddParam.Keys) {
