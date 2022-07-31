@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.69] - 2022-07-30 - bugfix with ScriptDefinition.Append in Open-Thread
+
 ## [1.0.68] - 2022-07-30 - In Open-Thread, converted string to scriptblock to ensure AddScript instead of AddCommand by Add-PsCommand
 
 ## [1.0.67] - 2022-07-30 - Bug fix in new AddScript feature

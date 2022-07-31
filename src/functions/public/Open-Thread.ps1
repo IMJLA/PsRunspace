@@ -95,7 +95,7 @@ function Open-Thread {
             }
 
             ForEach ($ThisKey in $AddParam.Keys) {
-                $null = $ScriptDefinition.Append(",`r`n    `$", $ThisKey)
+                $null = $ScriptDefinition.Append(",`r`n    `$$ThisKey")
                 $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
             }
 

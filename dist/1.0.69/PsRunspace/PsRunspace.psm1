@@ -435,7 +435,7 @@ function Open-Thread {
             }
 
             ForEach ($ThisKey in $AddParam.Keys) {
-                $null = $ScriptDefinition.Append(",`r`n    `$", $ThisKey)
+                $null = $ScriptDefinition.Append(",`r`n    `$$ThisKey")
                 $null = $CommandStringForScriptDefinition.Append(" -$ThisKey `$$ThisKey")
             }
 
@@ -930,6 +930,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
