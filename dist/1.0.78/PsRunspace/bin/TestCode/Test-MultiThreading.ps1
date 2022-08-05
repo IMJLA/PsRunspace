@@ -1,7 +1,13 @@
 ﻿
-$ModulePath = (Get-ChildItem -Path $PSScriptRoot\..\..\dist -Include *.psm1 -Recurse).FullName
+#$ModulePath = (Get-ChildItem -Path $PSScriptRoot\..\..\dist -Include *.psm1 -Recurse).FullName
+#Remove-Module PsRunspace -Force -ErrorAction SilentlyContinue *> $null
+#Import-Module $ModulePath #*> $null
+$SrcPath = (Get-ChildItem -Path $PSScriptRoot\..\..\src -Include *.ps1 -Recurse).FullName
 Remove-Module PsRunspace -Force -ErrorAction SilentlyContinue *> $null
-Import-Module $ModulePath #*> $null
+$SrcPath |
+ForEach-Object {
+    . $_
+}
 
 
 #[string]$Folder = 'C:\Test'

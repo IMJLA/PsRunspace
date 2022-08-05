@@ -24,7 +24,12 @@ function Expand-PsCommandInfo {
     $PsTokens = $null
     $TokenizerErrors = $null
     $AbstractSyntaxTree = [System.Management.Automation.Language.Parser]::ParseInput(
-        $PsCommandInfo.CommandInfo.Definition,
+        # We need the property which contains tokenizable PowerShell
+        # For a function in a ScriptModule, the definition and scriptblock properties are the same
+        # For an ExternalScript, the definition is the filepath and the scriptblock is tokenizable powershell
+        # This is why the Scriptblock property has been chosen
+        #$PsCommandInfo.CommandInfo.Definition,
+        $PsCommandInfo.CommandInfo.Scriptblock,
         [ref]$PsTokens,
         [ref]$TokenizerErrors
     )

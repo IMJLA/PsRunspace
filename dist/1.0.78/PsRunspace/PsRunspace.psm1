@@ -82,8 +82,8 @@ function Add-PsCommand {
                 }
                 'ScriptBlock' {
                     <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript('$Command')"
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript(`"`$Command`") # `$Command variable not expanded in debug message for brevity"
+                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript('$Command')"
+                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript(`"`$Command`") # `$Command variable not expanded in debug message for brevity"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
@@ -183,7 +183,9 @@ function Convert-FromPsCommandInfoToString {
                     "function $($ThisCmd.CommandInfo.Name) {`r`n$($ThisCmd.CommandInfo.Definition)`r`n}"
                 }
                 'ExternalScript' {
-                    "$($ThisCmd.CommandInfo.ScriptBlock)"
+                    "$($ThisCmd.ScriptBlock)"
+                    #"$($ThisCmd.CommandInfo.ScriptBlock)"
+                    #"$Command"
                 }
                 'ScriptBlock' {
                     "$Command"
@@ -222,7 +224,12 @@ function Expand-PsCommandInfo {
     $PsTokens = $null
     $TokenizerErrors = $null
     $AbstractSyntaxTree = [System.Management.Automation.Language.Parser]::ParseInput(
-        $PsCommandInfo.CommandInfo.Definition,
+        # We need the property which contains tokenizable PowerShell
+        # For a function in a ScriptModule, the definition and scriptblock properties are the same
+        # For an ExternalScript, the definition is the filepath and the scriptblock is tokenizable powershell
+        # This is why the Scriptblock property has been chosen
+        #$PsCommandInfo.CommandInfo.Definition,
+        $PsCommandInfo.CommandInfo.Scriptblock,
         [ref]$PsTokens,
         [ref]$TokenizerErrors
     )
@@ -341,7 +348,7 @@ function Get-PsCommandInfo {
             $ModuleInfo = Get-Module -Name $CommandInfo.Source -ListAvailable -ErrorAction SilentlyContinue
         } else {
             if ($CommandInfo.Source) {
-                <#NormallyCommentThisForPerformanceOptimization#>Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-PsCommandInfo`tGet-Module -Name '$Module'"
+                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-PsCommandInfo`tGet-Module -Name '$($CommandInfo.Source)'"
                 $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
             }
         }
@@ -433,13 +440,21 @@ function Open-Thread {
         if ($CommandInfo) {
 
             # Begin to build the command that the script will run with all its parameters
-            $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
+            if (Test-Path $Command -ErrorAction SilentlyContinue) {
+                # If $Command is a valid file path, dot-source it and wrap it in single quotes to handle spaces
+                $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new(". '$Command'")
+            } else {
+                $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
+            }
 
             # Build the param block of the script. Along the way, add any necessary parameters and switches
             # Avoided using AppendJoin for slight performance and code readability penalty due to lack of support in PS 5.1
             $ScriptDefinition = [System.Text.StringBuilder]::new()
             $null = $ScriptDefinition.AppendLine('param (')
-            If ( -not [string]::IsNullOrEmpty($InputParameter)) {
+            If ([string]::IsNullOrEmpty($InputParameter)) {
+                $null = $ScriptDefinition.Append("    `$PsRunspaceArgument1")
+                $null = $CommandStringForScriptDefinition.Append(" `$PsRunspaceArgument1")
+            } else {
                 $null = $ScriptDefinition.Append("    `$$InputParameter")
                 $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$$InputParameter")
             }
@@ -465,6 +480,13 @@ function Open-Thread {
             }
             $null = $ScriptDefinition.AppendLine()
             $ScriptString = $ScriptDefinition.ToString()
+
+            # Remove blank lines
+            # Commented out due to risk of unintended side effects: what if the code includes a here-string that requires blank lines, etc)
+            #while ( $ScriptString -match '\r\n\r\n' ) {
+            #    $ScriptString = $ScriptString -replace "`r`n`r`n", "`r`n"
+            #}
+
             $ScriptBlock = [scriptblock]::Create($ScriptString)
         }
 
@@ -497,15 +519,16 @@ function Open-Thread {
                 $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
             }
 
+            # Prepare to pass $InputObject into the runspace as a parameter not an argument
+            # Do this even if we end up passing it as an argument to the command inside the runspace
             If ([string]::IsNullOrEmpty($InputParameter)) {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddArgument('$ObjectString') # for '$Command' on '$ObjectString'"
-                $null = $PowershellInterface.AddArgument($Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "'$ObjectString'"
-            } Else {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
-                $null = $PowershellInterface.AddParameter($InputParameter, $Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
+                $InputParameter = 'PsRunspaceArgument1'
             }
+
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
+            $null = $PowershellInterface.AddParameter($InputParameter, $Object)
+            <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
+
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
@@ -956,6 +979,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

@@ -67,13 +67,21 @@ function Open-Thread {
         if ($CommandInfo) {
 
             # Begin to build the command that the script will run with all its parameters
-            $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
+            if (Test-Path $Command -ErrorAction SilentlyContinue) {
+                # If $Command is a valid file path, dot-source it and wrap it in single quotes to handle spaces
+                $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new(". '$Command'")
+            } else {
+                $CommandStringForScriptDefinition = [System.Text.StringBuilder]::new($Command)
+            }
 
             # Build the param block of the script. Along the way, add any necessary parameters and switches
             # Avoided using AppendJoin for slight performance and code readability penalty due to lack of support in PS 5.1
             $ScriptDefinition = [System.Text.StringBuilder]::new()
             $null = $ScriptDefinition.AppendLine('param (')
-            If ( -not [string]::IsNullOrEmpty($InputParameter)) {
+            If ([string]::IsNullOrEmpty($InputParameter)) {
+                $null = $ScriptDefinition.Append("    `$PsRunspaceArgument1")
+                $null = $CommandStringForScriptDefinition.Append(" `$PsRunspaceArgument1")
+            } else {
                 $null = $ScriptDefinition.Append("    `$$InputParameter")
                 $null = $CommandStringForScriptDefinition.Append(" -$InputParameter `$$InputParameter")
             }
@@ -99,6 +107,13 @@ function Open-Thread {
             }
             $null = $ScriptDefinition.AppendLine()
             $ScriptString = $ScriptDefinition.ToString()
+
+            # Remove blank lines
+            # Commented out due to risk of unintended side effects: what if the code includes a here-string that requires blank lines, etc)
+            #while ( $ScriptString -match '\r\n\r\n' ) {
+            #    $ScriptString = $ScriptString -replace "`r`n`r`n", "`r`n"
+            #}
+
             $ScriptBlock = [scriptblock]::Create($ScriptString)
         }
 
@@ -131,15 +146,16 @@ function Open-Thread {
                 $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
             }
 
+            # Prepare to pass $InputObject into the runspace as a parameter not an argument
+            # Do this even if we end up passing it as an argument to the command inside the runspace
             If ([string]::IsNullOrEmpty($InputParameter)) {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddArgument('$ObjectString') # for '$Command' on '$ObjectString'"
-                $null = $PowershellInterface.AddArgument($Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "'$ObjectString'"
-            } Else {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
-                $null = $PowershellInterface.AddParameter($InputParameter, $Object)
-                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
+                $InputParameter = 'PsRunspaceArgument1'
             }
+
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
+            $null = $PowershellInterface.AddParameter($InputParameter, $Object)
+            <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
+
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
