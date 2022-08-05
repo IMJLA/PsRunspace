@@ -147,7 +147,7 @@
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Add-PsModule</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>ModuleInfo</maml:name>
           <maml:description>
             <maml:para>ModuleInfo object for the module to add to the Powershell interface</maml:para>
@@ -186,7 +186,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>ModuleInfo</maml:name>
         <maml:description>
           <maml:para>ModuleInfo object for the module to add to the Powershell interface</maml:para>

@@ -14,7 +14,11 @@ function Expand-PsCommandInfo {
     )
 
     # Add the first object to the cache
-    $Cache[$PsCommandInfo.CommandInfo.Name] = $PsCommandInfo
+    if (-not $PsCommandInfo.CommandInfo.Name) {
+        $PsCommandInfo
+    } else {
+        $Cache[$PsCommandInfo.CommandInfo.Name] = $PsCommandInfo
+    }
 
     # Tokenize the function definition
     $PsTokens = $null

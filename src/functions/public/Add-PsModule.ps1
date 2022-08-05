@@ -20,7 +20,6 @@ function Add-PsModule {
         ModuleInfo object for the module to add to the Powershell interface
         #>
         [Parameter(
-            Mandatory,
             Position = 0
         )]
         [System.Management.Automation.PSModuleInfo[]]$ModuleInfo

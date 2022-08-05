@@ -33,8 +33,13 @@ function Get-PsCommandInfo {
     } else {
         $CommandInfo = Get-Command $Command -ErrorAction SilentlyContinue
         [string]$CommandType = $CommandInfo.CommandType
-        if ($CommandInfo.Source) {
-            $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
+        if ($CommandInfo.Source -like "*\*") {
+            $ModuleInfo = Get-Module -Name $CommandInfo.Source -ListAvailable -ErrorAction SilentlyContinue
+        } else {
+            if ($CommandInfo.Source) {
+                <#NormallyCommentThisForPerformanceOptimization#>Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-PsCommandInfo`tGet-Module -Name '$Module'"
+                $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
+            }
         }
     }
 

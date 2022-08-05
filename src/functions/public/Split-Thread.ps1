@@ -94,20 +94,25 @@ function Split-Thread {
 
         $OriginalCommandInfo = Get-PsCommandInfo -Command $Command
         <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Found 1 original PsCommandInfo for '$Command'"
+
         $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo
         <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos for '$Command' ($($CommandInfo.CommandInfo.Name -join ','))"
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
-        # This will also include any modules identified by tokenizing the -Command parameter or its definition, and recursing through all nested command tokens
         $ModulesToAdd = [System.Collections.Generic.List[System.Management.Automation.PSModuleInfo]]::new()
         ForEach ($Module in $AddModule) {
-            $ModuleObj = Get-Module $Module -ErrorAction SilentlyContinue
+            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`tGet-Module -Name '$Module'"
+            $ModuleObj = Get-Module -Name $Module -ErrorAction SilentlyContinue
             $null = $ModulesToAdd.Add($ModuleObj)
         }
 
-        $ModulesToAdd = $CommandInfo.ModuleInfo |
-        Sort-Object -Property Name -Unique
+        # This will also include any modules identified by tokenizing the -Command parameter or its definition, and recursing through all nested command tokens
+        $CommandInfo.ModuleInfo |
+        Sort-Object -Property Name -Unique |
+        ForEach-Object {
+            $null = $ModulesToAdd.Add($_)
+        }
 
         $CommandInfo = $CommandInfo |
         Where-Object -FilterScript {
@@ -116,7 +121,9 @@ function Split-Thread {
         }
         <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandInfo.CommandInfo.Name -join ','))"
 
-        $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
+        if ($ModulesToAdd.Count -gt 0) {
+            $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
+        }
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences
         $OutputStream = @('Debug', 'Verbose', 'Information', 'Warning', 'Error')

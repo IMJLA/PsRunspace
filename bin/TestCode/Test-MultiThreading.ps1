@@ -1,6 +1,6 @@
 ﻿
 $ModulePath = (Get-ChildItem -Path $PSScriptRoot\..\..\dist -Include *.psm1 -Recurse).FullName
-Remove-Module PsRunspace -ErrorAction SilentlyContinue *> $null
+Remove-Module PsRunspace -Force -ErrorAction SilentlyContinue *> $null
 Import-Module $ModulePath #*> $null
 
 
@@ -11,11 +11,11 @@ $Count = ($Samples | Measure-Object).Count
 
 #$Command = "Write-Output"
 #$Command = [scriptblock]::create("Write-Output `$args[0]")
-#$Command = "$PSScriptRoot\Test-Command.ps1"
+$Command = "$PSScriptRoot\Test-Command.ps1"
 
 Remove-Module TestModule -ErrorAction SilentlyContinue *> $null
 Import-Module $PSScriptRoot\TestModule\TestModule.psm1 *> $null
-$Command = "Test-Function"
+#$Command = "Test-Function"
 
 #$Start = Get-Date
 #$Samples | ForEach-Object {

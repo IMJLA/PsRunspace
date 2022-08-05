@@ -13,7 +13,7 @@ Import a Module in a \[System.Management.Automation.Runspaces.InitialSessionStat
 ## SYNTAX
 
 ```
-Add-PsModule -InitialSessionState <InitialSessionState> [-ModuleInfo] <PSModuleInfo[]> [<CommonParameters>]
+Add-PsModule -InitialSessionState <InitialSessionState> [[-ModuleInfo] <PSModuleInfo[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,7 +53,7 @@ Type: System.Management.Automation.PSModuleInfo[]
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
