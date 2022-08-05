@@ -183,7 +183,7 @@ function Convert-FromPsCommandInfoToString {
                     "function $($ThisCmd.CommandInfo.Name) {`r`n$($ThisCmd.CommandInfo.Definition)`r`n}"
                 }
                 'ExternalScript' {
-                    "$($ThisCmd.ScriptBlock)"
+                    "$($ThisCmd.CommandInfo.ScriptBlock)"
                 }
                 'ScriptBlock' {
                     "$Command"
@@ -347,13 +347,20 @@ function Get-PsCommandInfo {
         }
     }
 
+    if ($ModuleInfo.Path -like "*.ps1") {
+        $ModuleInfo = $null
+        $SourceModuleName = $null
+    } else {
+        $SourceModuleName = $CommandInfo.Source
+    }
+
     #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGet-PsCommandInfo`t$Command is a $CommandType"
     [pscustomobject]@{
         CommandInfo            = $CommandInfo
         ModuleInfo             = $ModuleInfo
         CommandType            = $CommandType
         SourceModuleDefinition = $ModuleInfo.Definition
-        SourceModuleName       = $CommandInfo.Source
+        SourceModuleName       = $SourceModuleName
     }
 
 }
@@ -949,6 +956,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

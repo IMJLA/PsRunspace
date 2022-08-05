@@ -20,7 +20,7 @@ function Convert-FromPsCommandInfoToString {
                     "function $($ThisCmd.CommandInfo.Name) {`r`n$($ThisCmd.CommandInfo.Definition)`r`n}"
                 }
                 'ExternalScript' {
-                    "$($ThisCmd.ScriptBlock)"
+                    "$($ThisCmd.CommandInfo.ScriptBlock)"
                 }
                 'ScriptBlock' {
                     "$Command"

@@ -43,13 +43,20 @@ function Get-PsCommandInfo {
         }
     }
 
+    if ($ModuleInfo.Path -like "*.ps1") {
+        $ModuleInfo = $null
+        $SourceModuleName = $null
+    } else {
+        $SourceModuleName = $CommandInfo.Source
+    }
+
     #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGet-PsCommandInfo`t$Command is a $CommandType"
     [pscustomobject]@{
         CommandInfo            = $CommandInfo
         ModuleInfo             = $ModuleInfo
         CommandType            = $CommandType
         SourceModuleDefinition = $ModuleInfo.Definition
-        SourceModuleName       = $CommandInfo.Source
+        SourceModuleName       = $SourceModuleName
     }
 
 }
