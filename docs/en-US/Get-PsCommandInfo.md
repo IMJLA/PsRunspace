@@ -13,7 +13,7 @@ Get info about a PowerShell command
 ## SYNTAX
 
 ```
-Get-PsCommandInfo [[-Command] <Object>]
+Get-PsCommandInfo [[-Command] <Object>] [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +48,36 @@ Aliases:
 Required: False
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: Silent
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TodaysHostname
+{{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: (HOSTNAME.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

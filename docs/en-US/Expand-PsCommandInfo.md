@@ -13,7 +13,8 @@ Return the original PsCommandInfo object as well as CommandInfo objects for any 
 ## SYNTAX
 
 ```
-Expand-PsCommandInfo [[-PsCommandInfo] <PSObject>] [[-Cache] <Hashtable>]
+Expand-PsCommandInfo [[-PsCommandInfo] <PSObject>] [[-Cache] <Hashtable>] [[-DebugOutputStream] <String>]
+ [[-TodaysHostname] <String>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +46,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: Silent
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PsCommandInfo
 CommandInfo object for the command whose nested command names to return
 
@@ -56,6 +72,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TodaysHostname
+{{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: (HOSTNAME.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

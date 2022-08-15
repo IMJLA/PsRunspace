@@ -13,7 +13,8 @@ Import a Module in a \[System.Management.Automation.Runspaces.InitialSessionStat
 ## SYNTAX
 
 ```
-Add-PsModule -InitialSessionState <InitialSessionState> [[-ModuleInfo] <PSModuleInfo[]>] [<CommonParameters>]
+Add-PsModule -InitialSessionState <InitialSessionState> [[-ModuleInfo] <PSModuleInfo[]>]
+ [-DebugOutputStream <String>] [-TodaysHostname <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,6 +30,21 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo
 ```
 
 ## PARAMETERS
+
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Silent
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -InitialSessionState
 Powershell interface to add the Command to
@@ -56,6 +72,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TodaysHostname
+{{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: (HOSTNAME.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

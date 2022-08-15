@@ -78,31 +78,40 @@ function Split-Thread {
         Name of a property (whose value is a string) that exists on each $InputObject and can be used to represent the object in text form
         If left null, the object's ToString() method will be used instead.
         #>
-        [string]$ObjectStringProperty
+        [string]$ObjectStringProperty,
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
 
     )
 
     begin {
 
-        $TodaysHostname = HOSTNAME.EXE
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Entered begin block for '$Command'"
+        $LogParams = @{
+            Type         = $DebugOutputStream
+            ThisHostname = $TodaysHostname
+        }
 
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
+        Write-LogMsg @LogParams -Text "  # Entered begin block for '$Command'"
+
+        Write-LogMsg @LogParams -Text "  `$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
 
-        $OriginalCommandInfo = Get-PsCommandInfo -Command $Command
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Found 1 original PsCommandInfo for '$Command'"
+        $OriginalCommandInfo = Get-PsCommandInfo -Command $Command -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+        Write-LogMsg @LogParams -Text "  # Found 1 original PsCommandInfo for '$Command'"
 
-        $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos for '$Command' ($($CommandInfo.CommandInfo.Name -join ','))"
+        $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+        Write-LogMsg @LogParams -Text "  # Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos for '$Command' ($($CommandInfo.CommandInfo.Name -join ','))"
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
         $ModulesToAdd = [System.Collections.Generic.List[System.Management.Automation.PSModuleInfo]]::new()
         ForEach ($Module in $AddModule) {
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`tGet-Module -Name '$Module'"
+            Write-LogMsg @LogParams -Text "  Get-Module -Name '$Module'"
             $ModuleObj = Get-Module -Name $Module -ErrorAction SilentlyContinue
             $null = $ModulesToAdd.Add($ModuleObj)
         }
@@ -119,10 +128,10 @@ function Split-Thread {
             $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name -and
             $_.CommandType -ne 'Cmdlet'
         }
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandInfo.CommandInfo.Name -join ','))"
+        Write-LogMsg @LogParams -Text "  # Found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandInfo.CommandInfo.Name -join ','))"
 
         if ($ModulesToAdd.Count -gt 0) {
-            $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd
+            $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
         }
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences
@@ -138,10 +147,9 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host) # for '$Command'"
+        Write-LogMsg @LogParams -Text "  `$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host) # for '$Command'"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
-        #####don'trememberwhythisishere#####$VerbosePreference = 'SilentlyContinue'
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t`$RunspacePool.Open() # for '$Command'"
+        Write-LogMsg @LogParams -Text "  `$RunspacePool.Open() # for '$Command'"
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -156,7 +164,7 @@ function Split-Thread {
         } else {
             $ObjectString = $InputObject.ToString()
         }
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Entered process block for '$Command' on '$ObjectString'"
+        Write-LogMsg @LogParams -Text "  # Entered process block for '$Command' on '$ObjectString'"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -165,8 +173,8 @@ function Split-Thread {
 
     }
     end {
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Entered end block for '$Command'"
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
+        Write-LogMsg @LogParams -Text "  # Entered end block for '$Command'"
+        Write-LogMsg @LogParams -Text "  # Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -176,21 +184,22 @@ function Split-Thread {
             ObjectStringProperty = $ObjectStringProperty
             CommandInfo          = $CommandInfo
             RunspacePool         = $RunspacePool
+            DebugOutputStream    = $DebugOutputStream
         }
         $AllThreads = Open-Thread @ThreadParameters
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t# Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
-        Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose
+        Write-LogMsg @LogParams -Text "  # Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
+        Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
         $VerbosePreference = 'Continue'
 
         if ($Global:TimedOut -eq $false) {
 
-            #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t[System.Management.Automation.Runspaces.RunspacePool]::Close()"
+            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Close()"
             $null = $RunspacePool.Close()
-            #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t[System.Management.Automation.Runspaces.RunspacePool]::Close() completed"
+            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Close() completed"
 
-            #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t[System.Management.Automation.Runspaces.RunspacePool]::Dispose()"
+            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Dispose()"
             $null = $RunspacePool.Dispose()
-            #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tSplit-Thread`t[System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed"
+            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed"
 
         }
 

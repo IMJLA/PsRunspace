@@ -10,7 +10,12 @@ function Expand-PsCommandInfo {
         [PSCustomObject]$PsCommandInfo,
 
         # Cache of already identified CommmandInfo objects
-        [hashtable]$Cache = [hashtable]::Synchronized(@{})
+        [hashtable]$Cache = [hashtable]::Synchronized(@{}),
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
     )
 
     # Add the first object to the cache
@@ -51,12 +56,12 @@ function Expand-PsCommandInfo {
             -not $Cache[$ThisCommandToken.Value] -and
             $ThisCommandToken.Value -notmatch '[\.\\]' # This excludes any file paths since they are not PowerShell commands with tokenizable definitions (they contain \ or .)
         ) {
-            $TokenCommandInfo = Get-PsCommandInfo -Command $ThisCommandToken.Value
+            $TokenCommandInfo = Get-PsCommandInfo -Command $ThisCommandToken.Value -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             $Cache[$ThisCommandToken.Value] = $TokenCommandInfo
 
             # Suppress the output of the Expand-PsCommandInfo function because we will instead be using the updated cache contents
             # This way the results are already deduplicated for us by the hashtable
-            $null = Expand-PsCommandInfo -PsCommandInfo $TokenCommandInfo -Cache $Cache
+            $null = Expand-PsCommandInfo -PsCommandInfo $TokenCommandInfo -Cache $Cache -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
         }
     }
 

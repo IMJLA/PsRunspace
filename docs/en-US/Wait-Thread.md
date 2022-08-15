@@ -14,7 +14,7 @@ Waits for a thread to be completed so the results can be returned, or for a time
 
 ```
 Wait-Thread [-Thread] <PSObject[]> [[-Threads] <Int32>] [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [-Dispose]
- [<CommonParameters>]
+ [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,6 +30,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: Silent
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Dispose
 Dispose of the thread when it is finished
@@ -102,6 +117,21 @@ Aliases:
 Required: False
 Position: 4
 Default value: 120
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TodaysHostname
+{{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: (HOSTNAME.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

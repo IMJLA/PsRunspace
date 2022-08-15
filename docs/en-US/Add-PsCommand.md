@@ -14,7 +14,7 @@ Add a command to a \[System.Management.Automation.PowerShell\] instance
 
 ```
 Add-PsCommand [-PowershellInterface <PowerShell[]>] [[-Command] <Object>] [-CommandInfo <PSObject>] [-Force]
- [<CommonParameters>]
+ [-DebugOutputStream <String>] [-TodaysHostname <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,6 +68,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Silent
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Force
 Add Commands rather than their definitions
 
@@ -95,6 +110,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -TodaysHostname
+{{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

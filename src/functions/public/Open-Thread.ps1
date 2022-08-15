@@ -53,16 +53,26 @@ function Open-Thread {
         [HashTable]$AddParam = @{},
 
         # Switches to add to the Command
-        [string[]]$AddSwitch = @()
+        [string[]]$AddSwitch = @(),
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
 
     )
 
     begin {
 
-        $TodaysHostname = HOSTNAME.EXE
+
+        $LogParams = @{
+            Type         = $DebugOutputStream
+            ThisHostname = $TodaysHostname
+        }
+
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t# Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread for '$Command'"
+        Write-LogMsg @LogParams -Text "  # Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread for '$Command'"
 
         if ($CommandInfo) {
 
@@ -96,7 +106,7 @@ function Open-Thread {
                 $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
             }
             $null = $ScriptDefinition.AppendLine("`r`n)`r`n")
-            Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo |
+            Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname |
             ForEach-Object {
                 $null = $ScriptDefinition.AppendLine("`r`n$_")
             }
@@ -130,20 +140,20 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface = [powershell]::Create() # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "  `$PowershellInterface = [powershell]::Create() # for '$Command' on '$ObjectString'"
             $PowershellInterface = [powershell]::Create()
 
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.RunspacePool = `$RunspacePool # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "  `$PowershellInterface.RunspacePool = `$RunspacePool # for '$Command' on '$ObjectString'"
             $PowershellInterface.RunspacePool = $RunspacePool
 
             # Do I need this one?  What commands would be in there?
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "  `$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
 
             if ($ScriptBlock) {
-                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force
+                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             } else {
-                $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force
+                $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             }
 
             # Prepare to pass $InputObject into the runspace as a parameter not an argument
@@ -152,14 +162,14 @@ function Open-Thread {
                 $InputParameter = 'PsRunspaceArgument1'
             }
 
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.AddParameter($InputParameter, $Object)
             <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
 
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)') # for '$Command' on '$ObjectString'"
+                Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
@@ -167,7 +177,7 @@ function Open-Thread {
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$PowershellInterface.AddParameter('$Switch') # for '$Command' on '$ObjectString'"
+                Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddParameter('$Switch') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
@@ -181,7 +191,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
-            <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tOpen-Thread`t`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "  `$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{

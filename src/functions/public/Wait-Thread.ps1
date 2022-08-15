@@ -33,7 +33,12 @@ function Wait-Thread {
         [int]$Timeout = 120,
 
         # Dispose of the thread when it is finished
-        [switch]$Dispose
+        [switch]$Dispose,
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
 
     )
 
@@ -50,7 +55,10 @@ function Wait-Thread {
 
         $CommandString = $FirstThread.Command
 
-        $TodaysHostname = HOSTNAME.EXE
+        $LogParams = @{
+            Type         = $DebugOutputStream
+            ThisHostname = $TodaysHostname
+        }
 
     }
 
@@ -61,7 +69,7 @@ function Wait-Thread {
             # If the threads do not have handles, there is nothing to wait for, so output the thread as-is.
             # Otherwise wait for the handle to indicate completion (or a timeout to be reached)
             if ($ThisThread.Handle -eq $false) {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t`$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($ThisThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  `$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($ThisThread.ObjectString)'"
                 $null = $ThisThread.PowerShellInterface.Streams.ClearStreams()
                 $ThisThread
             } else {
@@ -77,7 +85,7 @@ function Wait-Thread {
         # If the threads have handles, we can check to see if they are complete.
         While (@($AllThreads | Where-Object -FilterScript { $null -ne $_.Handle }).Count -gt 0) {
 
-            <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`tStart-Sleep -Milliseconds `$SleepTimer # for '$CommandString'"
+            Write-LogMsg @LogParams -Text "  Start-Sleep -Milliseconds `$SleepTimer # for '$CommandString'"
             Start-Sleep -Milliseconds $SleepTimer
 
             if ($RunspacePool) { $AvailableRunspaces = $RunspacePool.GetAvailableRunspaces() }
@@ -99,10 +107,10 @@ function Wait-Thread {
 
             $ActiveThreadCountString = "$($Threads - $AvailableRunspaces) of $Threads are active"
 
-            <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $ActiveThreadCountString for '$CommandString'"
-            <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($CompletedThreads.Count) completed threads for '$CommandString'"
-            <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
-            <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
+            Write-LogMsg @LogParams -Text "  # $ActiveThreadCountString for '$CommandString'"
+            Write-LogMsg @LogParams -Text "  # $($CompletedThreads.Count) completed threads for '$CommandString'"
+            Write-LogMsg @LogParams -Text "  # $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
+            Write-LogMsg @LogParams -Text "  # $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
 
             $RemainingString = "$($IncompleteThreads.ObjectString)"
             If ($RemainingString.Length -gt 60) {
@@ -119,11 +127,11 @@ function Wait-Thread {
             ForEach ($CompletedThread in $CompletedThreads) {
 
                 # TODO: Debug these counts, something seems off, they vary wildly with Test-Multithreading.ps1 but I would expect consistency (same number of Warnings per thread)
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Progress.Count) Progress messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Information.Count) Information messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Verbose.Count) Verbose messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Debug.Count) Debug messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t# $($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Progress.Count) Progress messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Information.Count) Information messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Verbose.Count) Verbose messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Debug.Count) Debug messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
 
                 # Because $Host was used to create the RunspacePool, any output to $Host (which includes Write-Host and Write-Information and Write-Progress) has already been displayed
                 #$CompletedThread.PowerShellInterface.Streams.Progress | ForEach-Object {Write-Progress "$_"}
@@ -132,26 +140,26 @@ function Wait-Thread {
                 #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug "$_" }
                 #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning "$_" }
 
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t`$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  `$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                 $null = $CompletedThread.PowerShellInterface.Streams.ClearStreams()
 
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t`$PowerShellInterface.EndInvoke(`$Handle) # for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "  `$PowerShellInterface.EndInvoke(`$Handle) # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                 $ThreadOutput = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
 
                 if ($Dispose -eq $true) {
-                    <#NormallyCommentThisForPerformanceOptimization#>##if (($ThreadOutput | Measure-Object).Count -gt 0) {
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`tOutput (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
-                    <#NormallyCommentThisForPerformanceOptimization#>##}
-                    <#NormallyCommentThisForPerformanceOptimization#>##else {
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`tNull result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
-                    <#NormallyCommentThisForPerformanceOptimization#>##}
+                    <#NormallyCommentThisForPerformanceOptimization#>## if (($ThreadOutput | Measure-Object).Count -gt 0) {
+                    <#NormallyCommentThisForPerformanceOptimization#>## Write-LogMsg @LogParams -Text "  # Output (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
+                    <#NormallyCommentThisForPerformanceOptimization#>## }
+                    <#NormallyCommentThisForPerformanceOptimization#>## else {
+                    <#NormallyCommentThisForPerformanceOptimization#>## Write-LogMsg @LogParams -Text "  # Null result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
+                    <#NormallyCommentThisForPerformanceOptimization#>## }
                     $ThreadOutput
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`t`$PowerShellInterface.Dispose() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                    Write-LogMsg @LogParams -Text "  `$PowerShellInterface.Dispose() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                     $null = $CompletedThread.PowerShellInterface.Dispose()
                     $CompletedThread.PowerShellInterface = $null
                     $CompletedThread.Handle = $null
                 } else {
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`tThread $($CompletedThread.Index) is finished opening for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                    Write-LogMsg @LogParams -Text "  # Thread $($CompletedThread.Index) is finished opening for '$CommandString' on '$($CompletedThread.ObjectString)'"
                     $CompletedThread.Handle = $null
                     $CompletedThread
                 }
@@ -163,7 +171,7 @@ function Wait-Thread {
 
             If ($StopWatch.ElapsedMilliseconds / 1000 -gt $Timeout) {
 
-                Write-Warning "$(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`tReached Timeout of $Timeout seconds. Skipping $($IncompleteThreads.Count) remaining threads: $RemainingString"
+                Write-Warning "  Reached Timeout of $Timeout seconds. Skipping $($IncompleteThreads.Count) remaining threads: $RemainingString"
 
                 $Global:TimedOut = $true
 
@@ -185,7 +193,7 @@ function Wait-Thread {
 
         $StopWatch.Stop()
 
-        #NormallyCommentThisForPerformanceOptimization#Write-Verbose "$(Get-Date -Format s)`t$TodaysHostname`tWait-Thread`tFinished waiting for threads"
+        Write-LogMsg @LogParams -Text "  # Finished waiting for threads"
         Write-Progress -Activity 'Completed' -Completed
 
     }

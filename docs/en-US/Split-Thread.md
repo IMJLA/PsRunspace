@@ -15,7 +15,8 @@ Split a command for a collection of input objects into multiple threads for asyn
 ```
 Split-Thread [-Command] <Object> [[-InputObject] <Object>] [[-InputParameter] <Object>] [[-Threads] <Int32>]
  [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [[-AddParam] <Hashtable>] [[-AddSwitch] <String[]>]
- [[-AddModule] <String[]>] [[-ObjectStringProperty] <String>] [<CommonParameters>]
+ [[-AddModule] <String[]>] [[-ObjectStringProperty] <String>] [[-DebugOutputStream] <String>]
+ [[-TodaysHostname] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -136,6 +137,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: Silent
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -InputObject
 Objects to pass to the Command as an argument or parameter
 
@@ -224,6 +240,21 @@ Aliases:
 Required: False
 Position: 6
 Default value: 120
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TodaysHostname
+{{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: (HOSTNAME.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

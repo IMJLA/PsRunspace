@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.79] - 2022-08-14 - Implemented PsLogMessage module
+
 ## [1.0.78] - 2022-08-05 - Completed bug fix when Command is a ps1 file
 
 ## [1.0.77] - 2022-08-05 - Bugfix in Convert-FromPsCommandInfoToString

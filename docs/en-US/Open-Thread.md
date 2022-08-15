@@ -15,7 +15,7 @@ Prepares each thread so it is ready to execute a command and capture the output 
 ```
 Open-Thread [[-InputObject] <Object>] [-RunspacePool] <RunspacePool> [[-ObjectStringProperty] <String>]
  [-Command] <Object> [[-CommandInfo] <PSObject[]>] [[-InputParameter] <String>] [[-AddParam] <Hashtable>]
- [[-AddSwitch] <String[]>] [<CommonParameters>]
+ [[-AddSwitch] <String[]>] [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -98,6 +98,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: Silent
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -InputObject
 Objects to pass to the Command as an argument or parameter
 
@@ -157,6 +172,21 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TodaysHostname
+{{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: (HOSTNAME.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

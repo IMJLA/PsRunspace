@@ -22,13 +22,21 @@ function Add-PsModule {
         [Parameter(
             Position = 0
         )]
-        [System.Management.Automation.PSModuleInfo[]]$ModuleInfo
+        [System.Management.Automation.PSModuleInfo[]]$ModuleInfo,
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
 
     )
 
     begin {
 
-        $TodaysHostname = HOSTNAME.EXE
+        $LogParams = @{
+            Type         = $DebugOutputStream
+            ThisHostname = $TodaysHostname
+        }
 
     }
 
@@ -38,17 +46,17 @@ function Add-PsModule {
 
             switch ($ThisModule.ModuleType) {
                 'Binary' {
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsModule`t`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
+                    Write-LogMsg @LogParams -Text "  `$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
                     $InitialSessionState.ImportPSModule($ThisModule.Name)
                 }
                 'Script' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-LogMsg @LogParams -Text "  `$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 'Manifest' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsModule`t`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-LogMsg @LogParams -Text "  `$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 default {

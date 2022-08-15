@@ -34,7 +34,12 @@ function Add-PsCommand {
         [pscustomobject]$CommandInfo,
 
         # Add Commands rather than their definitions
-        [switch]$Force
+        [switch]$Force,
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
 
     )
 
@@ -44,7 +49,10 @@ function Add-PsCommand {
             $CommandInfo = Get-PsCommandInfo -Command $Command
         }
 
-        $TodaysHostname = HOSTNAME.EXE
+        $LogParams = @{
+            Type         = $DebugOutputStream
+            ThisHostname = $TodaysHostname
+        }
 
     }
     process {
@@ -55,40 +63,42 @@ function Add-PsCommand {
 
                 'Alias' {
                     # Resolve the alias to its command and start from the beginning with that command.
-                    $CommandInfo = Get-PsCommandInfo -Command $CommandInfo.CommandInfo.Definition
-                    $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
+                    $CommandInfo = Get-PsCommandInfo -Command $CommandInfo.CommandInfo.Definition -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                    $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
                 }
                 'Function' {
 
                     if ($Force) {
-                        <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                        Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)'"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddStatement().AddCommand('$Command')"
+                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
                         $null = $ThisPowershell.AddStatement().AddCommand($Command)
                     } else {
                         # Add the definitions of the function
                         # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
-                        <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding Script (the Definition of a Function)"
-                        <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) {...}') # Function definition not expanded in debug message for brevity"
+                        Write-LogMsg @LogParams -Text "  # Adding Script (the Definition of a Function, `$CommandInfo.CommandInfo.Definition not expanded below for brevity)"
+                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
+                        #Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { $($CommandInfo.CommandInfo.Definition) }')"
                         $null = $ThisPowershell.AddScript($ThisFunction)
                     }
                 }
                 'ExternalScript' {
-                    <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding Script (the ScriptBlock of an ExternalScript)"
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript(`"$($CommandInfo.ScriptBlock)`") # `$CommandInfo.ScriptBlock not expanded in debug message for brevity"
+                    Write-LogMsg @LogParams -Text "   # Adding Script (the ScriptBlock of an ExternalScript, `$CommandInfo.ScriptBlock not expanded below for brevity)"
+                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$(`$CommandInfo.ScriptBlock)`") # "
+                    #Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 'ScriptBlock' {
-                    <#NormallyCommentThisForPerformanceOptimization#>###Write-Debug "Add-PsCommand adding Script (a ScriptBlock)"
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript('$Command')"
-                    <#NormallyCommentThisForPerformanceOptimization#>##Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddScript(`"`$Command`") # `$Command variable not expanded in debug message for brevity"
+                    Write-LogMsg @LogParams -Text "   # Adding Script (a ScriptBlock, not expanded below for brevity)"
+                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$Command`")
+                    #Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$Command')"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t# Adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                    Write-LogMsg @LogParams -Text "  # Adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                    <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tAdd-PsCommand`t`$PowershellInterface.AddStatement().AddCommand('$Command')"
+                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
 

@@ -24,9 +24,19 @@ function Get-PsCommandInfo {
             ExternalScript (the path to the .ps1 file)
             All, Application, Cmdlet, Configuration, Filter, or Script
         #>
-        $Command
+        $Command,
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
 
     )
+
+    $LogParams = @{
+        Type         = $DebugOutputStream
+        ThisHostname = $TodaysHostname
+    }
 
     if ($Command.GetType().FullName -eq 'System.Management.Automation.ScriptBlock') {
         [string]$CommandType = 'ScriptBlock'
@@ -37,7 +47,7 @@ function Get-PsCommandInfo {
             $ModuleInfo = Get-Module -Name $CommandInfo.Source -ListAvailable -ErrorAction SilentlyContinue
         } else {
             if ($CommandInfo.Source) {
-                <#NormallyCommentThisForPerformanceOptimization#>#Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-PsCommandInfo`tGet-Module -Name '$($CommandInfo.Source)'"
+                Write-LogMsg @LogParams -Text "  Get-Module -Name '$($CommandInfo.Source)'"
                 $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
             }
         }
@@ -50,7 +60,7 @@ function Get-PsCommandInfo {
         $SourceModuleName = $CommandInfo.Source
     }
 
-    #CommentedForPerformanceOptimization#Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGet-PsCommandInfo`t$Command is a $CommandType"
+    Write-LogMsg @LogParams -Text "  $Command is a $CommandType"
     [pscustomobject]@{
         CommandInfo            = $CommandInfo
         ModuleInfo             = $ModuleInfo

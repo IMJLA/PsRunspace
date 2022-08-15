@@ -1,8 +1,8 @@
 ---
 Module Name: PsRunspace
-Module Guid: bd092585-90cf-4df3-8d14-ee2b5bb548a6
+Module Guid: bd092585-90cf-4df3-8d14-ee2b5bb548a6 bd092585-90cf-4df3-8d14-ee2b5bb548a6
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.78
+Help Version: 1.0.79
 Locale: en-US
 ---
 
@@ -19,7 +19,7 @@ Import a Module in a [System.Management.Automation.Runspaces.InitialSessionState
 
 ### [Convert-FromPsCommandInfoToString](Convert-FromPsCommandInfoToString.md)
 
-Convert-FromPsCommandInfoToString [-CommandInfo] <psobject[]> [<CommonParameters>]
+Convert-FromPsCommandInfoToString [-CommandInfo] <psobject[]> [-DebugOutputStream <string>] [-TodaysHostname <string>] [<CommonParameters>]
 
 
 ### [Expand-PsCommandInfo](Expand-PsCommandInfo.md)

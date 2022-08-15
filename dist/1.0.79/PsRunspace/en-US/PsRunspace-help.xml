@@ -40,6 +40,18 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Silent</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
             <maml:para>Add Commands rather than their definitions</maml:para>
@@ -61,6 +73,18 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -90,6 +114,18 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Silent</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Force</maml:name>
         <maml:description>
           <maml:para>Add Commands rather than their definitions</maml:para>
@@ -112,6 +148,18 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -159,6 +207,18 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Silent</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>InitialSessionState</maml:name>
           <maml:description>
@@ -171,9 +231,33 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Silent</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>InitialSessionState</maml:name>
         <maml:description>
@@ -197,6 +281,18 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -245,6 +341,30 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill DebugOutputStream Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -256,6 +376,30 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
         <command:parameterValue required="true" variableLength="false">System.Management.Automation.PSObject[]</command:parameterValue>
         <dev:type>
           <maml:name>System.Management.Automation.PSObject[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill DebugOutputStream Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -336,6 +480,30 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
           </dev:type>
           <dev:defaultValue>[hashtable]::Synchronized(@{})</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Silent</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -351,6 +519,18 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
         </dev:type>
         <dev:defaultValue>[hashtable]::Synchronized(@{})</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Silent</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>PsCommandInfo</maml:name>
         <maml:description>
@@ -362,6 +542,18 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -479,6 +671,30 @@ Expand-PsToken</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Silent</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -493,6 +709,30 @@ Expand-PsToken</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Silent</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -541,6 +781,18 @@ Expand-PsToken</dev:code>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>RunspacePool</maml:name>
@@ -626,6 +878,18 @@ Expand-PsToken</dev:code>
           </dev:type>
           <dev:defaultValue>@()</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Silent</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -677,6 +941,18 @@ Expand-PsToken</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Silent</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
         <maml:name>InputObject</maml:name>
         <maml:description>
@@ -724,6 +1000,18 @@ Expand-PsToken</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -782,6 +1070,30 @@ Expand-PsToken</dev:code>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Silent</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="2" aliases="none">
           <maml:name>InputObject</maml:name>
@@ -930,6 +1242,18 @@ Expand-PsToken</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Silent</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="2" aliases="none">
         <maml:name>InputObject</maml:name>
         <maml:description>
@@ -1001,6 +1325,18 @@ Expand-PsToken</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>120</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -1131,6 +1467,30 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
           </dev:type>
           <dev:defaultValue>120</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>DebugOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Silent</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>TodaysHostname</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Dispose</maml:name>
           <maml:description>
@@ -1145,6 +1505,18 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>DebugOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Silent</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Dispose</maml:name>
         <maml:description>
@@ -1204,6 +1576,18 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>120</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>TodaysHostname</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill TodaysHostname Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>

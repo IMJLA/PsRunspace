@@ -4,7 +4,13 @@ function Convert-FromPsCommandInfoToString {
             Mandatory,
             Position = 0
         )]
-        [PSCustomObject[]]$CommandInfo
+        [PSCustomObject[]]$CommandInfo,
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        [string]$TodaysHostname = (HOSTNAME.EXE)
+
     )
     process {
         ForEach ($ThisCmd in $CommandInfo) {
@@ -13,8 +19,8 @@ function Convert-FromPsCommandInfoToString {
 
                 'Alias' {
                     # Resolve the alias to its command and start from the beginning with that command
-                    $ThisCmd = Get-PsCommandInfo -Command $ThisCmd.CommandInfo.Definition
-                    Convert-FromPsCommandInfoToString -CommandInfo $ThisCmd
+                    $ThisCmd = Get-PsCommandInfo -Command $ThisCmd.CommandInfo.Definition -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                    Convert-FromPsCommandInfoToString -CommandInfo $ThisCmd -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
                 }
                 'Function' {
                     "function $($ThisCmd.CommandInfo.Name) {`r`n$($ThisCmd.CommandInfo.Definition)`r`n}"
