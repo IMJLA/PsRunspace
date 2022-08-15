@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.81] - 2022-08-15 - Possible bug in Open-Thread?
+
 ## [1.0.80] - 2022-08-15 - Cannot decide on debug verbosity of Add-PsCommand
 
 ## [1.0.79] - 2022-08-14 - Implemented PsLogMessage module

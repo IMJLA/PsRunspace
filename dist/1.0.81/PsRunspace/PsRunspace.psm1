@@ -563,7 +563,8 @@ function Open-Thread {
             $null = $PowershellInterface.Commands.Clear()
 
             if ($ScriptBlock) {
-                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                #$null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             } else {
                 $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             }
@@ -1045,6 +1046,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
