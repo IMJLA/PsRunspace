@@ -68,7 +68,7 @@ function Add-PsCommand {
                 }
                 'Function' {
 
-                    if ($Force) {
+                    if ($PSBoundParameters.ContainsKey('Force')) {
                         Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a Command instead of a Function because -Force was used)"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                         Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"

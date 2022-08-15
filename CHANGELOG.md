@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.83] - 2022-08-15 - Bug fix in Add-PsCommandInfo
+
 ## [1.0.82] - 2022-08-15 - improved debug output of add-pscommand
 
 ## [1.0.81] - 2022-08-15 - Possible bug in Open-Thread?
