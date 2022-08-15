@@ -69,8 +69,8 @@ function Add-PsCommand {
                 }
                 'Function' {
 
-                    if ($PSBoundParameters.ContainsKey('Force')) {
-                        Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a Command instead of a Function because -Force was used)"
+                    if ($Force) {
+                        Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a command instead of a Function because -Force was used)"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                         Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
                         $null = $ThisPowershell.AddStatement().AddCommand($Command)
@@ -400,7 +400,7 @@ function Get-PsCommandInfo {
         $SourceModuleName = $CommandInfo.Source
     }
 
-    Write-LogMsg @LogParams -Text "  $Command is a $CommandType"
+    Write-LogMsg @LogParams -Text "   # $Command is a $CommandType"
     [pscustomobject]@{
         CommandInfo            = $CommandInfo
         ModuleInfo             = $ModuleInfo
@@ -563,10 +563,9 @@ function Open-Thread {
             $null = $PowershellInterface.Commands.Clear()
 
             if ($ScriptBlock) {
-                #$null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
-                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                $null = Add-PsCommand -Command $ScriptBlock -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             } else {
-                $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                $null = Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             }
 
             # Prepare to pass $InputObject into the runspace as a parameter not an argument
@@ -1046,6 +1045,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

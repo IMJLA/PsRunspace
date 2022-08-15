@@ -60,7 +60,7 @@ function Get-PsCommandInfo {
         $SourceModuleName = $CommandInfo.Source
     }
 
-    Write-LogMsg @LogParams -Text "  $Command is a $CommandType"
+    Write-LogMsg @LogParams -Text "   # $Command is a $CommandType"
     [pscustomobject]@{
         CommandInfo            = $CommandInfo
         ModuleInfo             = $ModuleInfo

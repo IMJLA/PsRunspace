@@ -151,10 +151,9 @@ function Open-Thread {
             $null = $PowershellInterface.Commands.Clear()
 
             if ($ScriptBlock) {
-                #$null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
-                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                $null = Add-PsCommand -Command $ScriptBlock -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             } else {
-                $null = Add-PsCommand -Command $Command -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                $null = Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
             }
 
             # Prepare to pass $InputObject into the runspace as a parameter not an argument
