@@ -78,21 +78,21 @@ function Add-PsCommand {
                         # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
                         Write-LogMsg @LogParams -Text "  # Adding Script (the Definition of a Function, `$CommandInfo.CommandInfo.Definition not expanded below for brevity)"
-                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
-                        #Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { $($CommandInfo.CommandInfo.Definition) }')"
+                        ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
+                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { $($CommandInfo.CommandInfo.Definition) }')"
                         $null = $ThisPowershell.AddScript($ThisFunction)
                     }
                 }
                 'ExternalScript' {
                     Write-LogMsg @LogParams -Text "   # Adding Script (the ScriptBlock of an ExternalScript, `$CommandInfo.ScriptBlock not expanded below for brevity)"
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$(`$CommandInfo.ScriptBlock)`") # "
-                    #Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
+                    ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$(`$CommandInfo.ScriptBlock)`") # "
+                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 'ScriptBlock' {
                     Write-LogMsg @LogParams -Text "   # Adding Script (a ScriptBlock, not expanded below for brevity)"
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$Command`")
-                    #Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$Command')"
+                    ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$Command`")
+                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$Command')"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
