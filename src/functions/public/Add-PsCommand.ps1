@@ -69,7 +69,7 @@ function Add-PsCommand {
                 'Function' {
 
                     if ($Force) {
-                        Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                        Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a Command instead of a Function because -Force was used)"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
                         Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
                         $null = $ThisPowershell.AddStatement().AddCommand($Command)
@@ -79,7 +79,7 @@ function Add-PsCommand {
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
                         Write-LogMsg @LogParams -Text "  # Adding Script (the Definition of a Function, `$CommandInfo.CommandInfo.Definition not expanded below for brevity)"
                         ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
-                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { $($CommandInfo.CommandInfo.Definition) }')"
+                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$ThisFunction')"
                         $null = $ThisPowershell.AddScript($ThisFunction)
                     }
                 }
