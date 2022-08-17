@@ -145,7 +145,7 @@ function Split-Thread {
         ForEach-Object {
             $null = $CommandsToAdd.Add($_)
         }
-        Write-LogMsg @LogParams -Text "  # Found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandInfo.CommandInfo.Name -join ','))"
+        Write-LogMsg @LogParams -Text "  # Found $(($CommandsToAdd | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandsToAdd.CommandInfo.Name -join ','))"
 
         if ($ModulesToAdd.Count -gt 0) {
             $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
@@ -191,7 +191,7 @@ function Split-Thread {
     }
     end {
         Write-LogMsg @LogParams -Text "  # Entered end block for '$Command'"
-        Write-LogMsg @LogParams -Text "  # Sending $(($CommandInfo | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
+        Write-LogMsg @LogParams -Text "  # Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -199,7 +199,7 @@ function Split-Thread {
             AddParam             = $AddParam
             AddSwitch            = $AddSwitch
             ObjectStringProperty = $ObjectStringProperty
-            CommandInfo          = $CommandInfo
+            CommandInfo          = $CommandsToAdd
             RunspacePool         = $RunspacePool
             DebugOutputStream    = $DebugOutputStream
         }
