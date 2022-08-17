@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.88] - 2022-08-17 - bug fix in split-thread not loading definition of non-module functions
+
 ## [1.0.87] - 2022-08-17 - bug fix in split-thread not loading definition of non-module functions
 
 ## [1.0.86] - 2022-08-17 - bug fix in split-thread not loading definition of non-module functions

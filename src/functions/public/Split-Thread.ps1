@@ -124,17 +124,13 @@ function Split-Thread {
         $ModulesToAdd = $ModulesToAdd |
         Sort-Object -Property Name -Unique
 
-        $CommandsToAdd = [System.Collections.Generic.List[System.Management.Automation.PSCustomObject]]::new()
-        $CommandInfo |
+        $CommandsToAdd = $CommandInfo |
         Where-Object -FilterScript {
             (
                 -not $_.ModuleInfo.Name -or
                 $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name
             ) -and
             $_.CommandType -ne 'Cmdlet'
-        } |
-        ForEach-Object {
-            $null = $CommandsToAdd.Add($_)
         }
         Write-LogMsg @LogParams -Text "  # Found $(($CommandsToAdd | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandsToAdd.CommandInfo.Name -join ','))"
 
