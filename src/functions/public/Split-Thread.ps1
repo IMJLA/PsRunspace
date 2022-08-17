@@ -117,10 +117,6 @@ function Split-Thread {
         }
 
         # This will also include any modules identified by tokenizing the -Command parameter or its definition, and recursing through all nested command tokens
-        $OriginalCommandInfo.ModuleInfo |
-        ForEach-Object {
-            $null = $ModulesToAdd.Add($_)
-        }
         $CommandInfo.ModuleInfo |
         ForEach-Object {
             $null = $ModulesToAdd.Add($_)
@@ -129,17 +125,12 @@ function Split-Thread {
         Sort-Object -Property Name -Unique
 
         $CommandsToAdd = [System.Collections.Generic.List[System.Management.Automation.PSCustomObject]]::new()
-        $OriginalCommandInfo |
-        Where-Object -FilterScript {
-            $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name -and
-            $_.CommandType -ne 'Cmdlet'
-        } |
-        ForEach-Object {
-            $null = $CommandsToAdd.Add($_)
-        }
         $CommandInfo |
         Where-Object -FilterScript {
-            $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name -and
+            (
+                -not $_.ModuleInfo.Name -or
+                $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name
+            ) -and
             $_.CommandType -ne 'Cmdlet'
         } |
         ForEach-Object {
