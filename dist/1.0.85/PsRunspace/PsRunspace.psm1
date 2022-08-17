@@ -497,7 +497,7 @@ function Open-Thread {
             }
 
             # Build the param block of the script. Along the way, add any necessary parameters and switches
-            # Avoided using AppendJoin for slight performance and code readability penalty due to lack of support in PS 5.1
+            # Avoided using AppendJoin. It would provide slight performance and code readability but lacks support in PS 5.1
             $ScriptDefinition = [System.Text.StringBuilder]::new()
             $null = $ScriptDefinition.AppendLine('param (')
             If ([string]::IsNullOrEmpty($InputParameter)) {
@@ -744,16 +744,33 @@ function Split-Thread {
         }
 
         # This will also include any modules identified by tokenizing the -Command parameter or its definition, and recursing through all nested command tokens
-        $CommandInfo.ModuleInfo |
-        Sort-Object -Property Name -Unique |
+        $OriginalCommandInfo.ModuleInfo |
         ForEach-Object {
             $null = $ModulesToAdd.Add($_)
         }
+        $CommandInfo.ModuleInfo |
+        ForEach-Object {
+            $null = $ModulesToAdd.Add($_)
+        }
+        $ModulesToAdd = $ModulesToAdd |
+        Sort-Object -Property Name -Unique
 
-        $CommandInfo = $CommandInfo |
+        $CommandsToAdd = [System.Collections.Generic.List[System.Management.Automation.PSCustomObject]]::new()
+        $OriginalCommandInfo |
         Where-Object -FilterScript {
             $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name -and
             $_.CommandType -ne 'Cmdlet'
+        } |
+        ForEach-Object {
+            $null = $CommandsToAdd.Add($_)
+        }
+        $CommandInfo |
+        Where-Object -FilterScript {
+            $ModulesToAdd.Name -notcontains $_.ModuleInfo.Name -and
+            $_.CommandType -ne 'Cmdlet'
+        } |
+        ForEach-Object {
+            $null = $CommandsToAdd.Add($_)
         }
         Write-LogMsg @LogParams -Text "  # Found $(($CommandInfo | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandInfo.CommandInfo.Name -join ','))"
 
@@ -1045,6 +1062,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

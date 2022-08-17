@@ -85,7 +85,7 @@ function Open-Thread {
             }
 
             # Build the param block of the script. Along the way, add any necessary parameters and switches
-            # Avoided using AppendJoin for slight performance and code readability penalty due to lack of support in PS 5.1
+            # Avoided using AppendJoin. It would provide slight performance and code readability but lacks support in PS 5.1
             $ScriptDefinition = [System.Text.StringBuilder]::new()
             $null = $ScriptDefinition.AppendLine('param (')
             If ([string]::IsNullOrEmpty($InputParameter)) {
