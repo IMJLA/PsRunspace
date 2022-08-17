@@ -94,18 +94,18 @@ function Split-Thread {
             ThisHostname = $TodaysHostname
         }
 
-        Write-LogMsg @LogParams -Text "  # Entered begin block for '$Command'"
+        Write-LogMsg @LogParams -Text " # Entered begin block for '$Command'"
 
-        Write-LogMsg @LogParams -Text "  `$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
+        Write-LogMsg @LogParams -Text "`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
         $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
 
         # Import the source module containing the specified Command in each thread
 
         $OriginalCommandInfo = Get-PsCommandInfo -Command $Command -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
-        Write-LogMsg @LogParams -Text "  # Found 1 original PsCommandInfo for '$Command'"
+        Write-LogMsg @LogParams -Text " # Found 1 original PsCommandInfo for '$Command'"
 
         $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
-        Write-LogMsg @LogParams -Text "  # Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos for '$Command' ($($CommandInfo.CommandInfo.Name -join ','))"
+        Write-LogMsg @LogParams -Text " # Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos for '$Command' ($($CommandInfo.CommandInfo.Name -join ','))"
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
@@ -132,7 +132,7 @@ function Split-Thread {
             ) -and
             $_.CommandType -ne 'Cmdlet'
         }
-        Write-LogMsg @LogParams -Text "  # Found $(($CommandsToAdd | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandsToAdd.CommandInfo.Name -join ','))"
+        Write-LogMsg @LogParams -Text " # Found $(($CommandsToAdd | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandsToAdd.CommandInfo.Name -join ','))"
 
         if ($ModulesToAdd.Count -gt 0) {
             $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
@@ -151,9 +151,9 @@ function Split-Thread {
             $InitialSessionState.Variables.Add($VariableEntry)
         }
 
-        Write-LogMsg @LogParams -Text "  `$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host) # for '$Command'"
+        Write-LogMsg @LogParams -Text "`$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, `$InitialSessionState, `$Host) # for '$Command'"
         $RunspacePool = [runspacefactory]::CreateRunspacePool(1, $Threads, $InitialSessionState, $Host)
-        Write-LogMsg @LogParams -Text "  `$RunspacePool.Open() # for '$Command'"
+        Write-LogMsg @LogParams -Text "`$RunspacePool.Open() # for '$Command'"
         $RunspacePool.Open()
 
         $Global:TimedOut = $false
@@ -168,7 +168,7 @@ function Split-Thread {
         } else {
             $ObjectString = $InputObject.ToString()
         }
-        Write-LogMsg @LogParams -Text "  # Entered process block for '$Command' on '$ObjectString'"
+        Write-LogMsg @LogParams -Text " # Entered process block for '$Command' on '$ObjectString'"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -177,8 +177,8 @@ function Split-Thread {
 
     }
     end {
-        Write-LogMsg @LogParams -Text "  # Entered end block for '$Command'"
-        Write-LogMsg @LogParams -Text "  # Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
+        Write-LogMsg @LogParams -Text " # Entered end block for '$Command'"
+        Write-LogMsg @LogParams -Text " # Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
@@ -197,13 +197,13 @@ function Split-Thread {
 
         if ($Global:TimedOut -eq $false) {
 
-            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Close()"
+            Write-LogMsg @LogParams -Text "[System.Management.Automation.Runspaces.RunspacePool]::Close()"
             $null = $RunspacePool.Close()
-            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Close() completed"
+            Write-LogMsg @LogParams -Text " # [System.Management.Automation.Runspaces.RunspacePool]::Close() completed"
 
-            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Dispose()"
+            Write-LogMsg @LogParams -Text "[System.Management.Automation.Runspaces.RunspacePool]::Dispose()"
             $null = $RunspacePool.Dispose()
-            Write-LogMsg @LogParams -Text "  [System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed"
+            Write-LogMsg @LogParams -Text " # [System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed"
 
         }
 

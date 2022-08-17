@@ -146,13 +146,13 @@ function Wait-Thread {
                 Write-LogMsg @LogParams -Text "  `$PowerShellInterface.EndInvoke(`$Handle) # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                 $ThreadOutput = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
 
+                if (@($ThreadOutput).Count -gt 0) {
+                    Write-LogMsg @LogParams -Text "  # Output (count of $(@($ThreadOutput).Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
+                } else {
+                    Write-LogMsg @LogParams -Text "  # Null result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
+                }
+
                 if ($Dispose -eq $true) {
-                    <#NormallyCommentThisForPerformanceOptimization#>## if (($ThreadOutput | Measure-Object).Count -gt 0) {
-                    <#NormallyCommentThisForPerformanceOptimization#>## Write-LogMsg @LogParams -Text "  # Output (count of $($ThreadOutput.Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
-                    <#NormallyCommentThisForPerformanceOptimization#>## }
-                    <#NormallyCommentThisForPerformanceOptimization#>## else {
-                    <#NormallyCommentThisForPerformanceOptimization#>## Write-LogMsg @LogParams -Text "  # Null result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
-                    <#NormallyCommentThisForPerformanceOptimization#>## }
                     $ThreadOutput
                     Write-LogMsg @LogParams -Text "  `$PowerShellInterface.Dispose() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                     $null = $CompletedThread.PowerShellInterface.Dispose()
