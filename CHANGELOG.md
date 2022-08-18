@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.91] - 2022-08-17 - bug fix in Open-Thread when scriptblock has been constructed don't send CommandInfo to Add-PsCommand
+
 ## [1.0.90] - 2022-08-17 - improved debug output
 
 ## [1.0.89] - 2022-08-17 - improved debug output
