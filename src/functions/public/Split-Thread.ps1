@@ -111,7 +111,7 @@ function Split-Thread {
         # This will include any modules specified by name with the -AddModule parameter
         $ModulesToAdd = [System.Collections.Generic.List[System.Management.Automation.PSModuleInfo]]::new()
         ForEach ($Module in $AddModule) {
-            Write-LogMsg @LogParams -Text "  Get-Module -Name '$Module'"
+            Write-LogMsg @LogParams -Text "Get-Module -Name '$Module'"
             $ModuleObj = Get-Module -Name $Module -ErrorAction SilentlyContinue
             $null = $ModulesToAdd.Add($ModuleObj)
         }
@@ -191,7 +191,7 @@ function Split-Thread {
             DebugOutputStream    = $DebugOutputStream
         }
         $AllThreads = Open-Thread @ThreadParameters
-        Write-LogMsg @LogParams -Text "  # Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
+        Write-LogMsg @LogParams -Text " # Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
         Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
         $VerbosePreference = 'Continue'
 

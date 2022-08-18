@@ -69,36 +69,36 @@ function Add-PsCommand {
                 'Function' {
 
                     if ($Force) {
-                        Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a command instead of a Function because -Force was used)"
+                        Write-LogMsg @LogParams -Text " # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a command instead of a Function because -Force was used)"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
+                        Write-LogMsg @LogParams -Text "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                         $null = $ThisPowershell.AddStatement().AddCommand($Command)
                     } else {
                         # Add the definitions of the function
                         # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
-                        Write-LogMsg @LogParams -Text "  # Adding Script (the Definition of a Function, `$CommandInfo.CommandInfo.Definition not expanded below for brevity)"
-                        ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
-                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$ThisFunction')"
+                        Write-LogMsg @LogParams -Text " # Adding Script (the Definition of a Function, `$CommandInfo.CommandInfo.Definition not expanded below for brevity)"
+                        ##Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
+                        Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('$ThisFunction')"
                         $null = $ThisPowershell.AddScript($ThisFunction)
                     }
                 }
                 'ExternalScript' {
-                    Write-LogMsg @LogParams -Text "   # Adding Script (the ScriptBlock of an ExternalScript, `$CommandInfo.ScriptBlock not expanded below for brevity)"
-                    ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$(`$CommandInfo.ScriptBlock)`") # "
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
+                    Write-LogMsg @LogParams -Text " # Adding Script (the ScriptBlock of an ExternalScript, `$CommandInfo.ScriptBlock not expanded below for brevity)"
+                    ##Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript(`"`$(`$CommandInfo.ScriptBlock)`") # "
+                    Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 'ScriptBlock' {
-                    Write-LogMsg @LogParams -Text "   # Adding Script (a ScriptBlock, not expanded below for brevity)"
-                    ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$Command`")
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$Command')"
+                    Write-LogMsg @LogParams -Text " # Adding Script (a ScriptBlock, not expanded below for brevity)"
+                    ##Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript(`"`$Command`")
+                    Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('$Command')"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
-                    Write-LogMsg @LogParams -Text "  # Adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                    Write-LogMsg @LogParams -Text " # Adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
+                    Write-LogMsg @LogParams -Text "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
 

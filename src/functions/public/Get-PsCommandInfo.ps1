@@ -47,7 +47,7 @@ function Get-PsCommandInfo {
             $ModuleInfo = Get-Module -Name $CommandInfo.Source -ListAvailable -ErrorAction SilentlyContinue
         } else {
             if ($CommandInfo.Source) {
-                Write-LogMsg @LogParams -Text "  Get-Module -Name '$($CommandInfo.Source)'"
+                Write-LogMsg @LogParams -Text "Get-Module -Name '$($CommandInfo.Source)'"
                 $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
             }
         }
@@ -60,7 +60,7 @@ function Get-PsCommandInfo {
         $SourceModuleName = $CommandInfo.Source
     }
 
-    Write-LogMsg @LogParams -Text "   # $Command is a $CommandType"
+    Write-LogMsg @LogParams -Text " # $Command is a $CommandType"
     [pscustomobject]@{
         CommandInfo            = $CommandInfo
         ModuleInfo             = $ModuleInfo

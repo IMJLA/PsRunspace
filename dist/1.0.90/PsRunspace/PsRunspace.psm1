@@ -70,36 +70,36 @@ function Add-PsCommand {
                 'Function' {
 
                     if ($Force) {
-                        Write-LogMsg @LogParams -Text "   # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a command instead of a Function because -Force was used)"
+                        Write-LogMsg @LogParams -Text " # Adding command '$Command' of type '$($CommandInfo.CommandType)' (treating it as a command instead of a Function because -Force was used)"
                         # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
+                        Write-LogMsg @LogParams -Text "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                         $null = $ThisPowershell.AddStatement().AddCommand($Command)
                     } else {
                         # Add the definitions of the function
                         # BUG: Look at the definition of Get-Member for example, it is not in a ScriptModule so its definition is not PowerShell code
                         [string]$ThisFunction = "function $($CommandInfo.CommandInfo.Name) {`r`n$($CommandInfo.CommandInfo.Definition)`r`n}"
-                        Write-LogMsg @LogParams -Text "  # Adding Script (the Definition of a Function, `$CommandInfo.CommandInfo.Definition not expanded below for brevity)"
-                        ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
-                        Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$ThisFunction')"
+                        Write-LogMsg @LogParams -Text " # Adding Script (the Definition of a Function, `$CommandInfo.CommandInfo.Definition not expanded below for brevity)"
+                        ##Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('function $($CommandInfo.CommandInfo.Name) { `$CommandInfo.CommandInfo.Definition }')"
+                        Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('$ThisFunction')"
                         $null = $ThisPowershell.AddScript($ThisFunction)
                     }
                 }
                 'ExternalScript' {
-                    Write-LogMsg @LogParams -Text "   # Adding Script (the ScriptBlock of an ExternalScript, `$CommandInfo.ScriptBlock not expanded below for brevity)"
-                    ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$(`$CommandInfo.ScriptBlock)`") # "
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
+                    Write-LogMsg @LogParams -Text " # Adding Script (the ScriptBlock of an ExternalScript, `$CommandInfo.ScriptBlock not expanded below for brevity)"
+                    ##Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript(`"`$(`$CommandInfo.ScriptBlock)`") # "
+                    Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('$($CommandInfo.ScriptBlock)')"
                     $null = $ThisPowershell.AddScript($CommandInfo.ScriptBlock)
                 }
                 'ScriptBlock' {
-                    Write-LogMsg @LogParams -Text "   # Adding Script (a ScriptBlock, not expanded below for brevity)"
-                    ##Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript(`"`$Command`")
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddScript('$Command')"
+                    Write-LogMsg @LogParams -Text " # Adding Script (a ScriptBlock, not expanded below for brevity)"
+                    ##Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript(`"`$Command`")
+                    Write-LogMsg @LogParams -Text "`$PowershellInterface.AddScript('$Command')"
                     $null = $ThisPowershell.AddScript($Command)
                 }
                 default {
-                    Write-LogMsg @LogParams -Text "  # Adding command '$Command' of type '$($CommandInfo.CommandType)'"
+                    Write-LogMsg @LogParams -Text " # Adding command '$Command' of type '$($CommandInfo.CommandType)'"
                     # If the type is All, Application, Cmdlet, Configuration, Filter, or Script then run the command as-is
-                    Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddStatement().AddCommand('$Command')"
+                    Write-LogMsg @LogParams -Text "`$PowershellInterface.AddStatement().AddCommand('$Command')"
                     $null = $ThisPowershell.AddStatement().AddCommand($Command)
                 }
 
@@ -155,17 +155,17 @@ function Add-PsModule {
 
             switch ($ThisModule.ModuleType) {
                 'Binary' {
-                    Write-LogMsg @LogParams -Text "  `$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
+                    Write-LogMsg @LogParams -Text "`$InitialSessionState.ImportPSModule('$($ThisModule.Name)')"
                     $InitialSessionState.ImportPSModule($ThisModule.Name)
                 }
                 'Script' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-LogMsg @LogParams -Text "  `$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-LogMsg @LogParams -Text "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 'Manifest' {
                     $ModulePath = Split-Path -Path $ThisModule.Path -Parent
-                    Write-LogMsg @LogParams -Text "  `$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
+                    Write-LogMsg @LogParams -Text "`$InitialSessionState.ImportPSModulesFromPath('$ModulePath')"
                     $InitialSessionState.ImportPSModulesFromPath($ModulePath)
                 }
                 default {
@@ -387,7 +387,7 @@ function Get-PsCommandInfo {
             $ModuleInfo = Get-Module -Name $CommandInfo.Source -ListAvailable -ErrorAction SilentlyContinue
         } else {
             if ($CommandInfo.Source) {
-                Write-LogMsg @LogParams -Text "  Get-Module -Name '$($CommandInfo.Source)'"
+                Write-LogMsg @LogParams -Text "Get-Module -Name '$($CommandInfo.Source)'"
                 $ModuleInfo = Get-Module -Name $CommandInfo.Source -ErrorAction SilentlyContinue
             }
         }
@@ -400,7 +400,7 @@ function Get-PsCommandInfo {
         $SourceModuleName = $CommandInfo.Source
     }
 
-    Write-LogMsg @LogParams -Text "   # $Command is a $CommandType"
+    Write-LogMsg @LogParams -Text " # $Command is a $CommandType"
     [pscustomobject]@{
         CommandInfo            = $CommandInfo
         ModuleInfo             = $ModuleInfo
@@ -484,7 +484,7 @@ function Open-Thread {
 
         [int64]$CurrentObjectIndex = 0
         $ThreadCount = @($InputObject).Count
-        Write-LogMsg @LogParams -Text "  # Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread for '$Command'"
+        Write-LogMsg @LogParams -Text " # Received $(($CommandInfo | Measure-Object).Count) PsCommandInfos from Split-Thread for '$Command'"
 
         if ($CommandInfo) {
 
@@ -518,16 +518,23 @@ function Open-Thread {
                 $null = $CommandStringForScriptDefinition.Append(" -$ThisSwitch")
             }
             $null = $ScriptDefinition.AppendLine("`r`n)`r`n")
+
+            # Define the command in the script ($Command)
             Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname |
             ForEach-Object {
                 $null = $ScriptDefinition.AppendLine("`r`n$_")
             }
             $null = $ScriptDefinition.AppendLine()
+
+            # Call the function in the script
+            Write-LogMsg @LogParams -Text " # Command string is $($CommandStringForScriptDefinition.ToString())"
             $CommandStringForScriptDefinition |
             ForEach-Object {
                 $null = $ScriptDefinition.AppendLine("`r`n$_")
             }
             $null = $ScriptDefinition.AppendLine()
+
+            # Convert the script to a single string
             $ScriptString = $ScriptDefinition.ToString()
 
             # Remove blank lines
@@ -536,6 +543,7 @@ function Open-Thread {
             #    $ScriptString = $ScriptString -replace "`r`n`r`n", "`r`n"
             #}
 
+            # Convert the script to a single scriptblock
             $ScriptBlock = [scriptblock]::Create($ScriptString)
         }
 
@@ -552,14 +560,14 @@ function Open-Thread {
                 [string]$ObjectString = $Object.ToString()
             }
 
-            Write-LogMsg @LogParams -Text "  `$PowershellInterface = [powershell]::Create() # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "`$PowershellInterface = [powershell]::Create() # for '$Command' on '$ObjectString'"
             $PowershellInterface = [powershell]::Create()
 
-            Write-LogMsg @LogParams -Text "  `$PowershellInterface.RunspacePool = `$RunspacePool # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "`$PowershellInterface.RunspacePool = `$RunspacePool # for '$Command' on '$ObjectString'"
             $PowershellInterface.RunspacePool = $RunspacePool
 
             # Do I need this one?  What commands would be in there?
-            Write-LogMsg @LogParams -Text "  `$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "`$PowershellInterface.Commands.Clear() # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.Commands.Clear()
 
             if ($ScriptBlock) {
@@ -574,14 +582,14 @@ function Open-Thread {
                 $InputParameter = 'PsRunspaceArgument1'
             }
 
-            Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
             $null = $PowershellInterface.AddParameter($InputParameter, $Object)
             <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
 
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
-                Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)') # for '$Command' on '$ObjectString'"
+                Write-LogMsg @LogParams -Text "`$PowershellInterface.AddParameter('$Key', '$($AddParam.$key)') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
@@ -589,7 +597,7 @@ function Open-Thread {
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
-                Write-LogMsg @LogParams -Text "  `$PowershellInterface.AddParameter('$Switch') # for '$Command' on '$ObjectString'"
+                Write-LogMsg @LogParams -Text "`$PowershellInterface.AddParameter('$Switch') # for '$Command' on '$ObjectString'"
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
@@ -603,7 +611,7 @@ function Open-Thread {
             }
             Write-Progress @Progress
 
-            Write-LogMsg @LogParams -Text "  `$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
+            Write-LogMsg @LogParams -Text "`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
             $Handle = $PowershellInterface.BeginInvoke()
 
             [PSCustomObject]@{
@@ -738,7 +746,7 @@ function Split-Thread {
         # This will include any modules specified by name with the -AddModule parameter
         $ModulesToAdd = [System.Collections.Generic.List[System.Management.Automation.PSModuleInfo]]::new()
         ForEach ($Module in $AddModule) {
-            Write-LogMsg @LogParams -Text "  Get-Module -Name '$Module'"
+            Write-LogMsg @LogParams -Text "Get-Module -Name '$Module'"
             $ModuleObj = Get-Module -Name $Module -ErrorAction SilentlyContinue
             $null = $ModulesToAdd.Add($ModuleObj)
         }
@@ -818,7 +826,7 @@ function Split-Thread {
             DebugOutputStream    = $DebugOutputStream
         }
         $AllThreads = Open-Thread @ThreadParameters
-        Write-LogMsg @LogParams -Text "  # Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
+        Write-LogMsg @LogParams -Text " # Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
         Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
         $VerbosePreference = 'Continue'
 
@@ -910,7 +918,7 @@ function Wait-Thread {
             # If the threads do not have handles, there is nothing to wait for, so output the thread as-is.
             # Otherwise wait for the handle to indicate completion (or a timeout to be reached)
             if ($ThisThread.Handle -eq $false) {
-                Write-LogMsg @LogParams -Text "  `$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($ThisThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "`$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($ThisThread.ObjectString)'"
                 $null = $ThisThread.PowerShellInterface.Streams.ClearStreams()
                 $ThisThread
             } else {
@@ -926,7 +934,7 @@ function Wait-Thread {
         # If the threads have handles, we can check to see if they are complete.
         While (@($AllThreads | Where-Object -FilterScript { $null -ne $_.Handle }).Count -gt 0) {
 
-            Write-LogMsg @LogParams -Text "  Start-Sleep -Milliseconds `$SleepTimer # for '$CommandString'"
+            Write-LogMsg @LogParams -Text "Start-Sleep -Milliseconds `$SleepTimer # for '$CommandString'"
             Start-Sleep -Milliseconds $SleepTimer
 
             if ($RunspacePool) { $AvailableRunspaces = $RunspacePool.GetAvailableRunspaces() }
@@ -948,10 +956,10 @@ function Wait-Thread {
 
             $ActiveThreadCountString = "$($Threads - $AvailableRunspaces) of $Threads are active"
 
-            Write-LogMsg @LogParams -Text "  # $ActiveThreadCountString for '$CommandString'"
-            Write-LogMsg @LogParams -Text "  # $($CompletedThreads.Count) completed threads for '$CommandString'"
-            Write-LogMsg @LogParams -Text "  # $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
-            Write-LogMsg @LogParams -Text "  # $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
+            Write-LogMsg @LogParams -Text " # $ActiveThreadCountString for '$CommandString'"
+            Write-LogMsg @LogParams -Text " # $($CompletedThreads.Count) completed threads for '$CommandString'"
+            Write-LogMsg @LogParams -Text " # $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
+            Write-LogMsg @LogParams -Text " # $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
 
             $RemainingString = "$($IncompleteThreads.ObjectString)"
             If ($RemainingString.Length -gt 60) {
@@ -968,11 +976,11 @@ function Wait-Thread {
             ForEach ($CompletedThread in $CompletedThreads) {
 
                 # TODO: Debug these counts, something seems off, they vary wildly with Test-Multithreading.ps1 but I would expect consistency (same number of Warnings per thread)
-                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Progress.Count) Progress messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Information.Count) Information messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Verbose.Count) Verbose messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Debug.Count) Debug messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
-                Write-LogMsg @LogParams -Text "  # $($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text " # $($CompletedThread.PowerShellInterface.Streams.Progress.Count) Progress messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text " # $($CompletedThread.PowerShellInterface.Streams.Information.Count) Information messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text " # $($CompletedThread.PowerShellInterface.Streams.Verbose.Count) Verbose messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text " # $($CompletedThread.PowerShellInterface.Streams.Debug.Count) Debug messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text " # $($CompletedThread.PowerShellInterface.Streams.Warning.Count) Warning messages for '$CommandString' on '$($CompletedThread.ObjectString)'"
 
                 # Because $Host was used to create the RunspacePool, any output to $Host (which includes Write-Host and Write-Information and Write-Progress) has already been displayed
                 #$CompletedThread.PowerShellInterface.Streams.Progress | ForEach-Object {Write-Progress "$_"}
@@ -981,26 +989,26 @@ function Wait-Thread {
                 #$CompletedThread.PowerShellInterface.Streams.Debug | ForEach-Object { Write-Debug "$_" }
                 #$CompletedThread.PowerShellInterface.Streams.Warning | ForEach-Object { Write-Warning "$_" }
 
-                Write-LogMsg @LogParams -Text "  `$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "`$PowerShellInterface.Streams.ClearStreams() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                 $null = $CompletedThread.PowerShellInterface.Streams.ClearStreams()
 
-                Write-LogMsg @LogParams -Text "  `$PowerShellInterface.EndInvoke(`$Handle) # for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                Write-LogMsg @LogParams -Text "`$PowerShellInterface.EndInvoke(`$Handle) # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                 $ThreadOutput = $CompletedThread.PowerShellInterface.EndInvoke($CompletedThread.Handle)
 
                 if (@($ThreadOutput).Count -gt 0) {
-                    Write-LogMsg @LogParams -Text "  # Output (count of $(@($ThreadOutput).Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
+                    Write-LogMsg @LogParams -Text " # Output (count of $(@($ThreadOutput).Count)) received from thread $($CompletedThread.Index): $($CompletedThread.ObjectString)"
                 } else {
-                    Write-LogMsg @LogParams -Text "  # Null result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
+                    Write-LogMsg @LogParams -Text " # Null result for thread $($CompletedThread.Index) ($($CompletedThread.ObjectString))"
                 }
 
                 if ($Dispose -eq $true) {
                     $ThreadOutput
-                    Write-LogMsg @LogParams -Text "  `$PowerShellInterface.Dispose() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                    Write-LogMsg @LogParams -Text "`$PowerShellInterface.Dispose() # for '$CommandString' on '$($CompletedThread.ObjectString)'"
                     $null = $CompletedThread.PowerShellInterface.Dispose()
                     $CompletedThread.PowerShellInterface = $null
                     $CompletedThread.Handle = $null
                 } else {
-                    Write-LogMsg @LogParams -Text "  # Thread $($CompletedThread.Index) is finished opening for '$CommandString' on '$($CompletedThread.ObjectString)'"
+                    Write-LogMsg @LogParams -Text " # Thread $($CompletedThread.Index) is finished opening for '$CommandString' on '$($CompletedThread.ObjectString)'"
                     $CompletedThread.Handle = $null
                     $CompletedThread
                 }
@@ -1034,7 +1042,7 @@ function Wait-Thread {
 
         $StopWatch.Stop()
 
-        Write-LogMsg @LogParams -Text "  # Finished waiting for threads"
+        Write-LogMsg @LogParams -Text " # Finished waiting for threads"
         Write-Progress -Activity 'Completed' -Completed
 
     }
@@ -1049,6 +1057,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
