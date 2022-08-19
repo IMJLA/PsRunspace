@@ -14,7 +14,8 @@ Waits for a thread to be completed so the results can be returned, or for a time
 
 ```
 Wait-Thread [-Thread] <PSObject[]> [[-Threads] <Int32>] [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [-Dispose]
- [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [<CommonParameters>]
+ [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,6 +58,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LogMsgCache
+Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: $Global:LogMessages
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -122,7 +138,7 @@ Accept wildcard characters: False
 ```
 
 ### -TodaysHostname
-{{ Fill TodaysHostname Description }}
+Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
 
 ```yaml
 Type: System.String
@@ -132,6 +148,21 @@ Aliases:
 Required: False
 Position: 6
 Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoAmI
+Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: (whoami.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -14,7 +14,7 @@ Return the original PsCommandInfo object as well as CommandInfo objects for any 
 
 ```
 Expand-PsCommandInfo [[-PsCommandInfo] <PSObject>] [[-Cache] <Hashtable>] [[-DebugOutputStream] <String>]
- [[-TodaysHostname] <String>]
+ [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -61,6 +61,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -LogMsgCache
+Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: $Global:LogMessages
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PsCommandInfo
 CommandInfo object for the command whose nested command names to return
 
@@ -77,7 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -TodaysHostname
-{{ Fill TodaysHostname Description }}
+Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
 
 ```yaml
 Type: System.String
@@ -87,6 +102,21 @@ Aliases:
 Required: False
 Position: 4
 Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoAmI
+Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: (whoami.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

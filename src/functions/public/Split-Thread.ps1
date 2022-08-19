@@ -83,17 +83,32 @@ function Split-Thread {
         # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
         [string]$DebugOutputStream = 'Silent',
 
-        [string]$TodaysHostname = (HOSTNAME.EXE)
+        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$TodaysHostname = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
 
     )
 
     begin {
 
         $LogParams = @{
-            Type         = $DebugOutputStream
+            LogMsgCache  = $LogMsgCache
             ThisHostname = $TodaysHostname
+            Type         = $DebugOutputStream
+            WhoAmI       = $WhoAmI
         }
 
+        $CommandInfoParams = @{
+            DebugOutputStream = $DebugOutputStream
+            TodaysHostname    = $TodaysHostname
+            WhoAmI            = $WhoAmI
+            LogMsgCache       = $LogMsgCache
+        }
         Write-LogMsg @LogParams -Text " # Entered begin block for '$Command'"
 
         Write-LogMsg @LogParams -Text "`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
@@ -101,10 +116,10 @@ function Split-Thread {
 
         # Import the source module containing the specified Command in each thread
 
-        $OriginalCommandInfo = Get-PsCommandInfo -Command $Command -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+        $OriginalCommandInfo = Get-PsCommandInfo @CommandInfoParams -Command $Command
         Write-LogMsg @LogParams -Text " # Found 1 original PsCommandInfo for '$Command'"
 
-        $CommandInfo = Expand-PsCommandInfo -PsCommandInfo $OriginalCommandInfo -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+        $CommandInfo = Expand-PsCommandInfo @CommandInfoParams -PsCommandInfo $OriginalCommandInfo
         Write-LogMsg @LogParams -Text " # Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos for '$Command' ($($CommandInfo.CommandInfo.Name -join ','))"
 
         # Prepare our collection of PowerShell modules to import in each thread
@@ -135,7 +150,7 @@ function Split-Thread {
         Write-LogMsg @LogParams -Text " # Found $(($CommandsToAdd | Measure-Object).Count) remaining PsCommandInfos to define for '$Command' (not in modules: $($CommandsToAdd.CommandInfo.Name -join ','))"
 
         if ($ModulesToAdd.Count -gt 0) {
-            $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+            $null = Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModulesToAdd @CommandInfoParams
         }
 
         # Set the preference variables for PowerShell output streams in each thread to match the current preferences
@@ -189,10 +204,24 @@ function Split-Thread {
             CommandInfo          = $CommandsToAdd
             RunspacePool         = $RunspacePool
             DebugOutputStream    = $DebugOutputStream
+            WhoAmI               = $WhoAmI
+            LogMsgCache          = $LogMsgCache
         }
         $AllThreads = Open-Thread @ThreadParameters
         Write-LogMsg @LogParams -Text " # Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
-        Wait-Thread -Thread $AllThreads -Threads $Threads -SleepTimer $SleepTimer -Timeout $Timeout -Dispose -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+
+        $ThreadParameters = @{
+            Thread            = $AllThreads
+            Threads           = $Threads
+            SleepTimer        = $SleepTimer
+            Timeout           = $Timeout
+            Dispose           = $true
+            DebugOutputStream = $DebugOutputStream
+            TodaysHostname    = $TodaysHostname
+            WhoAmI            = $WhoAmI
+            LogMsgCache       = $LogMsgCache
+        }
+        Wait-Thread @ThreadParameters
         $VerbosePreference = 'Continue'
 
         if ($Global:TimedOut -eq $false) {

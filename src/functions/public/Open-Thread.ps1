@@ -58,16 +58,31 @@ function Open-Thread {
         # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
         [string]$DebugOutputStream = 'Silent',
 
-        [string]$TodaysHostname = (HOSTNAME.EXE)
+        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$TodaysHostname = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
 
     )
 
     begin {
 
-
         $LogParams = @{
-            Type         = $DebugOutputStream
+            LogMsgCache  = $LogMsgCache
             ThisHostname = $TodaysHostname
+            Type         = $DebugOutputStream
+            WhoAmI       = $WhoAmI
+        }
+
+        $CommandInfoParams = @{
+            DebugOutputStream = $DebugOutputStream
+            TodaysHostname    = $TodaysHostname
+            WhoAmI            = $WhoAmI
+            LogMsgCache       = $LogMsgCache
         }
 
         [int64]$CurrentObjectIndex = 0
@@ -108,7 +123,7 @@ function Open-Thread {
             $null = $ScriptDefinition.AppendLine("`r`n)`r`n")
 
             # Define the command in the script ($Command)
-            Convert-FromPsCommandInfoToString -CommandInfo $CommandInfo -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname |
+            Convert-FromPsCommandInfoToString @CommandInfoParams -CommandInfo $CommandInfo |
             ForEach-Object {
                 $null = $ScriptDefinition.AppendLine("`r`n$_")
             }
@@ -159,9 +174,9 @@ function Open-Thread {
             $null = $PowershellInterface.Commands.Clear()
 
             if ($ScriptBlock) {
-                $null = Add-PsCommand -Command $ScriptBlock -PowershellInterface $PowershellInterface -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                $null = Add-PsCommand @CommandInfoParams -Command $ScriptBlock -PowershellInterface $PowershellInterface
             } else {
-                $null = Add-PsCommand -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface -Force -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                $null = Add-PsCommand @CommandInfoParams -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface -Force
             }
 
             # Prepare to pass $InputObject into the runspace as a parameter not an argument

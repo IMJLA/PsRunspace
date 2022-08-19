@@ -15,8 +15,22 @@ function Expand-PsCommandInfo {
         # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
         [string]$DebugOutputStream = 'Silent',
 
-        [string]$TodaysHostname = (HOSTNAME.EXE)
+        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$TodaysHostname = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
     )
+
+    $CommandInfoParams = @{
+        DebugOutputStream = $DebugOutputStream
+        TodaysHostname    = $TodaysHostname
+        WhoAmI            = $WhoAmI
+        LogMsgCache       = $LogMsgCache
+    }
 
     # Add the first object to the cache
     if (-not $PsCommandInfo.CommandInfo.Name) {
@@ -54,14 +68,14 @@ function Expand-PsCommandInfo {
     ForEach ($ThisCommandToken in $CommandTokens) {
         if (
             -not $Cache[$ThisCommandToken.Value] -and
-            $ThisCommandToken.Value -notmatch '[\.\\]' # This excludes any file paths since they are not PowerShell commands with tokenizable definitions (they contain \ or .)
+            $ThisCommandToken.Value -notmatch '[\.\\]' # Exclude any file paths since they are not PowerShell commands with tokenizable definitions (they contain \ or .)
         ) {
-            $TokenCommandInfo = Get-PsCommandInfo -Command $ThisCommandToken.Value -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+            $TokenCommandInfo = Get-PsCommandInfo @CommandInfoParams -Command $ThisCommandToken.Value
             $Cache[$ThisCommandToken.Value] = $TokenCommandInfo
 
             # Suppress the output of the Expand-PsCommandInfo function because we will instead be using the updated cache contents
             # This way the results are already deduplicated for us by the hashtable
-            $null = Expand-PsCommandInfo -PsCommandInfo $TokenCommandInfo -Cache $Cache -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+            $null = Expand-PsCommandInfo @CommandInfoParams -PsCommandInfo $TokenCommandInfo -Cache $Cache
         }
     }
 

@@ -39,19 +39,35 @@ function Add-PsCommand {
         # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
         [string]$DebugOutputStream = 'Silent',
 
-        [string]$TodaysHostname = (HOSTNAME.EXE)
+        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$TodaysHostname = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
 
     )
 
     begin {
 
-        if ($CommandInfo -eq $null) {
-            $CommandInfo = Get-PsCommandInfo -Command $Command
+        $LogParams = @{
+            LogMsgCache  = $LogMsgCache
+            ThisHostname = $TodaysHostname
+            Type         = $DebugOutputStream
+            WhoAmI       = $WhoAmI
         }
 
-        $LogParams = @{
-            Type         = $DebugOutputStream
-            ThisHostname = $TodaysHostname
+        $CommandInfoParams = @{
+            DebugOutputStream = $DebugOutputStream
+            TodaysHostname    = $TodaysHostname
+            WhoAmI            = $WhoAmI
+            LogMsgCache       = $LogMsgCache
+        }
+
+        if ($CommandInfo -eq $null) {
+            $CommandInfo = Get-PsCommandInfo @CommandInfoParams -Command $Command
         }
 
     }
@@ -63,8 +79,8 @@ function Add-PsCommand {
 
                 'Alias' {
                     # Resolve the alias to its command and start from the beginning with that command.
-                    $CommandInfo = Get-PsCommandInfo -Command $CommandInfo.CommandInfo.Definition -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
-                    $null = Add-PsCommand -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell -DebugOutputStream $DebugOutputStream -TodaysHostname $TodaysHostname
+                    $CommandInfo = Get-PsCommandInfo @CommandInfoParams -Command $CommandInfo.CommandInfo.Definition
+                    $null = Add-PsCommand @CommandInfoParams -Command $CommandInfo.CommandInfo.Definition -CommandInfo $CommandInfo -PowershellInterface $ThisPowerShell
                 }
                 'Function' {
 

@@ -14,7 +14,8 @@ Import a Module in a \[System.Management.Automation.Runspaces.InitialSessionStat
 
 ```
 Add-PsModule -InitialSessionState <InitialSessionState> [[-ModuleInfo] <PSModuleInfo[]>]
- [-DebugOutputStream <String>] [-TodaysHostname <String>] [<CommonParameters>]
+ [-DebugOutputStream <String>] [-TodaysHostname <String>] [-WhoAmI <String>] [-LogMsgCache <Hashtable>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,6 +62,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -LogMsgCache
+Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: $Global:LogMessages
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ModuleInfo
 ModuleInfo object for the module to add to the Powershell interface
 
@@ -77,7 +93,7 @@ Accept wildcard characters: False
 ```
 
 ### -TodaysHostname
-{{ Fill TodaysHostname Description }}
+Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
 
 ```yaml
 Type: System.String
@@ -87,6 +103,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoAmI
+Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: (whoami.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

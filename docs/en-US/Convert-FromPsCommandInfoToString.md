@@ -14,7 +14,7 @@ schema: 2.0.0
 
 ```
 Convert-FromPsCommandInfoToString [-CommandInfo] <PSObject[]> [-DebugOutputStream <String>]
- [-TodaysHostname <String>] [<CommonParameters>]
+ [-TodaysHostname <String>] [-WhoAmI <String>] [-LogMsgCache <Hashtable>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,8 +61,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -LogMsgCache
+{{ Fill LogMsgCache Description }}
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -TodaysHostname
 {{ Fill TodaysHostname Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoAmI
+{{ Fill WhoAmI Description }}
 
 ```yaml
 Type: System.String

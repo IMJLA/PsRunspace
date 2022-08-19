@@ -16,7 +16,7 @@ Split a command for a collection of input objects into multiple threads for asyn
 Split-Thread [-Command] <Object> [[-InputObject] <Object>] [[-InputParameter] <Object>] [[-Threads] <Int32>]
  [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [[-AddParam] <Hashtable>] [[-AddSwitch] <String[]>]
  [[-AddModule] <String[]>] [[-ObjectStringProperty] <String>] [[-DebugOutputStream] <String>]
- [[-TodaysHostname] <String>] [<CommonParameters>]
+ [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -183,6 +183,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -LogMsgCache
+Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: $Global:LogMessages
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ObjectStringProperty
 Name of a property (whose value is a string) that exists on each $InputObject and can be used to represent the object in text form
 If left null, the object's ToString() method will be used instead.
@@ -245,7 +260,7 @@ Accept wildcard characters: False
 ```
 
 ### -TodaysHostname
-{{ Fill TodaysHostname Description }}
+Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
 
 ```yaml
 Type: System.String
@@ -255,6 +270,21 @@ Aliases:
 Required: False
 Position: 12
 Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoAmI
+Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: (whoami.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

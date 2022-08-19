@@ -15,7 +15,8 @@ Prepares each thread so it is ready to execute a command and capture the output 
 ```
 Open-Thread [[-InputObject] <Object>] [-RunspacePool] <RunspacePool> [[-ObjectStringProperty] <String>]
  [-Command] <Object> [[-CommandInfo] <PSObject[]>] [[-InputParameter] <String>] [[-AddParam] <Hashtable>]
- [[-AddSwitch] <String[]>] [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [<CommonParameters>]
+ [[-AddSwitch] <String[]>] [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [[-WhoAmI] <String>]
+ [[-LogMsgCache] <Hashtable>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -144,6 +145,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -LogMsgCache
+Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: $Global:LogMessages
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ObjectStringProperty
 Name of a property (whose value is a string) that exists on each $InputObject
 It will be used to represent the object in text form
@@ -177,7 +193,7 @@ Accept wildcard characters: False
 ```
 
 ### -TodaysHostname
-{{ Fill TodaysHostname Description }}
+Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
 
 ```yaml
 Type: System.String
@@ -187,6 +203,21 @@ Aliases:
 Required: False
 Position: 10
 Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoAmI
+Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: (whoami.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
