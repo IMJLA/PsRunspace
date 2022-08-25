@@ -344,6 +344,19 @@ task FixMarkdownHelp -depends BuildMarkdownHelp {
 
     $ModuleHelp | Set-Content -LiteralPath $ModuleHelpFile -Encoding utf8
     Remove-Module $env:BHProjectName -Force
+
+    $ReadMeContents = $ModuleHelp
+    $DocsRootForURL = "/docs/$HelpDefaultLocale"
+    [regex]::Matches($ModuleHelp, '[^(]*\.md').Value |
+    ForEach-Object {
+        $EscapedTextToReplace = [regex]::Escape($_)
+        $Replacement = "$DocsRootForURL/$_"
+        $ReadMeContents = $ReadMeContents -replace $EscapedTextToReplace, $Replacement
+    }
+    $readMePath = Get-ChildItem -Path $env:BHProjectPath -Include 'readme.md', 'readme.markdown', 'readme.txt' -Depth 1 |
+    Select-Object -First 1
+
+    Set-Content -Path $ReadMePath.FullName -Value $ReadMeContents
 }
 
 $genHelpFilesPreReqs = {
