@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.94] - 2022-08-27 - Fixed debug output for Start-Sleep in Wait-Thread
+
 ## [1.0.93] - 2022-08-25 - new psake task to fix readme
 
 ## [1.0.92] - 2022-08-19 - Added parameters for improved Write-LogMsg support

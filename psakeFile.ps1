@@ -346,7 +346,7 @@ task FixMarkdownHelp -depends BuildMarkdownHelp {
     Remove-Module $env:BHProjectName -Force
 
     $ReadMeContents = $ModuleHelp
-    $DocsRootForURL = "/docs/$HelpDefaultLocale"
+    $DocsRootForURL = "docs/$HelpDefaultLocale"
     [regex]::Matches($ModuleHelp, '[^(]*\.md').Value |
     ForEach-Object {
         $EscapedTextToReplace = [regex]::Escape($_)
