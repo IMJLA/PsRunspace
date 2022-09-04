@@ -239,7 +239,7 @@ Aliases:
 
 Required: False
 Position: 4
-Default value: 20
+Default value: (Get-CimInstance -ClassName CIM_Processor | Measure-Object -Sum -Property NumberOfLogicalProcessors).Sum
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

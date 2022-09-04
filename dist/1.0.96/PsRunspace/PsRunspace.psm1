@@ -766,7 +766,7 @@ function Split-Thread {
         $InputParameter = $null,
 
         # Maximum number of concurrent threads to allow
-        [int]$Threads = 20,
+        [int]$Threads = (Get-CimInstance -ClassName CIM_Processor | Measure-Object -Sum -Property NumberOfLogicalProcessors).Sum,
 
         # Milliseconds to wait between cycles of the loop that checks threads for completion
         [int]$SleepTimer = 200,
@@ -1180,6 +1180,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
