@@ -948,6 +948,12 @@ function Split-Thread {
             $null = $RunspacePool.Dispose()
             Write-LogMsg @LogParams -Text " # [System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed"
 
+        } else {
+            # Statement-terminating error
+            #$PSCmdlet.ThrowTerminatingError()
+
+            # Script-terminating error
+            throw 'Split-Thread timeout reached'
         }
 
         Write-Progress -Activity 'Completed' -Completed
@@ -1174,6 +1180,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

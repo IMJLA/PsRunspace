@@ -234,6 +234,12 @@ function Split-Thread {
             $null = $RunspacePool.Dispose()
             Write-LogMsg @LogParams -Text " # [System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed"
 
+        } else {
+            # Statement-terminating error
+            #$PSCmdlet.ThrowTerminatingError()
+
+            # Script-terminating error
+            throw 'Split-Thread timeout reached'
         }
 
         Write-Progress -Activity 'Completed' -Completed
