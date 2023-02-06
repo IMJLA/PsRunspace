@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.97] - 2023-02-06 - Updated example description in Expand-PsToken
+
 ## [1.0.96] - 2022-09-04 - Updated default for -Threads to use number of logical procs
 
 ## [1.0.95] - 2022-09-04 - Added throw statement on timeout

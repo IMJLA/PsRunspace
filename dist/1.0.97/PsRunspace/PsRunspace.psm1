@@ -368,7 +368,7 @@ function Expand-PsToken {
       $Tokens |
       Expand-PsToken
 
-      Return all tokens nested inside the provided $Code
+      Return all tokens nested inside the provided $Code string (not scriptblock)
     #>
 
     param (
@@ -1180,6 +1180,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

@@ -829,7 +829,7 @@ $AbstractSyntaxTree = [System.Management.Automation.Language.Parser]::ParseInput
 $Tokens |
 Expand-PsToken</dev:code>
         <dev:remarks>
-          <maml:para>Return all tokens nested inside the provided $Code</maml:para>
+          <maml:para>Return all tokens nested inside the provided $Code string (not scriptblock)</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

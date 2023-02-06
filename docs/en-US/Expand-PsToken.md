@@ -35,7 +35,7 @@ $Tokens |
 Expand-PsToken
 ```
 
-Return all tokens nested inside the provided $Code
+Return all tokens nested inside the provided $Code string (not scriptblock)
 
 ## PARAMETERS
 
