@@ -174,21 +174,41 @@ function Open-Thread {
             $null = $PowershellInterface.Commands.Clear()
 
             if ($ScriptBlock) {
-                $null = Add-PsCommand @CommandInfoParams -Command $ScriptBlock -PowershellInterface $PowershellInterface
+                $null = Add-PsCommand @CommandInfoParams -Command $ScriptBlock -PowershellInterface $PowershellInterface #-DebugOutputStream 'Debug'
+
+                <#
+                If:
+                    the Command is a ScriptBlock (such as the content of a .ps1 file)
+                    and
+                    $InputParameter is null
+                Then:
+                    Pass $Object into the runspace as a parameter (not an argument)
+                Otherwise we will:
+                    Pass $Object into the runspace as an argument
+                Because:
+                    This allows more flexibility in the ScriptBlock
+                    TODO: Need more detail here, this was a bugfix for .ps1 files but I didn't save the details (or maybe I did and forgot)
+                #>
+                If ([string]::IsNullOrEmpty($InputParameter)) {
+                    $InputParameter = 'PsRunspaceArgument1'
+                }
             } else {
                 $null = Add-PsCommand @CommandInfoParams -Command $Command -CommandInfo $CommandInfo -PowershellInterface $PowershellInterface -Force
             }
 
-            # Prepare to pass $InputObject into the runspace as a parameter not an argument
+            # Prepare to
             # Do this even if we end up passing it as an argument to the command inside the runspace
+            ## WHY?? past self did not explain this and it's causing problems for non-script values of Command
+            ## Therefore I have re-introduced AddArgument until I figure out what was wrong with it #
             If ([string]::IsNullOrEmpty($InputParameter)) {
-                $InputParameter = 'PsRunspaceArgument1'
+                Write-LogMsg @LogParams -Text "`$PowershellInterface.AddArgument('$ObjectString') # for '$Command' on '$ObjectString'"
+                $null = $PowershellInterface.AddArgument($Object)
+                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = " '$ObjectString'"
+            } else {
+                Write-LogMsg @LogParams -Text "`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
+                $null = $PowershellInterface.AddParameter($InputParameter, $Object)
+                <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
             }
-
-            Write-LogMsg @LogParams -Text "`$PowershellInterface.AddParameter('$InputParameter', '$ObjectString') # for '$Command' on '$ObjectString'"
-            $null = $PowershellInterface.AddParameter($InputParameter, $Object)
-            <#NormallyCommentThisForPerformanceOptimization#>$InputParameterStringForDebug = "-$InputParameter '$ObjectString'"
-
 
             $AdditionalParameters = @()
             $AdditionalParameters = ForEach ($Key in $AddParam.Keys) {
