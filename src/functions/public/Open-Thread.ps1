@@ -252,7 +252,7 @@ function Open-Thread {
 
     end {
 
-        Write-Progress -Activity 'Completed' -Completed
+        Write-Progress -Activity $StatusString -Completed
 
     }
 }
