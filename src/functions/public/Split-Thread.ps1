@@ -103,24 +103,22 @@ function Split-Thread {
             WhoAmI       = $WhoAmI
         }
 
+        Write-LogMsg @LogParams -Text "`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
+        $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
+
         $CommandInfoParams = @{
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
             LogMsgCache       = $LogMsgCache
         }
-        Write-LogMsg @LogParams -Text " # Entered begin block for '$Command'"
-
-        Write-LogMsg @LogParams -Text "`$InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault() # for '$Command'"
-        $InitialSessionState = [System.Management.Automation.Runspaces.InitialSessionState]::CreateDefault()
-
-        # Import the source module containing the specified Command in each thread
-
         $OriginalCommandInfo = Get-PsCommandInfo @CommandInfoParams -Command $Command
         Write-LogMsg @LogParams -Text " # Found 1 original PsCommandInfo for '$Command'"
 
         $CommandInfo = Expand-PsCommandInfo @CommandInfoParams -PsCommandInfo $OriginalCommandInfo
         Write-LogMsg @LogParams -Text " # Found $(($CommandInfo | Measure-Object).Count) nested PsCommandInfos for '$Command' ($($CommandInfo.CommandInfo.Name -join ','))"
+
+        # Import the source module containing the specified Command in each thread
 
         # Prepare our collection of PowerShell modules to import in each thread
         # This will include any modules specified by name with the -AddModule parameter
@@ -178,12 +176,6 @@ function Split-Thread {
     }
 
     process {
-        if ($ObjectStringProperty) {
-            $ObjectString = $InputObject.$ObjectStringProperty
-        } else {
-            $ObjectString = $InputObject.ToString()
-        }
-        Write-LogMsg @LogParams -Text " # Entered process block for '$Command' on '$ObjectString'"
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
         ForEach ($ThisObject in $InputObject) {
@@ -192,8 +184,8 @@ function Split-Thread {
 
     }
     end {
-        Write-LogMsg @LogParams -Text " # Entered end block for '$Command'"
-        Write-LogMsg @LogParams -Text " # Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
+
+        Write-LogMsg @LogParams -Text " # Entered end block. Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter

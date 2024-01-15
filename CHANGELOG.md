@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.103] - 2024-01-15 - removed some excessive overhead from Split-Thread
+
 ## [1.0.102] - 2024-01-14 - bugfix when 'Completed' activity not found by Write-Progress, now sending last used activity instead Open-Thread ln 255
 
 ## [1.0.101] - 2024-01-13 - testing cached git auth
