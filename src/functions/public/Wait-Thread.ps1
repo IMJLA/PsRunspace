@@ -63,7 +63,7 @@ function Wait-Thread {
 
         $AllThreads = [System.Collections.Generic.List[PSCustomObject]]::new()
 
-        $FirstThread = $Thread | Select-Object -First 1
+        $FirstThread = @($Thread)[0]
 
         $RunspacePool = $FirstThread.PowershellInterface.RunspacePool
 
