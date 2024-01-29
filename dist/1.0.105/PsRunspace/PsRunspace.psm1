@@ -704,9 +704,10 @@ function Open-Thread {
 
             $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterStringForDebug $AdditionalParametersString $SwitchParameterString"
             $Progress = @{
-                Activity        = $StatusString
-                PercentComplete = $CurrentObjectIndex / $ThreadCount * 100
-                Status          = "$($ThreadCount - $CurrentObjectIndex) remaining"
+                Activity         = "Open-Thread"
+                CurrentOperation = $StatusString
+                PercentComplete  = $CurrentObjectIndex / $ThreadCount * 100
+                Status           = "$($ThreadCount - $CurrentObjectIndex) remaining"
             }
             Write-Progress @Progress
 
@@ -728,7 +729,7 @@ function Open-Thread {
 
     end {
 
-        Write-Progress -Activity $StatusString -Completed
+        Write-Progress -Activity 'Open-Thread' -Completed
 
     }
 }
@@ -968,8 +969,6 @@ function Split-Thread {
             throw 'Split-Thread timeout reached'
         }
 
-        Write-Progress -Activity 'Completed' -Completed
-
     }
 
 }
@@ -1102,9 +1101,10 @@ function Wait-Thread {
             }
 
             $Progress = @{
-                Activity        = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
-                PercentComplete = ($($CleanedUpThreads).count) / @($Thread).Count * 100
-                Status          = "$(@($IncompleteThreads).Count) remaining - $RemainingString"
+                Activity         = 'Wait-Thread'
+                CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
+                PercentComplete  = ($($CleanedUpThreads).count) / @($Thread).Count * 100
+                Status           = "$(@($IncompleteThreads).Count) remaining - $RemainingString"
             }
             Write-Progress @Progress
 
@@ -1178,7 +1178,7 @@ function Wait-Thread {
         $StopWatch.Stop()
 
         Write-LogMsg @LogParams -Text " # Finished waiting for threads"
-        Write-Progress -Activity 'Completed' -Completed
+        Write-Progress -Activity 'Wait-Thread' -Completed
 
     }
 
@@ -1192,6 +1192,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

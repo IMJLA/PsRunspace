@@ -234,8 +234,6 @@ function Split-Thread {
             throw 'Split-Thread timeout reached'
         }
 
-        Write-Progress -Activity 'Completed' -Completed
-
     }
 
 }
