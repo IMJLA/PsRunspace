@@ -228,6 +228,7 @@ function Open-Thread {
 
             $NewPercentComplete = $CurrentObjectIndex / $ThreadCount * 100
             if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
+                $OldPercentComplete = $NewPercentComplete
                 $AdditionalParametersString = $AdditionalParameters -join ' '
                 $SwitchParameterString = $Switches -join ' '
 
@@ -240,7 +241,6 @@ function Open-Thread {
                 }
                 Write-Progress @Progress
             }
-            $OldPercentComplete = $NewPercentComplete
 
             Write-LogMsg @LogParams -Text "`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
             $Handle = $PowershellInterface.BeginInvoke()

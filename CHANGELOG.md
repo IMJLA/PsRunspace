@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.110] - 2024-01-31 - bugfix prog bars
+
+## [1.0.109] - 2024-01-31 - bugfix new progress bars
+
+## [1.0.108] - 2024-01-31 - bugfix new progress bars
+
 ## [1.0.107] - 2024-01-31 - efficiency improvement for progress bars
 
 ## [1.0.106] - 2024-01-31 - updated progress bars

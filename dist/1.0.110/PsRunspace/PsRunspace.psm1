@@ -704,6 +704,7 @@ function Open-Thread {
 
             $NewPercentComplete = $CurrentObjectIndex / $ThreadCount * 100
             if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
+                $OldPercentComplete = $NewPercentComplete
                 $AdditionalParametersString = $AdditionalParameters -join ' '
                 $SwitchParameterString = $Switches -join ' '
 
@@ -716,7 +717,6 @@ function Open-Thread {
                 }
                 Write-Progress @Progress
             }
-            $OldPercentComplete = $NewPercentComplete
 
             Write-LogMsg @LogParams -Text "`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
             $Handle = $PowershellInterface.BeginInvoke()
@@ -1106,7 +1106,8 @@ function Wait-Thread {
             Write-LogMsg @LogParams -Text " # $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
 
             $NewPercentComplete = $CleanedUpThreads.Count / $ThreadCount * 100
-            if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
+            if (($NewPercentComplete - $OldPercentComplete) -ge 1) {
+                $OldPercentComplete = $NewPercentComplete
 
                 $RemainingString = "$($IncompleteThreads.ObjectString)"
                 If ($RemainingString.Length -gt 60) {
@@ -1122,7 +1123,6 @@ function Wait-Thread {
                 Write-Progress @Progress
 
             }
-            $OldPercentComplete = $NewPercentComplete
 
             ForEach ($CompletedThread in $CompletedThreads) {
 
@@ -1208,6 +1208,9 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
+
+
 
 
 
