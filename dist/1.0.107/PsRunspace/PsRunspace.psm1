@@ -625,6 +625,7 @@ function Open-Thread {
             # Convert the script to a single scriptblock
             $ScriptBlock = [scriptblock]::Create($ScriptString)
         }
+        $Activity = "Open-Thread -Command '$Command'"
 
     }
     process {
@@ -692,7 +693,6 @@ function Open-Thread {
                 $null = $PowershellInterface.AddParameter($Key, $AddParam.$key)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Key '$($AddParam.$key)'"
             }
-            $AdditionalParametersString = $AdditionalParameters -join ' '
 
             $Switches = @()
             $Switches = ForEach ($Switch in $AddSwitch) {
@@ -700,16 +700,23 @@ function Open-Thread {
                 $null = $PowershellInterface.AddParameter($Switch)
                 <#NormallyCommentThisForPerformanceOptimization#>"-$Switch"
             }
-            $SwitchParameterString = $Switches -join ' '
 
-            $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterStringForDebug $AdditionalParametersString $SwitchParameterString"
-            $Progress = @{
-                Activity         = "Open-Thread -Command '$Command'"
-                CurrentOperation = $StatusString
-                PercentComplete  = $CurrentObjectIndex / $ThreadCount * 100
-                Status           = "$($ThreadCount - $CurrentObjectIndex) of $ThreadCount remaining"
+
+            $NewPercentComplete = $CurrentObjectIndex / $ThreadCount * 100
+            if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
+                $AdditionalParametersString = $AdditionalParameters -join ' '
+                $SwitchParameterString = $Switches -join ' '
+
+                $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterStringForDebug $AdditionalParametersString $SwitchParameterString"
+                $Progress = @{
+                    Activity         = $Activity
+                    CurrentOperation = $StatusString
+                    PercentComplete  = $NewPercentComplete
+                    Status           = "$NewPercentComplete% ($($ThreadCount - $CurrentObjectIndex) of $ThreadCount) remain"
+                }
+                Write-Progress @Progress
             }
-            Write-Progress @Progress
+            $OldPercentComplete = $NewPercentComplete
 
             Write-LogMsg @LogParams -Text "`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
             $Handle = $PowershellInterface.BeginInvoke()
@@ -729,7 +736,7 @@ function Open-Thread {
 
     end {
 
-        Write-Progress -Activity 'Open-Thread' -Completed
+        Write-Progress -Activity $Activity -Completed
 
     }
 }
@@ -1098,18 +1105,24 @@ function Wait-Thread {
             Write-LogMsg @LogParams -Text " # $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
             Write-LogMsg @LogParams -Text " # $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
 
-            $RemainingString = "$($IncompleteThreads.ObjectString)"
-            If ($RemainingString.Length -gt 60) {
-                $RemainingString = $RemainingString.Substring(0, 60) + "..."
-            }
+            $NewPercentComplete = $CleanedUpThreads.Count / $ThreadCount * 100
+            if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
 
-            $Progress = @{
-                Activity         = $Activity
-                CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
-                PercentComplete  = $CleanedUpThreads.Count / $ThreadCount * 100
-                Status           = "$($IncompleteThreads.Count) of $ThreadCount remaining - $RemainingString"
+                $RemainingString = "$($IncompleteThreads.ObjectString)"
+                If ($RemainingString.Length -gt 60) {
+                    $RemainingString = $RemainingString.Substring(0, 60) + "..."
+                }
+
+                $Progress = @{
+                    Activity         = $Activity
+                    CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
+                    PercentComplete  = $NewPercentComplete
+                    Status           = "$NewPercentComplete% ($($IncompleteThreads.Count) of $ThreadCount remain): $RemainingString"
+                }
+                Write-Progress @Progress
+
             }
-            Write-Progress @Progress
+            $OldPercentComplete = $NewPercentComplete
 
             ForEach ($CompletedThread in $CompletedThreads) {
 
@@ -1195,6 +1208,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

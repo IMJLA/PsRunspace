@@ -124,18 +124,24 @@ function Wait-Thread {
             Write-LogMsg @LogParams -Text " # $($CleanedUpThreads.Count) cleaned up threads for '$CommandString'"
             Write-LogMsg @LogParams -Text " # $($IncompleteThreads.Count) incomplete threads for '$CommandString'"
 
-            $RemainingString = "$($IncompleteThreads.ObjectString)"
-            If ($RemainingString.Length -gt 60) {
-                $RemainingString = $RemainingString.Substring(0, 60) + "..."
-            }
+            $NewPercentComplete = $CleanedUpThreads.Count / $ThreadCount * 100
+            if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
 
-            $Progress = @{
-                Activity         = $Activity
-                CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
-                PercentComplete  = $CleanedUpThreads.Count / $ThreadCount * 100
-                Status           = "$($IncompleteThreads.Count) of $ThreadCount remaining - $RemainingString"
+                $RemainingString = "$($IncompleteThreads.ObjectString)"
+                If ($RemainingString.Length -gt 60) {
+                    $RemainingString = $RemainingString.Substring(0, 60) + "..."
+                }
+
+                $Progress = @{
+                    Activity         = $Activity
+                    CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
+                    PercentComplete  = $NewPercentComplete
+                    Status           = "$NewPercentComplete% ($($IncompleteThreads.Count) of $ThreadCount remain): $RemainingString"
+                }
+                Write-Progress @Progress
+
             }
-            Write-Progress @Progress
+            $OldPercentComplete = $NewPercentComplete
 
             ForEach ($CompletedThread in $CompletedThreads) {
 
