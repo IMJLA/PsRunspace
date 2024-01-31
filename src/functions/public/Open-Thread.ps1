@@ -228,10 +228,10 @@ function Open-Thread {
 
             $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterStringForDebug $AdditionalParametersString $SwitchParameterString"
             $Progress = @{
-                Activity         = "Open-Thread"
+                Activity         = "Open-Thread -Command '$Command'"
                 CurrentOperation = $StatusString
                 PercentComplete  = $CurrentObjectIndex / $ThreadCount * 100
-                Status           = "$($ThreadCount - $CurrentObjectIndex) remaining"
+                Status           = "$($ThreadCount - $CurrentObjectIndex) of $ThreadCount remaining"
             }
             Write-Progress @Progress
 

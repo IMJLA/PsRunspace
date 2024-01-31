@@ -69,6 +69,9 @@ function Wait-Thread {
 
         $CommandString = $FirstThread.Command
 
+        $Activity = "Wait-Thread '$CommandString'"
+        $ThreadCount = @($Thread).Count
+
     }
 
     process {
@@ -127,10 +130,10 @@ function Wait-Thread {
             }
 
             $Progress = @{
-                Activity         = 'Wait-Thread'
+                Activity         = $Activity
                 CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
-                PercentComplete  = ($($CleanedUpThreads).count) / @($Thread).Count * 100
-                Status           = "$(@($IncompleteThreads).Count) remaining - $RemainingString"
+                PercentComplete  = $CleanedUpThreads.Count / $ThreadCount * 100
+                Status           = "$($IncompleteThreads.Count) of $ThreadCount remaining - $RemainingString"
             }
             Write-Progress @Progress
 
@@ -204,7 +207,7 @@ function Wait-Thread {
         $StopWatch.Stop()
 
         Write-LogMsg @LogParams -Text " # Finished waiting for threads"
-        Write-Progress -Activity 'Wait-Thread' -Completed
+        Write-Progress -Activity $Activity -Completed
 
     }
 
