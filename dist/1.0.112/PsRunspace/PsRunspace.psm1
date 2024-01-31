@@ -713,7 +713,7 @@ function Open-Thread {
                     Activity         = $Activity
                     CurrentOperation = $StatusString
                     PercentComplete  = $NewPercentComplete
-                    Status           = "$([int]$NewPercentComplete)% ($($ThreadCount - $CurrentObjectIndex) of $ThreadCount) remain"
+                    Status           = "$([int]$NewPercentComplete)% ($($ThreadCount - $CurrentObjectIndex) of $ThreadCount remain)"
                 }
                 Write-Progress @Progress
             }
@@ -1208,6 +1208,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
