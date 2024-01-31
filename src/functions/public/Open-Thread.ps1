@@ -237,7 +237,7 @@ function Open-Thread {
                     Activity         = $Activity
                     CurrentOperation = $StatusString
                     PercentComplete  = $NewPercentComplete
-                    Status           = "$NewPercentComplete% ($($ThreadCount - $CurrentObjectIndex) of $ThreadCount) remain"
+                    Status           = "$([int]$NewPercentComplete)% ($($ThreadCount - $CurrentObjectIndex) of $ThreadCount) remain"
                 }
                 Write-Progress @Progress
             }

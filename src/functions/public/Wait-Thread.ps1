@@ -137,7 +137,7 @@ function Wait-Thread {
                     Activity         = $Activity
                     CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
                     PercentComplete  = $NewPercentComplete
-                    Status           = "$NewPercentComplete% ($($IncompleteThreads.Count) of $ThreadCount remain): $RemainingString"
+                    Status           = "$([int]$NewPercentComplete)% ($($IncompleteThreads.Count) of $ThreadCount remain): $RemainingString"
                 }
                 Write-Progress @Progress
 
