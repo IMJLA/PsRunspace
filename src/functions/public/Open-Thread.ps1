@@ -227,7 +227,7 @@ function Open-Thread {
 
 
             $NewPercentComplete = $CurrentObjectIndex / $ThreadCount * 100
-            if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
+            if (($NewPercentComplete - $OldPercentComplete) -ge 1) {
                 $OldPercentComplete = $NewPercentComplete
                 $AdditionalParametersString = $AdditionalParameters -join ' '
                 $SwitchParameterString = $Switches -join ' '

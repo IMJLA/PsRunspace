@@ -703,7 +703,7 @@ function Open-Thread {
 
 
             $NewPercentComplete = $CurrentObjectIndex / $ThreadCount * 100
-            if (($NewPercentComplete - $OldPercentComplete) -gt 1) {
+            if (($NewPercentComplete - $OldPercentComplete) -ge 1) {
                 $OldPercentComplete = $NewPercentComplete
                 $AdditionalParametersString = $AdditionalParameters -join ' '
                 $SwitchParameterString = $Switches -join ' '
@@ -1208,6 +1208,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 
