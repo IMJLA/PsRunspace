@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.114] - 2024-02-02 - add comments/future notesto expand-pscommandinfo
+
 ## [1.0.113] - 2024-01-31 - bugfix prog bars
 
 ## [1.0.112] - 2024-01-31 - make open-thread status text clearer

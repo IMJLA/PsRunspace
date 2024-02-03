@@ -63,6 +63,13 @@ function Expand-PsCommandInfo {
         $_.TokenFlags.HasFlag([System.Management.Automation.Language.TokenFlags]::CommandName)
     }
 
+    # PowerShell Class Tokens
+    #$possibletypes = ($pstokens | ?{$_.kind -eq 'Identifier' -and $_.TokenFlags -eq 'None'}).Text | Sort -Unique
+    #$definitetypes = ($pstokens | ?{$_.kind -eq 'Identifier' -and $_.TokenFlags -contains 'TypeName'}).Text | Sort -Unique
+    #$overlappingtypes = $possibletypes | Where-Object {$_ -in $definitetypes}
+    # ToDo: how to find their definitions?  Necessary to regex the ScriptBlock instead of using the parsed tokens for this?
+
+
     # Add the definitions of those functions if available
     # TODO: Add modules if available? Not needed at this time but maybe later
     ForEach ($ThisCommandToken in $CommandTokens) {
