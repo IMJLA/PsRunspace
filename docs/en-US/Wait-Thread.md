@@ -15,7 +15,7 @@ Waits for a thread to be completed so the results can be returned, or for a time
 ```
 Wait-Thread [-Thread] <PSObject[]> [[-Threads] <Int32>] [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [-Dispose]
  [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-ProgressParentId] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -88,6 +88,21 @@ Aliases: proga
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressParentId
+ID of the parent progress bar under which to show progres
+
+```yaml
+Type: System.Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

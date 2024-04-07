@@ -45,7 +45,10 @@ function Wait-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogMsgCache = $Global:LogMessages,
+
+        # ID of the parent progress bar under which to show progres
+        [int]$ProgressParentId
 
     )
 
@@ -69,7 +72,16 @@ function Wait-Thread {
 
         $CommandString = $FirstThread.Command
 
-        $Activity = "Wait-Thread '$CommandString'"
+        $Progress = @{
+            Activity = "Wait-Thread '$CommandString'"
+        }
+        if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
+            $Progress['ParentId'] = $ProgressParentId
+            $Progress['Id'] = $ProgressParentId + 1
+        } else {
+            $Progress['Id'] = 0
+        }
+
         $ThreadCount = @($Thread).Count
 
     }
@@ -133,13 +145,9 @@ function Wait-Thread {
                     $RemainingString = $RemainingString.Substring(0, 60) + "..."
                 }
 
-                $Progress = @{
-                    Activity         = $Activity
-                    CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
-                    PercentComplete  = $NewPercentComplete
-                    Status           = "$([int]$NewPercentComplete)% ($($IncompleteThreads.Count) of $ThreadCount remain): $RemainingString"
-                }
-                Write-Progress @Progress
+                $CurrentOperation = "Waiting on threads - $ActiveThreadCountString`: $CommandString"
+                $Status = "$([int]$NewPercentComplete)% ($($IncompleteThreads.Count) of $ThreadCount remain): $RemainingString"
+                Write-Progress @Progress -PercentComplete $NewPercentComplete -CurrentOperation $CurrentOperation -Status $Status
 
             }
 
@@ -213,7 +221,7 @@ function Wait-Thread {
         $StopWatch.Stop()
 
         Write-LogMsg @LogParams -Text " # Finished waiting for threads"
-        Write-Progress -Activity $Activity -Completed
+        Write-Progress @Progress -Completed
 
     }
 

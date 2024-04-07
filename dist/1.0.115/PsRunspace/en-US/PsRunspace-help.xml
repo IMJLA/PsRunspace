@@ -1154,6 +1154,18 @@ Expand-PsToken</dev:code>
           </dev:type>
           <dev:defaultValue>$Global:LogMessages</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+          <maml:name>ProgressParentId</maml:name>
+          <maml:description>
+            <maml:para>ID of the parent progress bar under which to show progres</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>RunspacePool</maml:name>
           <maml:description>
@@ -1385,6 +1397,18 @@ Expand-PsToken</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+        <maml:name>ProgressParentId</maml:name>
+        <maml:description>
+          <maml:para>ID of the parent progress bar under which to show progres</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>RunspacePool</maml:name>
         <maml:description>
@@ -1525,7 +1549,19 @@ Expand-PsToken</dev:code>
             <maml:name>System.Collections.Hashtable</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>$Global:LogMessages</dev:defaultValue>
+          <dev:defaultValue>([hashtable]::Synchronized(@{}))</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="15" aliases="none">
+          <maml:name>ProgressParentId</maml:name>
+          <maml:description>
+            <maml:para>ID of the parent progress bar under which to show progres</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="2" aliases="none">
           <maml:name>InputObject</maml:name>
@@ -1732,7 +1768,7 @@ Expand-PsToken</dev:code>
           <maml:name>System.Collections.Hashtable</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>$Global:LogMessages</dev:defaultValue>
+        <dev:defaultValue>([hashtable]::Synchronized(@{}))</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
         <maml:name>ObjectStringProperty</maml:name>
@@ -1757,6 +1793,18 @@ Expand-PsToken</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="15" aliases="none">
+        <maml:name>ProgressParentId</maml:name>
+        <maml:description>
+          <maml:para>ID of the parent progress bar under which to show progres</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>SleepTimer</maml:name>
@@ -1995,6 +2043,18 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
           </dev:type>
           <dev:defaultValue>$Global:LogMessages</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>ProgressParentId</maml:name>
+          <maml:description>
+            <maml:para>ID of the parent progress bar under which to show progres</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Dispose</maml:name>
           <maml:description>
@@ -2068,6 +2128,18 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <maml:name>ProgressParentId</maml:name>
+        <maml:description>
+          <maml:para>ID of the parent progress bar under which to show progres</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>SleepTimer</maml:name>

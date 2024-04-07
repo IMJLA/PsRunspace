@@ -65,11 +65,24 @@ function Open-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogMsgCache = $Global:LogMessages,
+
+        # ID of the parent progress bar under which to show progres
+        [int]$ProgressParentId
 
     )
 
     begin {
+
+        $Progress = @{
+            Activity = "Open-Thread -Command '$Command'"
+        }
+        if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
+            $Progress['ParentId'] = $ProgressParentId
+            $Progress['Id'] = $ProgressParentId + 1
+        } else {
+            $Progress['Id'] = 0
+        }
 
         $LogParams = @{
             LogMsgCache  = $LogMsgCache
@@ -149,7 +162,6 @@ function Open-Thread {
             # Convert the script to a single scriptblock
             $ScriptBlock = [scriptblock]::Create($ScriptString)
         }
-        $Activity = "Open-Thread -Command '$Command'"
 
     }
     process {
@@ -233,13 +245,8 @@ function Open-Thread {
                 $SwitchParameterString = $Switches -join ' '
 
                 $StatusString = "Invoking thread $CurrentObjectIndex`: $Command $InputParameterStringForDebug $AdditionalParametersString $SwitchParameterString"
-                $Progress = @{
-                    Activity         = $Activity
-                    CurrentOperation = $StatusString
-                    PercentComplete  = $NewPercentComplete
-                    Status           = "$([int]$NewPercentComplete)% ($($ThreadCount - $CurrentObjectIndex) of $ThreadCount remain)"
-                }
-                Write-Progress @Progress
+                $Status = "$([int]$NewPercentComplete)% ($($ThreadCount - $CurrentObjectIndex) of $ThreadCount remain)"
+                Write-Progress @Progress -CurrentOperation $StatusString -PercentComplete $NewPercentComplete -Status $Status
             }
 
             Write-LogMsg @LogParams -Text "`$Handle = `$PowershellInterface.BeginInvoke() # for '$Command' on '$ObjectString'"
@@ -260,7 +267,8 @@ function Open-Thread {
 
     end {
 
-        Write-Progress -Activity $Activity -Completed
+        Write-Progress @Progress -Completed
 
     }
+
 }

@@ -16,7 +16,7 @@ Split a command for a collection of input objects into multiple threads for asyn
 Split-Thread [-Command] <Object> [[-InputObject] <Object>] [[-InputParameter] <Object>] [[-Threads] <Int32>]
  [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [[-AddParam] <Hashtable>] [[-AddSwitch] <String[]>]
  [[-AddModule] <String[]>] [[-ObjectStringProperty] <String>] [[-DebugOutputStream] <String>]
- [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>]
+ [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>] [[-ProgressParentId] <Int32>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -194,7 +194,7 @@ Aliases:
 
 Required: False
 Position: 14
-Default value: $Global:LogMessages
+Default value: ([hashtable]::Synchronized(@{}))
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -226,6 +226,21 @@ Aliases: proga
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressParentId
+ID of the parent progress bar under which to show progres
+
+```yaml
+Type: System.Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

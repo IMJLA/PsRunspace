@@ -90,7 +90,10 @@ function Split-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogMsgCache = ([hashtable]::Synchronized(@{})),
+
+        # ID of the parent progress bar under which to show progres
+        [int]$ProgressParentId
 
     )
 
@@ -199,6 +202,9 @@ function Split-Thread {
             WhoAmI               = $WhoAmI
             LogMsgCache          = $LogMsgCache
         }
+        if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
+            $ThreadParameters['ProgressParentId'] = $ProgressParentId
+        }
         $AllThreads = Open-Thread @ThreadParameters
         Write-LogMsg @LogParams -Text " # Received $(($AllThreads | Measure-Object).Count) threads from Open-Thread for $Command"
 
@@ -212,6 +218,9 @@ function Split-Thread {
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
             LogMsgCache       = $LogMsgCache
+        }
+        if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
+            $ThreadParameters['ProgressParentId'] = $ProgressParentId
         }
         Wait-Thread @ThreadParameters
         $VerbosePreference = 'Continue'

@@ -16,7 +16,8 @@ Prepares each thread so it is ready to execute a command and capture the output 
 Open-Thread [[-InputObject] <Object>] [-RunspacePool] <RunspacePool> [[-ObjectStringProperty] <String>]
  [-Command] <Object> [[-CommandInfo] <PSObject[]>] [[-InputParameter] <String>] [[-AddParam] <Hashtable>]
  [[-AddSwitch] <String[]>] [[-DebugOutputStream] <String>] [[-TodaysHostname] <String>] [[-WhoAmI] <String>]
- [[-LogMsgCache] <Hashtable>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-LogMsgCache] <Hashtable>] [[-ProgressParentId] <Int32>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -188,6 +189,21 @@ Aliases: proga
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressParentId
+ID of the parent progress bar under which to show progres
+
+```yaml
+Type: System.Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
