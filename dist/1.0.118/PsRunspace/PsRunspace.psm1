@@ -46,7 +46,7 @@ function Add-PsCommand {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages
 
     )
@@ -158,7 +158,7 @@ function Add-PsModule {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages
 
     )
@@ -221,7 +221,7 @@ function Convert-FromPsCommandInfoToString {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages
 
     )
@@ -286,7 +286,7 @@ function Expand-PsCommandInfo {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages
     )
 
@@ -437,7 +437,7 @@ function Get-PsCommandInfo {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages
 
     )
@@ -547,7 +547,7 @@ function Open-Thread {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages,
 
         # ID of the parent progress bar under which to show progres
@@ -846,7 +846,7 @@ function Split-Thread {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
 
         # ID of the parent progress bar under which to show progres
@@ -1049,7 +1049,7 @@ function Wait-Thread {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages,
 
         # ID of the parent progress bar under which to show progres
@@ -1240,6 +1240,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

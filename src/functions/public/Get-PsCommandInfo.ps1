@@ -35,7 +35,7 @@ function Get-PsCommandInfo {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        # Log messages which have not yet been written to disk
         [hashtable]$LogBuffer = $Global:LogMessages
 
     )

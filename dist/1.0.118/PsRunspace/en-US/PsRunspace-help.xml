@@ -65,7 +65,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Log messages which have not yet been written to disk</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -176,7 +176,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          <maml:para>Log messages which have not yet been written to disk</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
@@ -306,7 +306,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Log messages which have not yet been written to disk</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -381,7 +381,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          <maml:para>Log messages which have not yet been written to disk</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
@@ -735,7 +735,7 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Log messages which have not yet been written to disk</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -774,7 +774,7 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          <maml:para>Log messages which have not yet been written to disk</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
@@ -998,7 +998,7 @@ Expand-PsToken</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Log messages which have not yet been written to disk</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -1037,7 +1037,7 @@ Expand-PsToken</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          <maml:para>Log messages which have not yet been written to disk</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
@@ -1145,7 +1145,7 @@ Expand-PsToken</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Log messages which have not yet been written to disk</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -1364,7 +1364,7 @@ Expand-PsToken</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          <maml:para>Log messages which have not yet been written to disk</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
@@ -1542,7 +1542,7 @@ Expand-PsToken</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="14" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Log messages which have not yet been written to disk</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -1761,7 +1761,7 @@ Expand-PsToken</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="14" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          <maml:para>Log messages which have not yet been written to disk</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
@@ -2034,7 +2034,7 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Log messages which have not yet been written to disk</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -2108,7 +2108,7 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          <maml:para>Log messages which have not yet been written to disk</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>

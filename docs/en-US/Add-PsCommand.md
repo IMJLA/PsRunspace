@@ -100,7 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -LogBuffer
-Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+Log messages which have not yet been written to disk
 
 ```yaml
 Type: System.Collections.Hashtable
