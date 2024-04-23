@@ -65,7 +65,7 @@ function Open-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
+        [hashtable]$LogBuffer = $Global:LogMessages,
 
         # ID of the parent progress bar under which to show progres
         [int]$ProgressParentId
@@ -85,7 +85,7 @@ function Open-Thread {
         }
 
         $LogParams = @{
-            LogMsgCache  = $LogMsgCache
+            LogBuffer  = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -95,7 +95,7 @@ function Open-Thread {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogMsgCache       = $LogMsgCache
+            LogBuffer       = $LogBuffer
         }
 
         [int64]$CurrentObjectIndex = 0

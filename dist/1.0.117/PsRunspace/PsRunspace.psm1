@@ -47,14 +47,14 @@ function Add-PsCommand {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogBuffer = $Global:LogMessages
 
     )
 
     begin {
 
         $LogParams = @{
-            LogMsgCache  = $LogMsgCache
+            LogBuffer  = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -64,7 +64,7 @@ function Add-PsCommand {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogMsgCache       = $LogMsgCache
+            LogBuffer       = $LogBuffer
         }
 
         if ($CommandInfo -eq $null) {
@@ -159,14 +159,14 @@ function Add-PsModule {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogBuffer = $Global:LogMessages
 
     )
 
     begin {
 
         $LogParams = @{
-            LogMsgCache  = $LogMsgCache
+            LogBuffer  = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -222,7 +222,7 @@ function Convert-FromPsCommandInfoToString {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogBuffer = $Global:LogMessages
 
     )
     begin {
@@ -230,7 +230,7 @@ function Convert-FromPsCommandInfoToString {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogMsgCache       = $LogMsgCache
+            LogBuffer       = $LogBuffer
         }
     }
 
@@ -287,14 +287,14 @@ function Expand-PsCommandInfo {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogBuffer = $Global:LogMessages
     )
 
     $CommandInfoParams = @{
         DebugOutputStream = $DebugOutputStream
         TodaysHostname    = $TodaysHostname
         WhoAmI            = $WhoAmI
-        LogMsgCache       = $LogMsgCache
+        LogBuffer       = $LogBuffer
     }
 
     # Add the first object to the cache
@@ -438,12 +438,12 @@ function Get-PsCommandInfo {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogBuffer = $Global:LogMessages
 
     )
 
     $LogParams = @{
-        LogMsgCache  = $LogMsgCache
+        LogBuffer  = $LogBuffer
         ThisHostname = $TodaysHostname
         Type         = $DebugOutputStream
         WhoAmI       = $WhoAmI
@@ -548,7 +548,7 @@ function Open-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
+        [hashtable]$LogBuffer = $Global:LogMessages,
 
         # ID of the parent progress bar under which to show progres
         [int]$ProgressParentId
@@ -568,7 +568,7 @@ function Open-Thread {
         }
 
         $LogParams = @{
-            LogMsgCache  = $LogMsgCache
+            LogBuffer  = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -578,7 +578,7 @@ function Open-Thread {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogMsgCache       = $LogMsgCache
+            LogBuffer       = $LogBuffer
         }
 
         [int64]$CurrentObjectIndex = 0
@@ -847,7 +847,7 @@ function Split-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = ([hashtable]::Synchronized(@{})),
+        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
 
         # ID of the parent progress bar under which to show progres
         [int]$ProgressParentId
@@ -857,7 +857,7 @@ function Split-Thread {
     begin {
 
         $LogParams = @{
-            LogMsgCache  = $LogMsgCache
+            LogBuffer    = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -870,7 +870,7 @@ function Split-Thread {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogMsgCache       = $LogMsgCache
+            LogBuffer         = $LogBuffer
         }
         $OriginalCommandInfo = Get-PsCommandInfo @CommandInfoParams -Command $Command
         Write-LogMsg @LogParams -Text " # Found 1 original PsCommandInfo for '$Command'"
@@ -957,7 +957,7 @@ function Split-Thread {
             RunspacePool         = $RunspacePool
             DebugOutputStream    = $DebugOutputStream
             WhoAmI               = $WhoAmI
-            LogMsgCache          = $LogMsgCache
+            LogBuffer            = $LogBuffer
         }
         if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
             $ThreadParameters['ProgressParentId'] = $ProgressParentId
@@ -974,7 +974,7 @@ function Split-Thread {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogMsgCache       = $LogMsgCache
+            LogBuffer         = $LogBuffer
         }
         if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
             $ThreadParameters['ProgressParentId'] = $ProgressParentId
@@ -1050,7 +1050,7 @@ function Wait-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
+        [hashtable]$LogBuffer = $Global:LogMessages,
 
         # ID of the parent progress bar under which to show progres
         [int]$ProgressParentId
@@ -1060,7 +1060,7 @@ function Wait-Thread {
     begin {
 
         $LogParams = @{
-            LogMsgCache  = $LogMsgCache
+            LogBuffer  = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -1240,6 +1240,8 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
+
 
 
 

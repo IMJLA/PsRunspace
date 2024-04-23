@@ -14,7 +14,7 @@ schema: 2.0.0
 
 ```
 Convert-FromPsCommandInfoToString [-CommandInfo] <PSObject[]> [-DebugOutputStream <String>]
- [-TodaysHostname <String>] [-WhoAmI <String>] [-LogMsgCache <Hashtable>] [-ProgressAction <ActionPreference>]
+ [-TodaysHostname <String>] [-WhoAmI <String>] [-LogBuffer <Hashtable>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -62,8 +62,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LogMsgCache
-{{ Fill LogMsgCache Description }}
+### -LogBuffer
+{{ Fill LogBuffer Description }}
 
 ```yaml
 Type: System.Collections.Hashtable

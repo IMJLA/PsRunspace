@@ -63,7 +63,7 @@
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
           </maml:description>
@@ -174,7 +174,7 @@
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
         </maml:description>
@@ -304,7 +304,7 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
           </maml:description>
@@ -379,7 +379,7 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
         </maml:description>
@@ -498,9 +498,9 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
-            <maml:para>{{ Fill LogMsgCache Description }}</maml:para>
+            <maml:para>{{ Fill LogBuffer Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -573,9 +573,9 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
-          <maml:para>{{ Fill LogMsgCache Description }}</maml:para>
+          <maml:para>{{ Fill LogBuffer Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
@@ -733,7 +733,7 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
           <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
           </maml:description>
@@ -772,7 +772,7 @@ Add-PsModule -InitialSessionState $InitialSessionState -ModuleInfo $ModuleInfo</
         <dev:defaultValue>Silent</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
         </maml:description>
@@ -996,7 +996,7 @@ Expand-PsToken</dev:code>
           <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
           </maml:description>
@@ -1035,7 +1035,7 @@ Expand-PsToken</dev:code>
         <dev:defaultValue>Silent</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
         </maml:description>
@@ -1143,7 +1143,7 @@ Expand-PsToken</dev:code>
           <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
           </maml:description>
@@ -1362,7 +1362,7 @@ Expand-PsToken</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
         </maml:description>
@@ -1540,7 +1540,7 @@ Expand-PsToken</dev:code>
           <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="14" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
           </maml:description>
@@ -1759,7 +1759,7 @@ Expand-PsToken</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="14" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
         </maml:description>
@@ -2032,7 +2032,7 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
           <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-          <maml:name>LogMsgCache</maml:name>
+          <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
           </maml:description>
@@ -2106,7 +2106,7 @@ The hastable can be accessed and updated from inside each runspace</dev:code>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-        <maml:name>LogMsgCache</maml:name>
+        <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
         </maml:description>
