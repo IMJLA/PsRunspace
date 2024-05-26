@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.119] - 2024-05-26 - implement $input in split-thread to improve performance
+
 ## [1.0.118] - 2024-04-22 - update LogBuffer comment
 
 ## [1.0.117] - 2024-04-22 - rename LogMsgCache to LogBuffer

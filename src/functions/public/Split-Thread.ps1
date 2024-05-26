@@ -177,7 +177,7 @@ function Split-Thread {
         $AllInputObjects = [System.Collections.Generic.List[psobject]]::new()
 
     }
-
+    <#
     process {
 
         # Add all the input objects from the pipeline to a single collection; allows progress bars later
@@ -186,7 +186,22 @@ function Split-Thread {
         }
 
     }
+    #>
     end {
+
+        # Add all the input objects from the pipeline to a single collection; allows progress bars later
+        <#
+        $input is ancient PowerShell v1
+
+        In a scriptblock it contains every input to the scriptblock at that point in time
+
+        in the end block, $input contains every input
+
+        It is faster than accumulating input in the process block
+
+        Watch Out: $input can only be read once
+        #>
+        $AllInputObjects = $input
 
         Write-LogMsg @LogParams -Text " # Entered end block. Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
         $ThreadParameters = @{
