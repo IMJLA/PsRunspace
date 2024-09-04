@@ -174,7 +174,7 @@ function Split-Thread {
 
         $Global:TimedOut = $false
 
-        $AllInputObjects = [System.Collections.Generic.List[psobject]]::new()
+        #$AllInputObjects = [System.Collections.Generic.List[psobject]]::new()
 
     }
     <#
@@ -204,7 +204,7 @@ function Split-Thread {
         $AllInputObjects = $input
 
         Write-LogMsg @LogParams -Text " # Entered end block. Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
-        Write-LogMsg @LogParams -Text " # Received '$(($AllInputObjects | Measure-Object).Count)' objects to the InputObject parameter."
+        Write-LogMsg @LogParams -Text " # Received '$(($AllInputObjects | Measure-Object).Count)' objects with the InputObject parameter."
 
         $ThreadParameters = @{
             Command              = $Command
