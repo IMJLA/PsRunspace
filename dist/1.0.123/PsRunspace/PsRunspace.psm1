@@ -961,7 +961,8 @@ function Split-Thread {
         $AllInputObjects = $input
 
         Write-LogMsg @LogParams -Text " # Entered end block. Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
-        Write-LogMsg @LogParams -Text " # Received '$(($AllInputObjects | Measure-Object).Count)' objects with the InputObject parameter."
+        Write-LogMsg @LogParams -Text " # Received '$(($AllInputObjects | Measure-Object).Count)' objects with the `$input automatic variable."
+        Write-LogMsg @LogParams -Text " # Received '$(($InputObject | Measure-Object).Count)' objects with the `InputObject parameter."
 
         $ThreadParameters = @{
             Command              = $Command
@@ -1257,6 +1258,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

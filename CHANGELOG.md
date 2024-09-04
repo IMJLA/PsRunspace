@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.123] - 2024-09-03 - add debug output
+
 ## [1.0.122] - 2024-09-03 - troubleshooting $input
 
 ## [1.0.121] - 2024-09-03 - add debug to confirm that the $input variable in the end block is not working
