@@ -100,7 +100,7 @@ function Split-Thread {
     begin {
 
         $LogParams = @{
-            LogBuffer    = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI

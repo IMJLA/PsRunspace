@@ -54,7 +54,7 @@ function Add-PsCommand {
     begin {
 
         $LogParams = @{
-            LogBuffer  = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -64,7 +64,7 @@ function Add-PsCommand {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogBuffer       = $LogBuffer
+            LogBuffer         = $LogBuffer
         }
 
         if ($CommandInfo -eq $null) {
@@ -166,7 +166,7 @@ function Add-PsModule {
     begin {
 
         $LogParams = @{
-            LogBuffer  = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -443,7 +443,7 @@ function Get-PsCommandInfo {
     )
 
     $LogParams = @{
-        LogBuffer  = $LogBuffer
+        Buffer       = $LogBuffer
         ThisHostname = $TodaysHostname
         Type         = $DebugOutputStream
         WhoAmI       = $WhoAmI
@@ -568,7 +568,7 @@ function Open-Thread {
         }
 
         $LogParams = @{
-            LogBuffer  = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -578,7 +578,7 @@ function Open-Thread {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogBuffer       = $LogBuffer
+            LogBuffer         = $LogBuffer
         }
 
         [int64]$CurrentObjectIndex = 0
@@ -857,7 +857,7 @@ function Split-Thread {
     begin {
 
         $LogParams = @{
-            LogBuffer    = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -1075,7 +1075,7 @@ function Wait-Thread {
     begin {
 
         $LogParams = @{
-            LogBuffer  = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -1255,6 +1255,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 #>
 Import-Module PsLogMessage -ErrorAction SilentlyContinue
 Export-ModuleMember -Function @('Add-PsCommand','Add-PsModule','Convert-FromPsCommandInfoToString','Expand-PsCommandInfo','Expand-PsToken','Get-PsCommandInfo','Open-Thread','Split-Thread','Wait-Thread')
+
 
 
 

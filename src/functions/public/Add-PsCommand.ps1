@@ -53,7 +53,7 @@ function Add-PsCommand {
     begin {
 
         $LogParams = @{
-            LogBuffer  = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -63,7 +63,7 @@ function Add-PsCommand {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogBuffer       = $LogBuffer
+            LogBuffer         = $LogBuffer
         }
 
         if ($CommandInfo -eq $null) {

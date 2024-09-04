@@ -85,7 +85,7 @@ function Open-Thread {
         }
 
         $LogParams = @{
-            LogBuffer  = $LogBuffer
+            Buffer       = $LogBuffer
             ThisHostname = $TodaysHostname
             Type         = $DebugOutputStream
             WhoAmI       = $WhoAmI
@@ -95,7 +95,7 @@ function Open-Thread {
             DebugOutputStream = $DebugOutputStream
             TodaysHostname    = $TodaysHostname
             WhoAmI            = $WhoAmI
-            LogBuffer       = $LogBuffer
+            LogBuffer         = $LogBuffer
         }
 
         [int64]$CurrentObjectIndex = 0
