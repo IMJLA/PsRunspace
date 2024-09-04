@@ -174,43 +174,15 @@ function Split-Thread {
 
         $Global:TimedOut = $false
 
-        #$AllInputObjects = [System.Collections.Generic.List[psobject]]::new()
-
     }
-    <#
-    process {
-
-        # Add all the input objects from the pipeline to a single collection; allows progress bars later
-        ForEach ($ThisObject in $InputObject) {
-            $null = $AllInputObjects.Add($ThisObject)
-        }
-
-    }
-    #>
     end {
 
-        # Add all the input objects from the pipeline to a single collection; allows progress bars later
-        <#
-        $input is ancient PowerShell v1
-
-        In a scriptblock it contains every input to the scriptblock at that point in time
-
-        in the end block, $input contains every input
-
-        It is faster than accumulating input in the process block
-
-        Watch Out: $input can only be read once
-        #>
-        $AllInputObjects = $input
-
-        Write-LogMsg @LogParams -Text " # Entered end block. Sending $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
-        Write-LogMsg @LogParams -Text " # Received '$(($AllInputObjects | Measure-Object).Count)' objects with the `$input automatic variable."
-        Write-LogMsg @LogParams -Text " # Received '$(($InputObject | Measure-Object).Count)' objects with the `InputObject parameter."
+        Write-LogMsg @LogParams -Text " # Entered end block. Sending $(($InputObject | Measure-Object).Count)' input objects and $(($CommandsToAdd | Measure-Object).Count) PsCommandInfos to Open-Thread for '$Command'"
 
         $ThreadParameters = @{
             Command              = $Command
             InputParameter       = $InputParameter
-            InputObject          = $AllInputObjects
+            InputObject          = $InputObject
             AddParam             = $AddParam
             AddSwitch            = $AddSwitch
             ObjectStringProperty = $ObjectStringProperty
