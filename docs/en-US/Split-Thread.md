@@ -16,7 +16,7 @@ Split a command for a collection of input objects into multiple threads for asyn
 Split-Thread [-Command] <Object> [[-InputObject] <Object>] [[-InputParameter] <Object>] [[-Threads] <Int32>]
  [[-SleepTimer] <Int32>] [[-Timeout] <Int32>] [[-AddParam] <Hashtable>] [[-AddSwitch] <String[]>]
  [[-AddModule] <String[]>] [[-ObjectStringProperty] <String>] [[-DebugOutputStream] <String>]
- [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>] [[-ProgressParentId] <Int32>]
+ [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [-LogBuffer] <PSReference> [[-ProgressParentId] <Int32>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -188,13 +188,13 @@ Accept wildcard characters: False
 Log messages which have not yet been written to disk
 
 ```yaml
-Type: System.Collections.Hashtable
+Type: System.Management.Automation.PSReference
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 14
-Default value: ([hashtable]::Synchronized(@{}))
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

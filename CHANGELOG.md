@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.126] - 2024-11-04 - convert log buffer to reference variable
+
 ## [1.0.124] - 2024-09-03 - kiss (fix bug introduced with unnecessary complexity)
 
 ## [1.0.123] - 2024-09-03 - add debug output

@@ -90,7 +90,8 @@ function Split-Thread {
         [string]$WhoAmI = (whoami.EXE),
 
         # Log messages which have not yet been written to disk
-        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
+        [Parameter(Mandatory)]
+        [ref]$LogBuffer,
 
         # ID of the parent progress bar under which to show progres
         [int]$ProgressParentId
@@ -217,13 +218,13 @@ function Split-Thread {
 
         if ($Global:TimedOut -eq $false) {
 
-            Write-LogMsg @LogParams -Text "[System.Management.Automation.Runspaces.RunspacePool]::Close()"
+            Write-LogMsg @LogParams -Text '[System.Management.Automation.Runspaces.RunspacePool]::Close()'
             $null = $RunspacePool.Close()
-            Write-LogMsg @LogParams -Text " # [System.Management.Automation.Runspaces.RunspacePool]::Close() completed"
+            Write-LogMsg @LogParams -Text ' # [System.Management.Automation.Runspaces.RunspacePool]::Close() completed'
 
-            Write-LogMsg @LogParams -Text "[System.Management.Automation.Runspaces.RunspacePool]::Dispose()"
+            Write-LogMsg @LogParams -Text '[System.Management.Automation.Runspaces.RunspacePool]::Dispose()'
             $null = $RunspacePool.Dispose()
-            Write-LogMsg @LogParams -Text " # [System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed"
+            Write-LogMsg @LogParams -Text ' # [System.Management.Automation.Runspaces.RunspacePool]::Dispose() completed'
 
         } else {
             # Statement-terminating error

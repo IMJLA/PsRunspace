@@ -12,7 +12,7 @@
     RootModule        = 'PsRunspace'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.124'
+    ModuleVersion     = '1.0.126'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
